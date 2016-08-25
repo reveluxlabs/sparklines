@@ -12,6 +12,10 @@
 		D497E9B21D6D1C37004CD872 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D497E9B01D6D1C37004CD872 /* Main.storyboard */; };
 		D497E9B41D6D1C37004CD872 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D497E9B31D6D1C37004CD872 /* Assets.xcassets */; };
 		D497E9B71D6D1C37004CD872 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D497E9B51D6D1C37004CD872 /* LaunchScreen.storyboard */; };
+		D497E9BF1D6D1F57004CD872 /* SparkLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D497E9BE1D6D1F57004CD872 /* SparkLineView.swift */; };
+		D497E9C31D6D2956004CD872 /* glucose_data.txt in Resources */ = {isa = PBXBuildFile; fileRef = D497E9C01D6D2956004CD872 /* glucose_data.txt */; };
+		D497E9C41D6D2956004CD872 /* heartRate_data.txt in Resources */ = {isa = PBXBuildFile; fileRef = D497E9C11D6D2956004CD872 /* heartRate_data.txt */; };
+		D497E9C51D6D2956004CD872 /* temperature_data.txt in Resources */ = {isa = PBXBuildFile; fileRef = D497E9C21D6D2956004CD872 /* temperature_data.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +26,10 @@
 		D497E9B31D6D1C37004CD872 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D497E9B61D6D1C37004CD872 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D497E9B81D6D1C37004CD872 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D497E9BE1D6D1F57004CD872 /* SparkLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SparkLineView.swift; sourceTree = "<group>"; };
+		D497E9C01D6D2956004CD872 /* glucose_data.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = glucose_data.txt; sourceTree = "<group>"; };
+		D497E9C11D6D2956004CD872 /* heartRate_data.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = heartRate_data.txt; sourceTree = "<group>"; };
+		D497E9C21D6D2956004CD872 /* temperature_data.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = temperature_data.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,9 +64,13 @@
 			children = (
 				D497E9AC1D6D1C37004CD872 /* AppDelegate.swift */,
 				D497E9AE1D6D1C37004CD872 /* ViewController.swift */,
+				D497E9BE1D6D1F57004CD872 /* SparkLineView.swift */,
 				D497E9B01D6D1C37004CD872 /* Main.storyboard */,
 				D497E9B31D6D1C37004CD872 /* Assets.xcassets */,
 				D497E9B51D6D1C37004CD872 /* LaunchScreen.storyboard */,
+				D497E9C01D6D2956004CD872 /* glucose_data.txt */,
+				D497E9C11D6D2956004CD872 /* heartRate_data.txt */,
+				D497E9C21D6D2956004CD872 /* temperature_data.txt */,
 				D497E9B81D6D1C37004CD872 /* Info.plist */,
 			);
 			path = sparklines;
@@ -123,6 +135,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D497E9B71D6D1C37004CD872 /* LaunchScreen.storyboard in Resources */,
+				D497E9C41D6D2956004CD872 /* heartRate_data.txt in Resources */,
+				D497E9C31D6D2956004CD872 /* glucose_data.txt in Resources */,
+				D497E9C51D6D2956004CD872 /* temperature_data.txt in Resources */,
 				D497E9B41D6D1C37004CD872 /* Assets.xcassets in Resources */,
 				D497E9B21D6D1C37004CD872 /* Main.storyboard in Resources */,
 			);
@@ -136,6 +151,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D497E9AF1D6D1C37004CD872 /* ViewController.swift in Sources */,
+				D497E9BF1D6D1F57004CD872 /* SparkLineView.swift in Sources */,
 				D497E9AD1D6D1C37004CD872 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,22 +1,147 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="sparklines" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                        <viewControllerLayoutGuide type="top" id="nt3-3k-fMt"/>
+                        <viewControllerLayoutGuide type="bottom" id="6NZ-qi-5gF"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                    <view key="view" contentMode="scaleToFill" id="aNe-cq-av7">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="140 x 20 Sparklines" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="AEF-8l-jiU">
+                                <rect key="frame" x="308" y="92" width="152" height="21"/>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="125" y="69" width="150" height="20"/>
+                                </variation>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xJd-ZT-Mgq" customClass="SparkLineView" customModule="sparklines">
+                                <rect key="frame" x="314" y="135" width="140" height="20"/>
+                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="132" y="105" width="140" height="20"/>
+                                </variation>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="am7-2a-Dzn" customClass="SparkLineView" customModule="sparklines">
+                                <rect key="frame" x="314" y="163" width="140" height="20"/>
+                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="132" y="133" width="140" height="20"/>
+                                </variation>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="54K-V3-z79" customClass="SparkLineView" customModule="sparklines" customModuleProvider="target">
+                                <rect key="frame" x="314" y="191" width="140" height="20"/>
+                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="132" y="161" width="140" height="20"/>
+                                </variation>
+                            </view>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="280 x 40 Sparklines" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="r9x-Dw-j1w">
+                                <rect key="frame" x="308" y="262" width="152" height="21"/>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="127" y="235" width="150" height="20"/>
+                                </variation>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E5v-Wd-Fbe" customClass="SparkLineView" customModule="sparklines" customModuleProvider="target">
+                                <rect key="frame" x="244" y="312" width="280" height="40"/>
+                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="62" y="291" width="280" height="40"/>
+                                </variation>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KPM-r6-16j" customClass="SparkLineView" customModule="sparklines" customModuleProvider="target">
+                                <rect key="frame" x="244" y="370" width="280" height="40"/>
+                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="62" y="349" width="280" height="40"/>
+                                </variation>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yaH-bW-zrk" customClass="SparkLineView" customModule="sparklines" customModuleProvider="target">
+                                <rect key="frame" x="244" y="429" width="280" height="40"/>
+                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="62" y="408" width="280" height="40"/>
+                                </variation>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c4C-oO-kZm">
+                                <rect key="frame" x="288" y="547" width="192" height="37"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Hide Current Values">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="126" y="505" width="147" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="toggleCurrentValues:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Vq2-g2-dLv"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oWM-jN-x5J">
+                                <rect key="frame" x="288" y="600" width="192" height="37"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Show Range Overlays">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="121" y="558" width="159" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="toggleShowOverlays:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9Rb-Yy-APf"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.47866351455897427" green="0.47866351455897427" blue="0.47866351455897427" alpha="1" colorSpace="calibratedRGB"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="AEF-8l-jiU"/>
+                                <exclude reference="xJd-ZT-Mgq"/>
+                                <exclude reference="am7-2a-Dzn"/>
+                                <exclude reference="54K-V3-z79"/>
+                                <exclude reference="r9x-Dw-j1w"/>
+                                <exclude reference="E5v-Wd-Fbe"/>
+                                <exclude reference="KPM-r6-16j"/>
+                                <exclude reference="yaH-bW-zrk"/>
+                                <exclude reference="c4C-oO-kZm"/>
+                                <exclude reference="oWM-jN-x5J"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="AEF-8l-jiU"/>
+                                <include reference="xJd-ZT-Mgq"/>
+                                <include reference="am7-2a-Dzn"/>
+                                <include reference="54K-V3-z79"/>
+                                <include reference="r9x-Dw-j1w"/>
+                                <include reference="E5v-Wd-Fbe"/>
+                                <include reference="KPM-r6-16j"/>
+                                <include reference="yaH-bW-zrk"/>
+                                <include reference="c4C-oO-kZm"/>
+                                <include reference="oWM-jN-x5J"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="sparkLineView1" destination="xJd-ZT-Mgq" id="Fth-sg-Hw0"/>
+                        <outlet property="sparkLineView2" destination="am7-2a-Dzn" id="fEZ-wI-Nah"/>
+                        <outlet property="sparkLineView3" destination="54K-V3-z79" id="Y1a-Zg-zIR"/>
+                        <outlet property="sparkLineView4" destination="E5v-Wd-Fbe" id="zeo-h6-oev"/>
+                        <outlet property="sparkLineView5" destination="KPM-r6-16j" id="gsD-uu-LRZ"/>
+                        <outlet property="sparkLineView6" destination="yaH-bW-zrk" id="zEl-Qm-HYC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
