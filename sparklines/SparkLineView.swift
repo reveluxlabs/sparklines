@@ -35,18 +35,7 @@ var GRAPH_PEN_WIDTH                   = DEFAULT_GRAPH_PEN_WIDTH    // pen width 
 // no user-tweakable bits beyond this point...
 
 
-// returns the Y plot value, given the limitations we have
-@inline(__always)
-func yPlotValue(maxHeight: Float, yInc: Float, val: Float, offset: Float, penWidth: Float) -> CGFloat {
-  let y = yInc * (val - offset)
-  let pen = penWidth / 2.0
-  let height = y + Float(GRAPH_Y_BORDER) + pen
-  let ypv = maxHeight - height
-  
-  return CGFloat(ypv)
-}
-
-public class SparkLineView: UIView {
+public class SparkLineView: UIView, SparkLineViewProtocol {
   
   // MARK: Types
   
@@ -390,22 +379,22 @@ public class SparkLineView: UIView {
     
     // X scale is set to show all values
     
-    let xinc = plotSpace.sparkWidth / CGFloat(dataValues.count - 1)
+    let xinc = xInc( dataValues, penWidth: penWidth, plotSpace: plotSpace)
     
     // Y scale is auto-zoomed to specified limits (allowing for pen width)
     
-    let yInc = (Float(plotSpace.sparkHeight) - Float(penWidth)) / (plotSpace.graphMax - plotSpace.graphMin)
+    let yinc = yInc(penWidth, plotSpace: plotSpace)
     
     selectPenWidth(penWidth, context: context)
     
     selectPenColor(penColor)
    
-    drawValues( dataValues, plotSpace: &plotSpace, xInc: xinc, yInc: yInc, context: context)
+    drawValues( dataValues, plotSpace: &plotSpace, xInc: xinc, yInc: yinc, context: context)
     
     // draw the value marker circle, if requested
     
     if showCurrentValue {
-      drawValueMarker( dataValues, plotSpace: &plotSpace, xInc: xinc, yInc: yInc, context: context )
+      drawValueMarker( dataValues, plotSpace: &plotSpace, xInc: xinc, yInc: yinc, context: context )
     }
   }
   
@@ -478,10 +467,22 @@ public class SparkLineView: UIView {
     }
   }
   
+  func xInc(values: [NSNumber], penWidth: CGFloat, plotSpace: PlotSpace) -> CGFloat {
+    // X scale is set to show all values
+    
+    return plotSpace.sparkWidth / CGFloat(values.count - 1)
+  }
+  
+  func yInc(penWidth: CGFloat, plotSpace: PlotSpace) -> Float {
+    // Y scale is auto-zoomed to specified limits (allowing for pen width)
+    
+    return (Float(plotSpace.sparkHeight) - Float(penWidth)) / (plotSpace.graphMax - plotSpace.graphMin)
+  }
+  
   func selectPenWidth(penWidth: CGFloat, context: CGContextRef) {
     // ensure the pen is a suitable width for the device we are on (i.e. we use *pixels* and not points)
     if penWidth != 0.0 {
-      CGContextSetLineWidth(context, self.penWidth / self.contentScaleFactor)
+      CGContextSetLineWidth(context, penWidth / self.contentScaleFactor)
     } else {
       CGContextSetLineWidth(context, GRAPH_PEN_WIDTH / self.contentScaleFactor)
     }
@@ -503,24 +504,7 @@ public class SparkLineView: UIView {
     for (index, value) in values.enumerate() {
       
       let xpos: CGFloat = xInc * CGFloat(index) + GRAPH_X_BORDER
-      var ypos: CGFloat = 0.0
-      
-      // warning and zero value for any non-NSNumber objects
-      if value.isKindOfClass(NSNumber) {
-        ypos = yPlotValue(Float(plotSpace.fullHeight),
-                          yInc: yInc,
-                          val: value.floatValue,
-                          offset: plotSpace.graphMin,
-                          penWidth: Float(penWidth))
-        
-      } else {
-        NSLog("non-NSNumber object (%@) found in data (index %lu), zero value used", value, index)
-        ypos = yPlotValue(Float(plotSpace.fullHeight),
-                          yInc: yInc,
-                          val: 0.0,
-                          offset: plotSpace.graphMin,
-                          penWidth: Float(penWidth))
-      }
+      let ypos: CGFloat = validateYPos( value, yInc: yInc, index: index, plotSpace: plotSpace )
       
       if (index > 0) {
         CGContextAddLineToPoint(context, xpos, ypos)
@@ -554,4 +538,38 @@ public class SparkLineView: UIView {
     CGContextFillEllipseInRect(context, markRect)
   }
   
+  func validateYPos(value: AnyObject, yInc: Float, index: Int, plotSpace: PlotSpace) -> CGFloat {
+    // Hook method
+    var ypos: CGFloat = 0.0
+    
+    // warning and zero value for any non-NSNumber objects
+    if value.isKindOfClass(NSNumber) {
+      ypos = yPlotValue(Float(plotSpace.fullHeight),
+                        yInc: Float(yInc),
+                        val: value.floatValue,
+                        offset: plotSpace.graphMin,
+                        penWidth: Float(penWidth))
+      
+    } else {
+//      NSLog("non-NSNumber object (%@) found in data (index %lu), zero value used", value, index)
+      ypos = yPlotValue(Float(plotSpace.fullHeight),
+                        yInc: Float(yInc),
+                        val: 0.0,
+                        offset: plotSpace.graphMin,
+                        penWidth: Float(penWidth))
+    }
+    return ypos
+  }
+  
+  // returns the Y plot value, given the limitations we have
+  @inline(__always)
+  func yPlotValue(maxHeight: Float, yInc: Float, val: Float, offset: Float, penWidth: Float) -> CGFloat {
+    let y = yInc * (val - offset)
+    let pen = penWidth / 2.0
+    let height = y + Float(GRAPH_Y_BORDER) + pen
+    let ypv = maxHeight - height
+    
+    return CGFloat(ypv)
+  }
+
 }

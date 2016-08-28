@@ -17,11 +17,14 @@ class ViewController: UIViewController {
   @IBOutlet weak var sparkLineView5: SparkLineView!
   @IBOutlet weak var sparkLineView6: SparkLineView!
   
+  @IBOutlet weak var sparkLineView7: WhiskerSparkLineView!
+  
   var allSparklines: [SparkLineView] = []
   
   var glucoseData: [NSNumber]     = []
   var temperatureData: [NSNumber] = []
   var heartRateData: [NSNumber]   = []
+  var baseballData: [NSNumber]   = []
 
   let glucoseMinLimit: Float = 5.0
   let glucoseMaxLimit: Float = 6.8
@@ -60,6 +63,7 @@ class ViewController: UIViewController {
     glucoseData     = loadFile("glucose_data")
     temperatureData = loadFile("temperature_data")
     heartRateData   = loadFile("heartRate_data")
+    baseballData    = loadFile("baseball_data")
     
     assert(glucoseData.count > 0)
   }
@@ -136,6 +140,11 @@ class ViewController: UIViewController {
     
     allSparklines = [sparkLineView1, sparkLineView2, sparkLineView3,
                      sparkLineView4, sparkLineView5, sparkLineView6]
+    
+    sparkLineView7.dataValues = baseballData
+    sparkLineView7.showCurrentValue = false
+    sparkLineView7.labelText = ""
+    sparkLineView7.penWidth = 6.0
   }
   
   @IBAction func toggleCurrentValues(sender: AnyObject) {

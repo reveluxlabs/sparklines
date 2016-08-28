@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D45D73291D6F832600C4531B /* LineSparkLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D73281D6F832600C4531B /* LineSparkLineView.swift */; };
+		D45D732B1D6F837800C4531B /* WhiskerSparkLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D732A1D6F837800C4531B /* WhiskerSparkLineView.swift */; };
+		D45D732D1D71B92200C4531B /* baseball_data.txt in Resources */ = {isa = PBXBuildFile; fileRef = D45D732C1D71B92200C4531B /* baseball_data.txt */; };
+		D45D732F1D72664700C4531B /* SparkLineViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D732E1D72664700C4531B /* SparkLineViewProtocol.swift */; };
 		D497E9AD1D6D1C37004CD872 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D497E9AC1D6D1C37004CD872 /* AppDelegate.swift */; };
 		D497E9AF1D6D1C37004CD872 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D497E9AE1D6D1C37004CD872 /* ViewController.swift */; };
 		D497E9B21D6D1C37004CD872 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D497E9B01D6D1C37004CD872 /* Main.storyboard */; };
@@ -19,6 +23,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D45D73281D6F832600C4531B /* LineSparkLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineSparkLineView.swift; sourceTree = "<group>"; };
+		D45D732A1D6F837800C4531B /* WhiskerSparkLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhiskerSparkLineView.swift; sourceTree = "<group>"; };
+		D45D732C1D71B92200C4531B /* baseball_data.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = baseball_data.txt; sourceTree = "<group>"; };
+		D45D732E1D72664700C4531B /* SparkLineViewProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SparkLineViewProtocol.swift; sourceTree = "<group>"; };
 		D497E9A91D6D1C37004CD872 /* sparklines.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sparklines.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D497E9AC1D6D1C37004CD872 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D497E9AE1D6D1C37004CD872 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -64,10 +72,14 @@
 			children = (
 				D497E9AC1D6D1C37004CD872 /* AppDelegate.swift */,
 				D497E9AE1D6D1C37004CD872 /* ViewController.swift */,
+				D45D732E1D72664700C4531B /* SparkLineViewProtocol.swift */,
 				D497E9BE1D6D1F57004CD872 /* SparkLineView.swift */,
+				D45D73281D6F832600C4531B /* LineSparkLineView.swift */,
+				D45D732A1D6F837800C4531B /* WhiskerSparkLineView.swift */,
 				D497E9B01D6D1C37004CD872 /* Main.storyboard */,
 				D497E9B31D6D1C37004CD872 /* Assets.xcassets */,
 				D497E9B51D6D1C37004CD872 /* LaunchScreen.storyboard */,
+				D45D732C1D71B92200C4531B /* baseball_data.txt */,
 				D497E9C01D6D2956004CD872 /* glucose_data.txt */,
 				D497E9C11D6D2956004CD872 /* heartRate_data.txt */,
 				D497E9C21D6D2956004CD872 /* temperature_data.txt */,
@@ -138,6 +150,7 @@
 				D497E9C41D6D2956004CD872 /* heartRate_data.txt in Resources */,
 				D497E9C31D6D2956004CD872 /* glucose_data.txt in Resources */,
 				D497E9C51D6D2956004CD872 /* temperature_data.txt in Resources */,
+				D45D732D1D71B92200C4531B /* baseball_data.txt in Resources */,
 				D497E9B41D6D1C37004CD872 /* Assets.xcassets in Resources */,
 				D497E9B21D6D1C37004CD872 /* Main.storyboard in Resources */,
 			);
@@ -152,6 +165,9 @@
 			files = (
 				D497E9AF1D6D1C37004CD872 /* ViewController.swift in Sources */,
 				D497E9BF1D6D1F57004CD872 /* SparkLineView.swift in Sources */,
+				D45D73291D6F832600C4531B /* LineSparkLineView.swift in Sources */,
+				D45D732B1D6F837800C4531B /* WhiskerSparkLineView.swift in Sources */,
+				D45D732F1D72664700C4531B /* SparkLineViewProtocol.swift in Sources */,
 				D497E9AD1D6D1C37004CD872 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -302,6 +318,7 @@
 				D497E9BD1D6D1C37004CD872 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
