@@ -35,47 +35,7 @@ var GRAPH_PEN_WIDTH                   = DEFAULT_GRAPH_PEN_WIDTH    // pen width 
 // no user-tweakable bits beyond this point...
 
 
-public class SparkLineView: UIView, SparkLineViewProtocol {
-  
-  // MARK: Types
-  
-  public struct PlotSpace {
-    // calculate the view fraction that will be the graph
-    let graphSize: CGFloat
-    let graphFrac: CGFloat
-    
-    // calculate the graph area and X & Y widths and scales
-    var dataMin: Float
-    var dataMax: Float
-    
-    let fullWidth:   CGFloat
-    let fullHeight:  CGFloat
-    let sparkWidth:  CGFloat
-    let sparkHeight: CGFloat
-    
-    // defaults: upper and lower graph bounds are data maximum and minimum, respectively
-    var graphMax: Float
-    var graphMin: Float
-    
-    init( bounds: CGRect, textSize: CGSize, dataMinimum: Float, dataMaximum: Float) {
-      // calculate the view fraction that will be the graph
-      graphSize = (CGRectGetWidth(bounds) * 0.95) - textSize.width
-      graphFrac = graphSize / CGRectGetWidth(bounds)
-      
-      // calculate the graph area and X & Y widths and scales
-      dataMin = dataMinimum
-      dataMax = dataMaximum
-      
-      fullWidth = CGRectGetWidth(bounds)
-      fullHeight = CGRectGetHeight(bounds)
-      sparkWidth  = (fullWidth  - (2 * GRAPH_X_BORDER)) * graphFrac
-      sparkHeight = fullHeight - (2 * GRAPH_Y_BORDER)
-      
-      // defaults: upper and lower graph bounds are data maximum and minimum, respectively
-      graphMax = dataMax
-      graphMin = dataMin
-    }
-  }
+public class SparkLineView: UIView, SparkLinePlotter {
   
   // MARK: Stored Properties
   
@@ -189,90 +149,90 @@ public class SparkLineView: UIView, SparkLineViewProtocol {
   
   // MARK: Convenience
   
-  func initialize(data: [NSNumber], label: String) {
-    dataValues = data
-    labelText = label
-    computeRanges(dataValues!)
-    configureView()
-    self.setNeedsDisplay()
-  }
+//  func initialize(data: [NSNumber], label: String) {
+//    dataValues = data
+//    labelText = label
+//    computeRanges(dataValues!)
+//    configureView()
+//    self.setNeedsDisplay()
+//  }
   
-  func computeRanges(dataValues: [NSNumber]) {
-    let computedValues = computeMaxMin( dataValues )
-    dataMaximum = computedValues.max
-    dataMinimum = computedValues.min
-    rangeOverlayUpperLimit = dataMaximum
-    rangeOverlayLowerLimit = dataMinimum
-  }
+//  func computeRanges(dataValues: [NSNumber]) {
+//    let computedValues = computeMaxMin( dataValues )
+//    dataMaximum = computedValues.max
+//    dataMinimum = computedValues.min
+//    rangeOverlayUpperLimit = dataMaximum
+//    rangeOverlayLowerLimit = dataMinimum
+//  }
   
-  // configures the defaults (used in init or when waking from a nib)
-  func configureView() {
-    
-    // ensure we redraw correctly when resized
-    self.contentMode = UIViewContentMode.Redraw
-    
-    // and we have a nice rounded shape...
-    self.layer.masksToBounds = true
-    self.layer.cornerRadius = 5.0
-  }
-  
-  // Calculates the min and max values (for auto-scaling)
-  func computeMaxMin(values: [NSNumber]) -> (max: NSNumber?, min: NSNumber?) {
-    var min: NSNumber?
-    var max: NSNumber?
- 
-    let numData = values.count
-    
-    /// special cases first
-    if numData == 0 {
-      min = nil
-      max = nil
-    
-    } else if numData == 1 {
-      min = values.last
-      max = values.last
-    
-    } else {
-      min = values.first!
-      max = min
-      
-      // extract the min and max values (ignore any non-NSNumber objects)
-      for (_, value) in values.enumerate() {
-        if value.isKindOfClass(NSNumber) {
-          let val = value.floatValue
-          if val < min!.floatValue {
-              min = val
-          } else if val > max!.floatValue {
-              max = val
-          }
-        }
-      }               // for
-    }                 // end if
-    
-    return (max, min)
-  }
-  
-  func frameForText( text: String, sizeWithFont font: UIFont, constrainedToSize maxSize: CGSize, lineBreakMode: NSLineBreakMode ) -> CGSize {
-    var paragraphStyle: NSMutableParagraphStyle
-    var attributes:     [String: AnyObject]
-    var textRect:       CGRect
-    
-    paragraphStyle = NSMutableParagraphStyle()
-    paragraphStyle.setParagraphStyle(NSParagraphStyle.defaultParagraphStyle())
-    paragraphStyle.lineBreakMode = lineBreakMode;
-    
-    attributes = [NSFontAttributeName           : font,
-                  NSParagraphStyleAttributeName : paragraphStyle
-    ]
-    
-    
-    textRect = text.boundingRectWithSize(maxSize,
-                                         options:NSStringDrawingOptions.UsesLineFragmentOrigin,
-                                         attributes:attributes,
-                                         context:nil)
-    
-    return textRect.size;
-  }
+//  // configures the defaults (used in init or when waking from a nib)
+//  func configureView() {
+//    
+//    // ensure we redraw correctly when resized
+//    self.contentMode = UIViewContentMode.Redraw
+//    
+//    // and we have a nice rounded shape...
+//    self.layer.masksToBounds = true
+//    self.layer.cornerRadius = 5.0
+//  }
+//  
+//  // Calculates the min and max values (for auto-scaling)
+//  func computeMaxMin(values: [NSNumber]) -> (max: NSNumber?, min: NSNumber?) {
+//    var min: NSNumber?
+//    var max: NSNumber?
+// 
+//    let numData = values.count
+//    
+//    /// special cases first
+//    if numData == 0 {
+//      min = nil
+//      max = nil
+//    
+//    } else if numData == 1 {
+//      min = values.last
+//      max = values.last
+//    
+//    } else {
+//      min = values.first!
+//      max = min
+//      
+//      // extract the min and max values (ignore any non-NSNumber objects)
+//      for (_, value) in values.enumerate() {
+//        if value.isKindOfClass(NSNumber) {
+//          let val = value.floatValue
+//          if val < min!.floatValue {
+//              min = val
+//          } else if val > max!.floatValue {
+//              max = val
+//          }
+//        }
+//      }               // for
+//    }                 // end if
+//    
+//    return (max, min)
+//  }
+//  
+//  func frameForText( text: String, sizeWithFont font: UIFont, constrainedToSize maxSize: CGSize, lineBreakMode: NSLineBreakMode ) -> CGSize {
+//    var paragraphStyle: NSMutableParagraphStyle
+//    var attributes:     [String: AnyObject]
+//    var textRect:       CGRect
+//    
+//    paragraphStyle = NSMutableParagraphStyle()
+//    paragraphStyle.setParagraphStyle(NSParagraphStyle.defaultParagraphStyle())
+//    paragraphStyle.lineBreakMode = lineBreakMode;
+//    
+//    attributes = [NSFontAttributeName           : font,
+//                  NSParagraphStyleAttributeName : paragraphStyle
+//    ]
+//    
+//    
+//    textRect = text.boundingRectWithSize(maxSize,
+//                                         options:NSStringDrawingOptions.UsesLineFragmentOrigin,
+//                                         attributes:attributes,
+//                                         context:nil)
+//    
+//    return textRect.size;
+//  }
 
   // MARK: Drawing Methods
   
@@ -289,287 +249,255 @@ public class SparkLineView: UIView, SparkLineViewProtocol {
                   context:     context!)
   }
   
-  func drawSparkline( labelText: String, bounds: CGRect, dataMinimum: Float, dataMaximum: Float, dataValues: [NSNumber], context: CGContextRef ) {
-    let textSize = drawLabelIfNeeded( labelText, dataValues: dataValues, context: context )
-
-    var plotSpace = PlotSpace(bounds: bounds,
-                              textSize: textSize,
-                              dataMinimum: dataMinimum,
-                              dataMaximum: dataMaximum)
-
-    drawGraphInContext( &plotSpace, dataValues: dataValues, context: context)
-  }
+//  func drawSparkline( labelText: String, bounds: CGRect, dataMinimum: Float, dataMaximum: Float, dataValues: [NSNumber], context: CGContextRef ) {
+//    let textSize = drawLabelIfNeeded( labelText, dataValues: dataValues, context: context )
+//
+//    var plotSpace = PlotSpace(bounds: bounds,
+//                              textSize: textSize,
+//                              dataMinimum: dataMinimum,
+//                              dataMaximum: dataMaximum)
+//
+//    drawGraphInContext( &plotSpace, dataValues: dataValues, context: context)
+//  }
   
-  func drawLabelIfNeeded( labelText: String?, dataValues: [NSNumber], context: CGContextRef) -> CGSize {
+//  func drawLabelIfNeeded( labelText: String?, dataValues: [NSNumber], context: CGContextRef) -> CGSize {
+//  
+//    // ---------------------------------------------------
+//    // Text label Drawing
+//    // ---------------------------------------------------
+//    
+//    let maxTextWidth = CGRectGetWidth(self.bounds) * MAX_TEXT_FRAC
+//    print("max text width \(maxTextWidth) =  \(NSStringFromCGSize(self.bounds.size)) * \(MAX_TEXT_FRAC)")
+//    
+//    // see how much text we have to show
+//  
+//    var graphText = labelText == nil ? "not set" : String(UTF8String: labelText!)!
+//    
+//    let formattedValue = " ".stringByAppendingFormat(currentValueFormat, dataValues.last!.floatValue)
+//
+//    if showCurrentValue {
+//      graphText = graphText + formattedValue
+//    }
+//    print("graph text \(graphText)")
+//  
+//    // calculate the width the text would take with the specified font
+//    var font = UIFont(name:LABEL_FONT, size:DEFAULT_FONT_SIZE)
+//
+//    let textSize = frameForText(graphText,
+//                                sizeWithFont:font!,
+//                                constrainedToSize:CGSizeMake(maxTextWidth, DEFAULT_FONT_SIZE+4),
+//                                lineBreakMode:NSLineBreakMode.ByClipping)
+//
+//    print("text size with default font \( NSStringFromCGSize(textSize))")
+//    
+//    let actualFontSize: CGFloat =
+//      textSize.width <= (MAX_TEXT_FRAC * self.bounds.size.width) ? DEFAULT_FONT_SIZE : MIN_FONT_SIZE
+//  
+//    // first we draw the label
+//    let textStartX = (CGRectGetWidth(self.bounds) * 0.975) - textSize.width
+//    let textStartY = CGRectGetMidY(self.bounds) - (textSize.height / 2.0)
+//    var textStart  = CGPointMake(textStartX, textStartY)
+//    
+//    print("actual font size \(actualFontSize), textStartX \(textStartX), textStartY \(textStartY)")
+//    
+//    // using the specified font
+//    font = UIFont(name:LABEL_FONT, size:actualFontSize)
+//    
+//    let attrs = [ NSFontAttributeName : font! ]
+//    
+//    let labelDrawnSize = frameForText(labelText!,
+//                            sizeWithFont:font!,
+//                            constrainedToSize:CGSizeMake(maxTextWidth, actualFontSize+4),
+//                            lineBreakMode:NSLineBreakMode.ByClipping)
+//
+//    print("label drawn size \(NSStringFromCGSize(labelDrawnSize))")
+//    print("+----------------------------------")
+//
+//    labelText!.drawAtPoint(textStart, withAttributes:attrs)
+// 
+//    // conditionally draw the current value in the chosen colour
+//    if showCurrentValue {
+//      CGContextSaveGState(context)
+//      currentValueColor.setFill()
+//      textStart = CGPointMake(textStartX + labelDrawnSize.width, textStartY)
+//      
+//      formattedValue.drawAtPoint(textStart, withAttributes:attrs)
+//        
+//      CGContextRestoreGState(context)
+//    }
+//    
+//    return textSize
+//  }
   
-    // ---------------------------------------------------
-    // Text label Drawing
-    // ---------------------------------------------------
-    
-    let maxTextWidth = CGRectGetWidth(self.bounds) * MAX_TEXT_FRAC
-    print("max text width \(maxTextWidth) =  \(NSStringFromCGSize(self.bounds.size)) * \(MAX_TEXT_FRAC)")
-    
-    // see how much text we have to show
+//  func drawGraphInContext(inout plotSpace: PlotSpace, dataValues: [NSNumber], context: CGContextRef ) {
+//
+//    showRangeOverlay = disableOverlayIfLimitsInconsistent( showRangeOverlay, upperLimit: rangeOverlayUpperLimit , lowerLimit: rangeOverlayLowerLimit )
+//    
+//    configureOverlay( &plotSpace, upperLimit: rangeOverlayUpperLimit , lowerLimit: rangeOverlayLowerLimit )
+//    
+//    drawOverlayIfEnabled( &plotSpace, context: context )
+//    
+//    // X scale is set to show all values
+//    
+//    let xinc = xInc( dataValues, penWidth: penWidth, plotSpace: plotSpace)
+//    
+//    // Y scale is auto-zoomed to specified limits (allowing for pen width)
+//    
+//    let yinc = yInc(penWidth, plotSpace: plotSpace)
+//    
+//    selectPenWidth(penWidth, context: context)
+//    
+//    selectPenColor(penColor)
+//   
+//    drawValues( dataValues, plotSpace: &plotSpace, xInc: xinc, yInc: yinc, context: context)
+//    
+//    // draw the value marker circle, if requested
+//    
+//    if showCurrentValue {
+//      drawValueMarker( dataValues, plotSpace: &plotSpace, xInc: xinc, yInc: yinc, context: context )
+//    }
+//  }
   
-    var graphText = labelText == nil ? "not set" : String(UTF8String: labelText!)!
-    
-    let formattedValue = " ".stringByAppendingFormat(currentValueFormat, dataValues.last!.floatValue)
-
-    if showCurrentValue {
-      graphText = graphText + formattedValue
-    }
-    print("graph text \(graphText)")
+//  func disableOverlayIfLimitsInconsistent( showOverlay: Bool, upperLimit: NSNumber?, lowerLimit: NSNumber? ) -> Bool {
+//    var result = showOverlay
+//    // disable overlay if the upper limit is at or below the lower limit
+//    if showOverlay &&
+//      upperLimit != nil &&
+//      lowerLimit != nil &&
+//      upperLimit!.floatValue <= lowerLimit!.floatValue {
+//      result = false
+//    }
+//    
+//    return result
+//  }
+//  
+//  func configureOverlay( inout plotSpace: PlotSpace, upperLimit: NSNumber?, lowerLimit: NSNumber? ) {
+//    // upper scale limit will be the maximum of (defined) overlay and data maxima
+//    if (upperLimit != nil) {
+//      let rangeUpper = upperLimit!.floatValue
+//      if (rangeUpper > plotSpace.graphMax) {
+//        plotSpace.graphMax = rangeUpper
+//      }
+//    }
+//    
+//    // lower scale limit will be the minimum of (defined) overlay and data minima
+//    if (lowerLimit != nil) {
+//      let rangeLower = lowerLimit!.floatValue
+//      if (rangeLower < plotSpace.graphMin) {
+//        plotSpace.graphMin = rangeLower
+//      }
+//    }
+//    
+//    // special case if min = max, push the limits 10% further
+//    if (plotSpace.graphMin == plotSpace.graphMax) {
+//      plotSpace.graphMin *= 1.0 - CONSTANT_GRAPH_BUFFER
+//      plotSpace.graphMax *= 1.0 + CONSTANT_GRAPH_BUFFER
+//    }
+//  }
   
-    // calculate the width the text would take with the specified font
-    var font = UIFont(name:LABEL_FONT, size:DEFAULT_FONT_SIZE)
-
-    let textSize = frameForText(graphText,
-                                sizeWithFont:font!,
-                                constrainedToSize:CGSizeMake(maxTextWidth, DEFAULT_FONT_SIZE+4),
-                                lineBreakMode:NSLineBreakMode.ByClipping)
-
-    print("text size with default font \( NSStringFromCGSize(textSize))")
-    
-    let actualFontSize: CGFloat =
-      textSize.width <= (MAX_TEXT_FRAC * self.bounds.size.width) ? DEFAULT_FONT_SIZE : MIN_FONT_SIZE
+//  func xInc(values: [NSNumber], penWidth: CGFloat, plotSpace: PlotSpace) -> CGFloat {
+//    // X scale is set to show all values
+//    
+//    return plotSpace.sparkWidth / CGFloat(values.count - 1)
+//  }
+//  
+//  func yInc(penWidth: CGFloat, plotSpace: PlotSpace) -> Float {
+//    // Y scale is auto-zoomed to specified limits (allowing for pen width)
+//    
+//    return (Float(plotSpace.sparkHeight) - Float(penWidth)) / (plotSpace.graphMax - plotSpace.graphMin)
+//  }
+//  
+//  func selectPenWidth(penWidth: CGFloat, context: CGContextRef) {
+//    // ensure the pen is a suitable width for the device we are on (i.e. we use *pixels* and not points)
+//    if penWidth != 0.0 {
+//      CGContextSetLineWidth(context, penWidth / self.contentScaleFactor)
+//    } else {
+//      CGContextSetLineWidth(context, GRAPH_PEN_WIDTH / self.contentScaleFactor)
+//    }
+//  }
+//  
+//  func selectPenColor(penColor: UIColor) {
+//    // Customisation to allow pencolour changes
+//    if penColor != PEN_COL {
+//      penColor.setStroke()
+//    } else {
+//      PEN_COL.setStroke()
+//    }
+//  }
   
-    // first we draw the label
-    let textStartX = (CGRectGetWidth(self.bounds) * 0.975) - textSize.width
-    let textStartY = CGRectGetMidY(self.bounds) - (textSize.height / 2.0)
-    var textStart  = CGPointMake(textStartX, textStartY)
-    
-    print("actual font size \(actualFontSize), textStartX \(textStartX), textStartY \(textStartY)")
-    
-    // using the specified font
-    font = UIFont(name:LABEL_FONT, size:actualFontSize)
-    
-    let attrs = [ NSFontAttributeName : font! ]
-    
-    let labelDrawnSize = frameForText(labelText!,
-                            sizeWithFont:font!,
-                            constrainedToSize:CGSizeMake(maxTextWidth, actualFontSize+4),
-                            lineBreakMode:NSLineBreakMode.ByClipping)
-
-    print("label drawn size \(NSStringFromCGSize(labelDrawnSize))")
-    print("+----------------------------------")
-
-    labelText!.drawAtPoint(textStart, withAttributes:attrs)
- 
-    // conditionally draw the current value in the chosen colour
-    if showCurrentValue {
-      CGContextSaveGState(context)
-      currentValueColor.setFill()
-      textStart = CGPointMake(textStartX + labelDrawnSize.width, textStartY)
-      
-      formattedValue.drawAtPoint(textStart, withAttributes:attrs)
-        
-      CGContextRestoreGState(context)
-    }
-    
-    return textSize
-  }
+//  func drawValues( values: [NSNumber], inout plotSpace: PlotSpace, xInc: CGFloat, yInc: Float, context: CGContextRef ) {
+//    CGContextBeginPath(context)
+//    
+//    // iterate over the data items, plotting the graph path
+//    for (index, value) in values.enumerate() {
+//      
+//      let xpos: CGFloat = xInc * CGFloat(index) + GRAPH_X_BORDER
+//      let ypos: CGFloat = validateYPos( value, yInc: yInc, index: index, plotSpace: plotSpace )
+//      
+//      if (index > 0) {
+//        CGContextAddLineToPoint(context, xpos, ypos)
+//      } else {
+//        CGContextMoveToPoint(context, xpos, ypos)
+//      }
+//    }
+//    
+//    // draw the graph line (path)
+//    CGContextStrokePath(context)
+//  }
   
-  func drawGraphInContext(inout plotSpace: PlotSpace, dataValues: [NSNumber], context: CGContextRef ) {
-
-    showRangeOverlay = disableOverlayIfLimitsInconsistent( showRangeOverlay, upperLimit: rangeOverlayUpperLimit , lowerLimit: rangeOverlayLowerLimit )
-    
-    configureOverlay( &plotSpace, upperLimit: rangeOverlayUpperLimit , lowerLimit: rangeOverlayLowerLimit )
-    
-    drawOverlayIfEnabled( &plotSpace, context: context )
-    
-    // X scale is set to show all values
-    
-    let xinc = xInc( dataValues, penWidth: penWidth, plotSpace: plotSpace)
-    
-    // Y scale is auto-zoomed to specified limits (allowing for pen width)
-    
-    let yinc = yInc(penWidth, plotSpace: plotSpace)
-    
-    selectPenWidth(penWidth, context: context)
-    
-    selectPenColor(penColor)
-   
-    drawValues( dataValues, plotSpace: &plotSpace, xInc: xinc, yInc: yinc, context: context)
-    
-    // draw the value marker circle, if requested
-    
-    if showCurrentValue {
-      drawValueMarker( dataValues, plotSpace: &plotSpace, xInc: xinc, yInc: yinc, context: context )
-    }
-  }
-  
-  func disableOverlayIfLimitsInconsistent( showOverlay: Bool, upperLimit: NSNumber?, lowerLimit: NSNumber? ) -> Bool {
-    var result = showOverlay
-    // disable overlay if the upper limit is at or below the lower limit
-    if showOverlay &&
-      upperLimit != nil &&
-      lowerLimit != nil &&
-      upperLimit!.floatValue <= lowerLimit!.floatValue {
-      result = false
-    }
-    
-    return result
-  }
-  
-  func configureOverlay( inout plotSpace: PlotSpace, upperLimit: NSNumber?, lowerLimit: NSNumber? ) {
-    // upper scale limit will be the maximum of (defined) overlay and data maxima
-    if (upperLimit != nil) {
-      let rangeUpper = upperLimit!.floatValue
-      if (rangeUpper > plotSpace.graphMax) {
-        plotSpace.graphMax = rangeUpper
-      }
-    }
-    
-    // lower scale limit will be the minimum of (defined) overlay and data minima
-    if (lowerLimit != nil) {
-      let rangeLower = lowerLimit!.floatValue
-      if (rangeLower < plotSpace.graphMin) {
-        plotSpace.graphMin = rangeLower
-      }
-    }
-    
-    // special case if min = max, push the limits 10% further
-    if (plotSpace.graphMin == plotSpace.graphMax) {
-      plotSpace.graphMin *= 1.0 - CONSTANT_GRAPH_BUFFER
-      plotSpace.graphMax *= 1.0 + CONSTANT_GRAPH_BUFFER
-    }
-  }
-  
-  func drawOverlayIfEnabled( inout plotSpace: PlotSpace, context: CGContextRef) {
-    // default: undefined overlay limit means "no limit", so overlay will extend to view border
-    var overlayOrigin: CGFloat = 0.0
-    var overlayHeight: CGFloat = plotSpace.fullHeight
-    
-    // show the graph overlay if (still) enabled
-    if showRangeOverlay {
-      
-      // set the graph location of the overlay upper and lower limits, if defined
-      if rangeOverlayUpperLimit != nil {
-        overlayOrigin = yPlotValue(Float(plotSpace.fullHeight),
-                                   yInc: Float(plotSpace.sparkHeight) / (plotSpace.graphMax - plotSpace.graphMin),
-                                   val: rangeOverlayUpperLimit!.floatValue,
-                                   offset:  plotSpace.graphMin,
-                                   penWidth:  Float(penWidth))
-      }
-      if rangeOverlayLowerLimit != nil {
-        let lowerY = yPlotValue(Float(plotSpace.fullHeight),
-                                yInc: Float(plotSpace.sparkHeight) / (plotSpace.graphMax - plotSpace.graphMin),
-                                val: rangeOverlayLowerLimit!.floatValue,
-                                offset:  plotSpace.graphMin,
-                                penWidth:  Float(penWidth))
-        overlayHeight = CGFloat(lowerY) - overlayOrigin
-      }
-      
-      // draw the overlay
-      self.rangeOverlayColor.setFill()
-      let overlayRect = CGRectMake(GRAPH_X_BORDER, CGFloat(overlayOrigin), plotSpace.sparkWidth, overlayHeight)
-      CGContextFillRect(context, overlayRect)
-    }
-  }
-  
-  func xInc(values: [NSNumber], penWidth: CGFloat, plotSpace: PlotSpace) -> CGFloat {
-    // X scale is set to show all values
-    
-    return plotSpace.sparkWidth / CGFloat(values.count - 1)
-  }
-  
-  func yInc(penWidth: CGFloat, plotSpace: PlotSpace) -> Float {
-    // Y scale is auto-zoomed to specified limits (allowing for pen width)
-    
-    return (Float(plotSpace.sparkHeight) - Float(penWidth)) / (plotSpace.graphMax - plotSpace.graphMin)
-  }
-  
-  func selectPenWidth(penWidth: CGFloat, context: CGContextRef) {
-    // ensure the pen is a suitable width for the device we are on (i.e. we use *pixels* and not points)
-    if penWidth != 0.0 {
-      CGContextSetLineWidth(context, penWidth / self.contentScaleFactor)
-    } else {
-      CGContextSetLineWidth(context, GRAPH_PEN_WIDTH / self.contentScaleFactor)
-    }
-  }
-  
-  func selectPenColor(penColor: UIColor) {
-    // Customisation to allow pencolour changes
-    if penColor != PEN_COL {
-      penColor.setStroke()
-    } else {
-      PEN_COL.setStroke()
-    }
-  }
-  
-  func drawValues( values: [NSNumber], inout plotSpace: PlotSpace, xInc: CGFloat, yInc: Float, context: CGContextRef ) {
-    CGContextBeginPath(context)
-    
-    // iterate over the data items, plotting the graph path
-    for (index, value) in values.enumerate() {
-      
-      let xpos: CGFloat = xInc * CGFloat(index) + GRAPH_X_BORDER
-      let ypos: CGFloat = validateYPos( value, yInc: yInc, index: index, plotSpace: plotSpace )
-      
-      if (index > 0) {
-        CGContextAddLineToPoint(context, xpos, ypos)
-      } else {
-        CGContextMoveToPoint(context, xpos, ypos)
-      }
-    }
-    
-    // draw the graph line (path)
-    CGContextStrokePath(context)
-  }
-  
-  func drawValueMarker(values: [NSNumber], inout plotSpace: PlotSpace, xInc: CGFloat, yInc: Float, context: CGContextRef) {
-    let markX = xInc * CGFloat(values.count-1) + GRAPH_X_BORDER
-    let markY = yPlotValue(Float(plotSpace.fullHeight),
-                           yInc: yInc,
-                           val: values.last!.floatValue,
-                           offset: plotSpace.graphMin,
-                           penWidth: Float(penWidth))
-    
-    // calculate the accent marker size, with limits
-    var markSize = plotSpace.fullHeight * DEF_MARKER_SIZE_FRAC
-    if (markSize < MARKER_MIN_SIZE) {
-      markSize = MARKER_MIN_SIZE
-    } else if markSize > MARKER_MAX_SIZE {
-      markSize = MARKER_MAX_SIZE
-    }
-    
-    let markRect = CGRectMake(markX - (markSize/2.0), markY - (markSize/2.0), markSize, markSize)
-    currentValueColor.setFill()
-    CGContextFillEllipseInRect(context, markRect)
-  }
-  
-  func validateYPos(value: AnyObject, yInc: Float, index: Int, plotSpace: PlotSpace) -> CGFloat {
-    // Hook method
-    var ypos: CGFloat = 0.0
-    
-    // warning and zero value for any non-NSNumber objects
-    if value.isKindOfClass(NSNumber) {
-      ypos = yPlotValue(Float(plotSpace.fullHeight),
-                        yInc: Float(yInc),
-                        val: value.floatValue,
-                        offset: plotSpace.graphMin,
-                        penWidth: Float(penWidth))
-      
-    } else {
-//      NSLog("non-NSNumber object (%@) found in data (index %lu), zero value used", value, index)
-      ypos = yPlotValue(Float(plotSpace.fullHeight),
-                        yInc: Float(yInc),
-                        val: 0.0,
-                        offset: plotSpace.graphMin,
-                        penWidth: Float(penWidth))
-    }
-    return ypos
-  }
-  
-  // returns the Y plot value, given the limitations we have
-  @inline(__always)
-  func yPlotValue(maxHeight: Float, yInc: Float, val: Float, offset: Float, penWidth: Float) -> CGFloat {
-    let y = yInc * (val - offset)
-    let pen = penWidth / 2.0
-    let height = y + Float(GRAPH_Y_BORDER) + pen
-    let ypv = maxHeight - height
-    
-    return CGFloat(ypv)
-  }
+//  func drawValueMarker(values: [NSNumber], inout plotSpace: PlotSpace, xInc: CGFloat, yInc: Float, context: CGContextRef) {
+//    let markX = xInc * CGFloat(values.count-1) + GRAPH_X_BORDER
+//    let markY = yPlotValue(Float(plotSpace.fullHeight),
+//                           yInc: yInc,
+//                           val: values.last!.floatValue,
+//                           offset: plotSpace.graphMin,
+//                           penWidth: Float(penWidth))
+//    
+//    // calculate the accent marker size, with limits
+//    var markSize = plotSpace.fullHeight * DEF_MARKER_SIZE_FRAC
+//    if (markSize < MARKER_MIN_SIZE) {
+//      markSize = MARKER_MIN_SIZE
+//    } else if markSize > MARKER_MAX_SIZE {
+//      markSize = MARKER_MAX_SIZE
+//    }
+//    
+//    let markRect = CGRectMake(markX - (markSize/2.0), markY - (markSize/2.0), markSize, markSize)
+//    currentValueColor.setFill()
+//    CGContextFillEllipseInRect(context, markRect)
+//  }
+//  
+//  func validateYPos(value: AnyObject, yInc: Float, index: Int, plotSpace: PlotSpace) -> CGFloat {
+//    // Hook method
+//    var ypos: CGFloat = 0.0
+//    
+//    // warning and zero value for any non-NSNumber objects
+//    if value.isKindOfClass(NSNumber) {
+//      ypos = yPlotValue(Float(plotSpace.fullHeight),
+//                        yInc: Float(yInc),
+//                        val: value.floatValue,
+//                        offset: plotSpace.graphMin,
+//                        penWidth: Float(penWidth))
+//      
+//    } else {
+////      NSLog("non-NSNumber object (%@) found in data (index %lu), zero value used", value, index)
+//      ypos = yPlotValue(Float(plotSpace.fullHeight),
+//                        yInc: Float(yInc),
+//                        val: 0.0,
+//                        offset: plotSpace.graphMin,
+//                        penWidth: Float(penWidth))
+//    }
+//    return ypos
+//  }
+//  
+//  // returns the Y plot value, given the limitations we have
+//  @inline(__always)
+//  func yPlotValue(maxHeight: Float, yInc: Float, val: Float, offset: Float, penWidth: Float) -> CGFloat {
+//    let y = yInc * (val - offset)
+//    let pen = penWidth / 2.0
+//    let height = y + Float(GRAPH_Y_BORDER) + pen
+//    let ypv = maxHeight - height
+//    
+//    return CGFloat(ypv)
+//  }
 
 }

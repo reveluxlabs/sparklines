@@ -17,126 +17,220 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="140 x 20 Sparklines" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="AEF-8l-jiU">
-                                <rect key="frame" x="308" y="92" width="152" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="140 x 20 Sparklines" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="AEF-8l-jiU">
+                                <rect key="frame" x="20" y="20" width="152" height="21"/>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="125" y="44" width="150" height="20"/>
                                 </variation>
+                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="324" y="6" width="152" height="21"/>
+                                </variation>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xJd-ZT-Mgq" customClass="SparkLineView" customModule="sparklines">
-                                <rect key="frame" x="314" y="135" width="140" height="20"/>
-                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xJd-ZT-Mgq" customClass="LineSparkLineView" customModule="sparklines">
+                                <rect key="frame" x="26" y="56" width="140" height="20"/>
+                                <color key="backgroundColor" red="1" green="1" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="132" y="80" width="140" height="20"/>
                                 </variation>
+                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="330" y="49" width="140" height="20"/>
+                                </variation>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="am7-2a-Dzn" customClass="SparkLineView" customModule="sparklines">
-                                <rect key="frame" x="314" y="163" width="140" height="20"/>
-                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="am7-2a-Dzn" customClass="LineSparkLineView" customModule="sparklines">
+                                <rect key="frame" x="26" y="84" width="140" height="20"/>
+                                <color key="backgroundColor" red="1" green="1" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="132" y="108" width="140" height="20"/>
                                 </variation>
+                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="330" y="77" width="140" height="20"/>
+                                </variation>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="54K-V3-z79" customClass="SparkLineView" customModule="sparklines" customModuleProvider="target">
-                                <rect key="frame" x="314" y="191" width="140" height="20"/>
-                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="54K-V3-z79" customClass="LineSparkLineView" customModule="sparklines" customModuleProvider="target">
+                                <rect key="frame" x="26" y="112" width="140" height="20"/>
+                                <color key="backgroundColor" red="1" green="1" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="132" y="136" width="140" height="20"/>
                                 </variation>
+                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="330" y="105" width="140" height="20"/>
+                                </variation>
                             </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="280 x 40 Sparklines" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="r9x-Dw-j1w">
-                                <rect key="frame" x="308" y="262" width="152" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="280 x 40 Sparklines" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="r9x-Dw-j1w">
+                                <rect key="frame" x="364" y="20" width="152" height="21"/>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="127" y="189" width="150" height="20"/>
                                 </variation>
+                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="324" y="150" width="152" height="21"/>
+                                </variation>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E5v-Wd-Fbe" customClass="SparkLineView" customModule="sparklines" customModuleProvider="target">
-                                <rect key="frame" x="244" y="312" width="280" height="40"/>
-                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E5v-Wd-Fbe" customClass="LineSparkLineView" customModule="sparklines" customModuleProvider="target">
+                                <rect key="frame" x="300" y="57" width="280" height="40"/>
+                                <color key="backgroundColor" red="1" green="1" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="62" y="232" width="280" height="40"/>
                                 </variation>
+                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="260" y="187" width="280" height="40"/>
+                                </variation>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KPM-r6-16j" customClass="SparkLineView" customModule="sparklines" customModuleProvider="target">
-                                <rect key="frame" x="244" y="370" width="280" height="40"/>
-                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KPM-r6-16j" customClass="LineSparkLineView" customModule="sparklines" customModuleProvider="target">
+                                <rect key="frame" x="300" y="107" width="280" height="40"/>
+                                <color key="backgroundColor" red="1" green="1" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="62" y="290" width="280" height="40"/>
                                 </variation>
+                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="260" y="245" width="280" height="40"/>
+                                </variation>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yaH-bW-zrk" customClass="SparkLineView" customModule="sparklines" customModuleProvider="target">
-                                <rect key="frame" x="244" y="429" width="280" height="40"/>
-                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yaH-bW-zrk" customClass="LineSparkLineView" customModule="sparklines" customModuleProvider="target">
+                                <rect key="frame" x="300" y="156" width="280" height="40"/>
+                                <color key="backgroundColor" red="1" green="1" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="62" y="349" width="280" height="40"/>
                                 </variation>
+                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="260" y="304" width="280" height="40"/>
+                                </variation>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c4C-oO-kZm">
-                                <rect key="frame" x="288" y="547" width="192" height="37"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c4C-oO-kZm">
+                                <rect key="frame" x="20" y="139" width="152" height="37"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                 <state key="normal" title="Hide Current Values">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="126" y="443" width="147" height="30"/>
                                 </variation>
+                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="304" y="370" width="192" height="37"/>
+                                </variation>
                                 <connections>
                                     <action selector="toggleCurrentValues:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Vq2-g2-dLv"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oWM-jN-x5J">
-                                <rect key="frame" x="288" y="600" width="192" height="37"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oWM-jN-x5J">
+                                <rect key="frame" x="20" y="177" width="152" height="39"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                 <state key="normal" title="Show Range Overlays">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="121" y="496" width="159" height="30"/>
                                 </variation>
+                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="304" y="421" width="192" height="39"/>
+                                </variation>
                                 <connections>
                                     <action selector="toggleShowOverlays:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9Rb-Yy-APf"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y7Y-WH-JFN" customClass="WhiskerSparkLineView" customModule="sparklines" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="82" y="617" width="240" height="40"/>
-                                </variation>
-                            </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="280 x 40 Whisker" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="aB8-kE-heE">
-                                <rect key="frame" x="308" y="262" width="152" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="576 x 40 Whisker" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="aB8-kE-heE">
+                                <rect key="frame" x="224" y="231" width="152" height="21"/>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="136" y="572" width="132" height="20"/>
                                 </variation>
+                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="324" y="495" width="152" height="21"/>
+                                </variation>
                             </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="2014 Washington Nationals win-loss record, 96-66," lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="D5h-9e-tdp">
+                                <rect key="frame" x="20" y="260" width="253" height="21"/>
+                                <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="12"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="136" y="572" width="132" height="20"/>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="324" y="495" width="152" height="21"/>
+                                </variation>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Longest Winning Streak" lineBreakMode="tailTruncation" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="pJh-Uu-etJ">
+                                <rect key="frame" x="523" y="260" width="97" height="21"/>
+                                <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="9"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="136" y="572" width="132" height="20"/>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="324" y="495" width="152" height="21"/>
+                                </variation>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text=" winning streaks of 4 or more games" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="is6-An-8Sn">
+                                <rect key="frame" x="272" y="260" width="184" height="21"/>
+                                <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="12"/>
+                                <color key="textColor" red="1" green="0.12954848299999999" blue="0.073293942520000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="136" y="572" width="132" height="20"/>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="324" y="495" width="152" height="21"/>
+                                </variation>
+                            </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y7Y-WH-JFN" customClass="WhiskerSparkLineView" customModule="sparklines" customModuleProvider="target">
+                                <rect key="frame" x="20" y="280" width="576" height="40"/>
+                                <color key="backgroundColor" red="1" green="1" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="82" y="617" width="240" height="40"/>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="120" y="524" width="560" height="40"/>
+                                </variation>
+                            </view>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Random season with same win-loss record" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="zKY-y8-pva">
+                                <rect key="frame" x="20" y="321" width="323" height="21"/>
+                                <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="12"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="136" y="572" width="132" height="20"/>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="324" y="495" width="152" height="21"/>
+                                </variation>
+                            </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gq2-3n-dcL" customClass="WhiskerSparkLineView" customModule="sparklines" customModuleProvider="target">
+                                <rect key="frame" x="20" y="341" width="576" height="40"/>
+                                <color key="backgroundColor" red="1" green="1" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="82" y="617" width="240" height="40"/>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="120" y="524" width="560" height="40"/>
+                                </variation>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lyk-QO-LKw">
+                                <rect key="frame" x="20" y="216" width="152" height="39"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                <state key="normal" title="Regenerate Season">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="121" y="496" width="159" height="30"/>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="304" y="421" width="192" height="39"/>
+                                </variation>
+                                <connections>
+                                    <action selector="regenerateSeason:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hLa-T3-2HD"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.47866351455897427" green="0.47866351455897427" blue="0.47866351455897427" alpha="1" colorSpace="calibratedRGB"/>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="AEF-8l-jiU"/>
-                                <exclude reference="xJd-ZT-Mgq"/>
-                                <exclude reference="am7-2a-Dzn"/>
-                                <exclude reference="54K-V3-z79"/>
-                                <exclude reference="r9x-Dw-j1w"/>
-                                <exclude reference="E5v-Wd-Fbe"/>
-                                <exclude reference="KPM-r6-16j"/>
-                                <exclude reference="yaH-bW-zrk"/>
-                                <exclude reference="c4C-oO-kZm"/>
-                                <exclude reference="oWM-jN-x5J"/>
-                                <exclude reference="Y7Y-WH-JFN"/>
-                                <exclude reference="aB8-kE-heE"/>
-                            </mask>
-                        </variation>
+                        <color key="backgroundColor" red="1" green="1" blue="0.94509803921568625" alpha="1" colorSpace="calibratedRGB"/>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="AEF-8l-jiU"/>
@@ -149,11 +243,12 @@
                                 <include reference="yaH-bW-zrk"/>
                                 <include reference="c4C-oO-kZm"/>
                                 <include reference="oWM-jN-x5J"/>
-                                <include reference="Y7Y-WH-JFN"/>
                                 <include reference="aB8-kE-heE"/>
+                                <include reference="Y7Y-WH-JFN"/>
                             </mask>
                         </variation>
                     </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
                         <outlet property="sparkLineView1" destination="xJd-ZT-Mgq" id="Fth-sg-Hw0"/>
                         <outlet property="sparkLineView2" destination="am7-2a-Dzn" id="fEZ-wI-Nah"/>
@@ -162,11 +257,25 @@
                         <outlet property="sparkLineView5" destination="KPM-r6-16j" id="gsD-uu-LRZ"/>
                         <outlet property="sparkLineView6" destination="yaH-bW-zrk" id="zEl-Qm-HYC"/>
                         <outlet property="sparkLineView7" destination="Y7Y-WH-JFN" id="Vvf-cv-U5F"/>
+                        <outlet property="sparkLineView8" destination="Gq2-3n-dcL" id="VG2-cA-PBx"/>
                     </connections>
                 </viewController>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="2014 Washington Nationals win-loss record, 96-66" lineBreakMode="tailTruncation" minimumFontSize="10" id="AxB-6J-TLl">
+                    <rect key="frame" x="0.0" y="0.0" width="323" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                        <rect key="frame" x="136" y="572" width="132" height="20"/>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
+                        <rect key="frame" x="324" y="495" width="152" height="21"/>
+                    </variation>
+                </label>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="138" y="381"/>
+            <point key="canvasLocation" x="206" y="375"/>
         </scene>
     </scenes>
 </document>

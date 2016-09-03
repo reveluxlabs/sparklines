@@ -10,13 +10,19 @@
 		D45D73291D6F832600C4531B /* LineSparkLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D73281D6F832600C4531B /* LineSparkLineView.swift */; };
 		D45D732B1D6F837800C4531B /* WhiskerSparkLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D732A1D6F837800C4531B /* WhiskerSparkLineView.swift */; };
 		D45D732D1D71B92200C4531B /* baseball_data.txt in Resources */ = {isa = PBXBuildFile; fileRef = D45D732C1D71B92200C4531B /* baseball_data.txt */; };
-		D45D732F1D72664700C4531B /* SparkLineViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D732E1D72664700C4531B /* SparkLineViewProtocol.swift */; };
+		D45D732F1D72664700C4531B /* SparkLinePlotter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D732E1D72664700C4531B /* SparkLinePlotter.swift */; };
+		D45D73311D75AF6C00C4531B /* SparkLineDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D73301D75AF6C00C4531B /* SparkLineDataSource.swift */; };
+		D45D73371D79A53D00C4531B /* StreakDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D73361D79A53D00C4531B /* StreakDataSource.swift */; };
+		D45D73391D79F17000C4531B /* PlotSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D73381D79F17000C4531B /* PlotSpace.swift */; };
+		D45D733B1D79F1C800C4531B /* SparkLineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D733A1D79F1C800C4531B /* SparkLineLabel.swift */; };
+		D45D733D1D79F21E00C4531B /* LineSparkLinePlotter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D733C1D79F21E00C4531B /* LineSparkLinePlotter.swift */; };
+		D45D733F1D79F27700C4531B /* WhiskerSparkLinePlotter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D733E1D79F27700C4531B /* WhiskerSparkLinePlotter.swift */; };
+		D45D73431D7B4D7900C4531B /* TestDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D73421D7B4D7900C4531B /* TestDataSource.swift */; };
 		D497E9AD1D6D1C37004CD872 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D497E9AC1D6D1C37004CD872 /* AppDelegate.swift */; };
 		D497E9AF1D6D1C37004CD872 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D497E9AE1D6D1C37004CD872 /* ViewController.swift */; };
 		D497E9B21D6D1C37004CD872 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D497E9B01D6D1C37004CD872 /* Main.storyboard */; };
 		D497E9B41D6D1C37004CD872 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D497E9B31D6D1C37004CD872 /* Assets.xcassets */; };
 		D497E9B71D6D1C37004CD872 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D497E9B51D6D1C37004CD872 /* LaunchScreen.storyboard */; };
-		D497E9BF1D6D1F57004CD872 /* SparkLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D497E9BE1D6D1F57004CD872 /* SparkLineView.swift */; };
 		D497E9C31D6D2956004CD872 /* glucose_data.txt in Resources */ = {isa = PBXBuildFile; fileRef = D497E9C01D6D2956004CD872 /* glucose_data.txt */; };
 		D497E9C41D6D2956004CD872 /* heartRate_data.txt in Resources */ = {isa = PBXBuildFile; fileRef = D497E9C11D6D2956004CD872 /* heartRate_data.txt */; };
 		D497E9C51D6D2956004CD872 /* temperature_data.txt in Resources */ = {isa = PBXBuildFile; fileRef = D497E9C21D6D2956004CD872 /* temperature_data.txt */; };
@@ -26,7 +32,14 @@
 		D45D73281D6F832600C4531B /* LineSparkLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineSparkLineView.swift; sourceTree = "<group>"; };
 		D45D732A1D6F837800C4531B /* WhiskerSparkLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhiskerSparkLineView.swift; sourceTree = "<group>"; };
 		D45D732C1D71B92200C4531B /* baseball_data.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = baseball_data.txt; sourceTree = "<group>"; };
-		D45D732E1D72664700C4531B /* SparkLineViewProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SparkLineViewProtocol.swift; sourceTree = "<group>"; };
+		D45D732E1D72664700C4531B /* SparkLinePlotter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SparkLinePlotter.swift; sourceTree = "<group>"; };
+		D45D73301D75AF6C00C4531B /* SparkLineDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SparkLineDataSource.swift; sourceTree = "<group>"; };
+		D45D73361D79A53D00C4531B /* StreakDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreakDataSource.swift; sourceTree = "<group>"; };
+		D45D73381D79F17000C4531B /* PlotSpace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlotSpace.swift; sourceTree = "<group>"; };
+		D45D733A1D79F1C800C4531B /* SparkLineLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SparkLineLabel.swift; sourceTree = "<group>"; };
+		D45D733C1D79F21E00C4531B /* LineSparkLinePlotter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineSparkLinePlotter.swift; sourceTree = "<group>"; };
+		D45D733E1D79F27700C4531B /* WhiskerSparkLinePlotter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhiskerSparkLinePlotter.swift; sourceTree = "<group>"; };
+		D45D73421D7B4D7900C4531B /* TestDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDataSource.swift; sourceTree = "<group>"; };
 		D497E9A91D6D1C37004CD872 /* sparklines.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sparklines.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D497E9AC1D6D1C37004CD872 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D497E9AE1D6D1C37004CD872 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -34,7 +47,6 @@
 		D497E9B31D6D1C37004CD872 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D497E9B61D6D1C37004CD872 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D497E9B81D6D1C37004CD872 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D497E9BE1D6D1F57004CD872 /* SparkLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SparkLineView.swift; sourceTree = "<group>"; };
 		D497E9C01D6D2956004CD872 /* glucose_data.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = glucose_data.txt; sourceTree = "<group>"; };
 		D497E9C11D6D2956004CD872 /* heartRate_data.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = heartRate_data.txt; sourceTree = "<group>"; };
 		D497E9C21D6D2956004CD872 /* temperature_data.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = temperature_data.txt; sourceTree = "<group>"; };
@@ -51,6 +63,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D45D73401D79F2B700C4531B /* SparkLine Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				D45D732E1D72664700C4531B /* SparkLinePlotter.swift */,
+				D45D733C1D79F21E00C4531B /* LineSparkLinePlotter.swift */,
+				D45D733E1D79F27700C4531B /* WhiskerSparkLinePlotter.swift */,
+				D45D73381D79F17000C4531B /* PlotSpace.swift */,
+				D45D733A1D79F1C800C4531B /* SparkLineLabel.swift */,
+			);
+			name = "SparkLine Protocols";
+			sourceTree = "<group>";
+		};
+		D45D73411D79F2CE00C4531B /* Data Sources */ = {
+			isa = PBXGroup;
+			children = (
+				D45D73301D75AF6C00C4531B /* SparkLineDataSource.swift */,
+				D45D73361D79A53D00C4531B /* StreakDataSource.swift */,
+				D45D73421D7B4D7900C4531B /* TestDataSource.swift */,
+			);
+			name = "Data Sources";
+			sourceTree = "<group>";
+		};
 		D497E9A01D6D1C37004CD872 = {
 			isa = PBXGroup;
 			children = (
@@ -72,10 +106,10 @@
 			children = (
 				D497E9AC1D6D1C37004CD872 /* AppDelegate.swift */,
 				D497E9AE1D6D1C37004CD872 /* ViewController.swift */,
-				D45D732E1D72664700C4531B /* SparkLineViewProtocol.swift */,
-				D497E9BE1D6D1F57004CD872 /* SparkLineView.swift */,
+				D45D73401D79F2B700C4531B /* SparkLine Protocols */,
 				D45D73281D6F832600C4531B /* LineSparkLineView.swift */,
 				D45D732A1D6F837800C4531B /* WhiskerSparkLineView.swift */,
+				D45D73411D79F2CE00C4531B /* Data Sources */,
 				D497E9B01D6D1C37004CD872 /* Main.storyboard */,
 				D497E9B31D6D1C37004CD872 /* Assets.xcassets */,
 				D497E9B51D6D1C37004CD872 /* LaunchScreen.storyboard */,
@@ -163,11 +197,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D45D733B1D79F1C800C4531B /* SparkLineLabel.swift in Sources */,
 				D497E9AF1D6D1C37004CD872 /* ViewController.swift in Sources */,
-				D497E9BF1D6D1F57004CD872 /* SparkLineView.swift in Sources */,
+				D45D73431D7B4D7900C4531B /* TestDataSource.swift in Sources */,
+				D45D733D1D79F21E00C4531B /* LineSparkLinePlotter.swift in Sources */,
 				D45D73291D6F832600C4531B /* LineSparkLineView.swift in Sources */,
+				D45D73371D79A53D00C4531B /* StreakDataSource.swift in Sources */,
+				D45D733F1D79F27700C4531B /* WhiskerSparkLinePlotter.swift in Sources */,
 				D45D732B1D6F837800C4531B /* WhiskerSparkLineView.swift in Sources */,
-				D45D732F1D72664700C4531B /* SparkLineViewProtocol.swift in Sources */,
+				D45D732F1D72664700C4531B /* SparkLinePlotter.swift in Sources */,
+				D45D73391D79F17000C4531B /* PlotSpace.swift in Sources */,
+				D45D73311D75AF6C00C4531B /* SparkLineDataSource.swift in Sources */,
 				D497E9AD1D6D1C37004CD872 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -10,16 +10,17 @@ import UIKit
 
 class ViewController: UIViewController {
 
-  @IBOutlet weak var sparkLineView1: SparkLineView!
-  @IBOutlet weak var sparkLineView2: SparkLineView!
-  @IBOutlet weak var sparkLineView3: SparkLineView!
-  @IBOutlet weak var sparkLineView4: SparkLineView!
-  @IBOutlet weak var sparkLineView5: SparkLineView!
-  @IBOutlet weak var sparkLineView6: SparkLineView!
+  @IBOutlet weak var sparkLineView1: LineSparkLineView!
+  @IBOutlet weak var sparkLineView2: LineSparkLineView!
+  @IBOutlet weak var sparkLineView3: LineSparkLineView!
+  @IBOutlet weak var sparkLineView4: LineSparkLineView!
+  @IBOutlet weak var sparkLineView5: LineSparkLineView!
+  @IBOutlet weak var sparkLineView6: LineSparkLineView!
   
   @IBOutlet weak var sparkLineView7: WhiskerSparkLineView!
   
-  var allSparklines: [SparkLineView] = []
+  @IBOutlet weak var sparkLineView8: WhiskerSparkLineView!
+  var allSparklines: [LineSparkLineView] = []
   
   var glucoseData: [NSNumber]     = []
   var temperatureData: [NSNumber] = []
@@ -46,6 +47,9 @@ class ViewController: UIViewController {
     else {
       super.init(nibName: nil, bundle:nil)
     }
+    
+//    UIFont.familyNames().map {UIFont.fontNamesForFamilyName($0)}
+//      .forEach {(n:[String]) in n.forEach {print($0)}}
     
     loadData()
   }
@@ -101,6 +105,7 @@ class ViewController: UIViewController {
     
     let darkRed   = UIColor(red:0.6, green:0.0, blue:0.0, alpha:1.0)
     let darkGreen = UIColor(red:0.0, green:0.6, blue:0.0, alpha:1.0)
+    let scarlet   = UIColor(red:0.99, green:0.14, blue:0.22, alpha:1.0)
     
     // small ones are 1 - 3
     sparkLineView1.dataValues = glucoseData
@@ -117,7 +122,7 @@ class ViewController: UIViewController {
     sparkLineView3.labelText = "Pulse";
     sparkLineView3.currentValueColor = darkGreen
     sparkLineView3.currentValueFormat = "%.0f"
-    sparkLineView3.penColor = UIColor.redColor()
+    sparkLineView3.penColor = scarlet
     sparkLineView3.penWidth = 3.0
     
     // large ones are 4 - 6
@@ -135,16 +140,51 @@ class ViewController: UIViewController {
     sparkLineView6.labelText = "Pulse"
     sparkLineView6.currentValueColor = darkGreen
     sparkLineView6.currentValueFormat = "%.0f"
-    sparkLineView6.penColor = UIColor.redColor()
+    sparkLineView6.penColor = scarlet
     sparkLineView6.penWidth = 6.0
     
     allSparklines = [sparkLineView1, sparkLineView2, sparkLineView3,
                      sparkLineView4, sparkLineView5, sparkLineView6]
     
-    sparkLineView7.dataValues = baseballData
-    sparkLineView7.showCurrentValue = false
-    sparkLineView7.labelText = ""
-    sparkLineView7.penWidth = 6.0
+    let unboxedBaseball = baseballData.map({ $0.doubleValue })
+    sparkLineView7.labelText          = "games"
+    sparkLineView7.labelFont          = "Baskerville"
+    sparkLineView7.dataSource         = StreakDataSource( values: unboxedBaseball)
+    sparkLineView7.xIncrement         = 3.0
+    sparkLineView7.currentValueFormat = " %.0f"
+    sparkLineView7.labelColor         = scarlet
+    sparkLineView7.penWidth           = 1.0
+    sparkLineView7.centerSparkLine    = false
+
+    let randomBaseball = generateRandomRecord( 96, losses: 66 )
+    sparkLineView8.labelText          = ""
+    sparkLineView8.labelFont          = "Baskerville"
+    sparkLineView8.dataSource         = StreakDataSource( values: randomBaseball)
+    sparkLineView8.xIncrement         = 3.0
+    sparkLineView8.currentValueFormat = "    %.0f"
+    sparkLineView8.labelColor         = scarlet
+    sparkLineView8.penWidth           = 1.0
+    sparkLineView8.centerSparkLine    = false
+  }
+  
+  func generateRandomRecord( wins: Int, losses: Int ) -> [Double] {
+    var result: [Double] = []
+    var r: Double
+    let winPercent: Double = Double(wins)/Double(wins + losses)
+    
+    let t = time(UnsafeMutablePointer(bitPattern: 0))
+    srand48(t)
+    for _ in 1...162 {
+      r = drand48()
+     
+      if r > winPercent {
+        result.append( -1.0 )
+      } else {
+        result.append( 1.0 )
+      }
+    }
+    
+    return result
   }
   
   @IBAction func toggleCurrentValues(sender: AnyObject) {
@@ -191,5 +231,12 @@ class ViewController: UIViewController {
     }
   }
 
+  @IBAction func regenerateSeason(sender: AnyObject) {
+    
+    let randomBaseball        = generateRandomRecord( 96, losses: 66 )
+    sparkLineView8.dataSource = StreakDataSource( values: randomBaseball)
+    
+    sparkLineView8.setNeedsDisplay()
+  }
 }
 

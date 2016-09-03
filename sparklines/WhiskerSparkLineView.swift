@@ -8,61 +8,116 @@
 
 import UIKit
 
-let TIME_PEN_WIDTH: CGFloat = 1.0
-let DEFAULT_TICK_PEN_WIDTH: CGFloat  = 4.0
+public class WhiskerSparkLineView: UIView, WhiskerSparkLinePlotter {
+  
+  // MARK: Stored Properties
+  
+  // Array of NSNumber values to display
+  var dataValues: [NSNumber]?
+    {
+    didSet {
+      computeRanges(dataValues!)
+      
+      self.setNeedsDisplay()
+    }
+  }
+  
+  // Text to be displayed beside the graph data
+  var labelText: String?
+    {
+    didSet {
+      self.setNeedsDisplay()
+    }
+  }
 
-var TICK_PEN_WIDTH                   = DEFAULT_TICK_PEN_WIDTH    // pen width for the graph line (in *pixels*)
+  var labelFont: String = LABEL_FONT
+  
+  // Color of the label text (default: dark gray)
+  // Color of the label text (default: dark gray)
+  var labelColor: UIColor = DEFAULT_LABEL_COL
+    {
+    didSet {
+      self.setNeedsDisplay()
+    }
+  }
+  
+  // Enable centering of the sparkline in the view
+  var centerSparkLine: Bool = true
+    {
+    didSet {
+      self.setNeedsDisplay()
+    }
+  }
 
-public class WhiskerSparkLineView: SparkLineView {
+  // Enable display of the numerical current (last) value (default: YES).
+  var showLabel: Bool = true
+    {
+    didSet {
+      self.setNeedsDisplay()
+    }
+  }
+  // The format (in printf() style) of the numeric current value.
+  var currentValueFormat: String = "%.1f"
+    {
+    didSet {
+      self.setNeedsDisplay()
+    }
+  }
+  
+  // The UIColor used for the sparkline colour itself
+  var penColor: UIColor = PEN_COL
+  
+  //! The float value used for the sparkline pen width
+  var penWidth: CGFloat = DEFAULT_GRAPH_PEN_WIDTH
+  
+  var dataMinimum: NSNumber?
+  var dataMaximum: NSNumber?
+  
+  var dataSource: WhiskerSparkLineDataSource? {
+    didSet {
+      longestRun = dataSource!.longestRun
+    }
+  }
   
   // For the whisker view, xIncrement is set, not calculated.
-  var xIncrement:              CGFloat = 1.0
+  var xIncrement:              CGFloat = 2.0
   var whiskerColor:            UIColor = UIColor.blackColor()
-  var highlightedWhiskerColor: UIColor = UIColor.redColor()
-  var viewCenterX:             CGFloat = 0.0
+  var highlightedWhiskerColor: UIColor = UIColor(red:0.99, green:0.14, blue:0.22, alpha:1.0) // scarlet
   
-  var tickWidth: CGFloat? = DEFAULT_TICK_PEN_WIDTH
-  var timeWidth: CGFloat? = TIME_PEN_WIDTH
+  var tickWidth:               CGFloat = DEFAULT_TICK_PEN_WIDTH
+  var tickColor:               UIColor = UIColor.blackColor()
+  var longestRun:              Int? = 0
+
+  // MARK: NSObject Lifecycle
   
-  // MARK: NSObject lifecycle
-  
-  override func initialize(data: [NSNumber], label: String) {
-    super.initialize(data, label: "")
-    viewCenterX = 8.0
+  required public init(data: [NSNumber], frame: CGRect, label: String) {
+    super.init(frame: frame)
+    initialize( data, label: label)
   }
   
-  override func drawLabelIfNeeded( labelText: String?, dataValues: [NSNumber], context: CGContextRef) -> CGSize {
-    // Null out superclass method as Whisker view has no label.
+  required public init?(coder aDecoder: NSCoder) {
+    super.init(coder: aDecoder)
     
-    return CGSizeMake(0.0, 0.0)
+    let data: [NSNumber] = []
+    initialize( data, label: "")
   }
   
-  func selectTickPenWidth( tickWidth: CGFloat, context: CGContextRef ) {
-    // Ensure the tick pen is a suitable width for the device we are on (i.e. we use *pixels* and not points)
-    if (tickWidth != 0.0) {
-      CGContextSetLineWidth(context, tickWidth / self.contentScaleFactor);
-    } else {
-      CGContextSetLineWidth(context, TICK_PEN_WIDTH / self.contentScaleFactor);
-    }
+  // MARK: Drawing Methods
+  
+  // draws all the elements of this view
+  public override func drawRect(rect: CGRect) {
+    
+    let context = UIGraphicsGetCurrentContext()
+    
+    drawSparkline(labelText!,
+                  bounds: self.bounds,
+                  dataMinimum: -1,
+                  dataMaximum: 1,
+                  dataValues:  dataValues!,
+                  context:     context!)
   }
   
-  func selectTimePenWidth( timeWidth: CGFloat, context: CGContextRef) {
-    // Ensure the tick pen is a suitable width for the device we are on (i.e. we use *pixels* and not points)
-    if (timeWidth != 0.0) {
-      CGContextSetLineWidth(context, timeWidth / self.contentScaleFactor);
-    } else {
-      CGContextSetLineWidth(context, TIME_PEN_WIDTH / self.contentScaleFactor);
-    }
-  }
-  
-  override func xInc(values: [NSNumber], penWidth: CGFloat, plotSpace: PlotSpace) -> CGFloat {
-    // X scale is set to show all values
-    let xi = penWidth
-    print("whisker view: penWidth \(penWidth), xInc \(xi)")
-    return xi
-  }
-  
-  override func drawValues( values: [NSNumber], inout plotSpace: PlotSpace, xInc: CGFloat, yInc: Float, context: CGContextRef ) {
+  func drawValues( values: [NSNumber], inout plotSpace: PlotSpace, xInc: CGFloat, yInc: Float, context: CGContextRef ) {
     // Retrieves the data and draws the binary outcome sparkline--whiskers, axis and tick marks.
     // Height and width for the sparkline are derived from the view bounds less borders.
   
@@ -75,116 +130,65 @@ public class WhiskerSparkLineView: SparkLineView {
   
     CGContextBeginPath(context)
   
-    let numberOfPoints = values.count
-  
-    let viewWidth = self.bounds.size.width
-    let graphWidth = xInc * CGFloat(numberOfPoints)
-    viewCenterX = (viewWidth - graphWidth)/2.0
+    var numberOfPoints: Int = 0
     
-    print("whisker view setting view padding \(viewCenterX) for view X \(viewWidth), graph X \(graphWidth)")
-  
-    var xpos: CGFloat
-    var ypos: CGFloat = 1.0
+    if let ds = dataSource {
+      numberOfPoints = ds.numberOfDataPoints(self)
+      
+    } else {
+      numberOfPoints = values.count
+    }
     
-    for (index, value) in values.enumerate() {
+    var xpos:          CGFloat
+    var ypos:          CGFloat = 1.0
+    var value:         NSNumber?
+    var currentColor:  UIColor?
     
-      // And the whisker color
+    for index in 0..<numberOfPoints {
     
-      whiskerColor.setStroke()
+      // Get the value and whisker color
+      
+      if let ds = dataSource {
+        value        = ds.dataPointForIndex(self, index: index)
+        currentColor = ds.whiskerColorForIndex(self, index: index)
+        
+      } else {
+        value        = values[index]
+        currentColor = whiskerColor
+      }
+      
+      // And set the stroke color
+    
+      currentColor!.setStroke()
     
       // Calculate the x & y positions
     
-      xpos = (xInc * CGFloat(index)) + GRAPH_X_BORDER + viewCenterX
-      ypos = validateYPos(value, yInc:yInc, index:index, plotSpace: plotSpace)
+      xpos = (xInc * CGFloat(index)) + GRAPH_X_BORDER + plotSpace.xOffsetToCenter
+      ypos = validateYPos(value!, yInc:yInc, index:index, plotSpace: plotSpace)
     
       // Draw the whisker
     
       drawWhiskerAtXpos(xpos, ypos:ypos, centerY:centerY, context:context)
     
-    // And a tick mark if needed
-    
-  //    if ([self.dataSource respondsToSelector:@selector(sparklineView:tickForIndex:)] &&
-  //    [self.dataSource sparklineView:self tickForIndex:index]) {
+      // And a tick mark if needed
       
-  //    [self drawTickAtXpos:xpos xinc:xinc tickColor:tickColor context:context];
-  //    }
+      if let ds = dataSource {
+        if ds.tickForIndex( self, index: index ) {
+          drawTickAtXpos( xpos,  xinc: xInc, tickColor: tickColor, plotSpace: plotSpace, context: context)
+        }
+      }
       
-  //    if ([self.dataSource respondsToSelector:@selector(sparklineView:timeForIndex:)] &&
-  //    [self.dataSource sparklineView:self timeForIndex:index]) {
-    
-  //    [self drawTickAtXpos:xpos xinc:xinc tickColor:[UIColor redColor] context:context];
-  //    }
       lastXPos = xpos
     }
     
     // Draw the last tick
     
-    xpos = (xInc * CGFloat(numberOfPoints)) + GRAPH_X_BORDER + viewCenterX
+    xpos = (xInc * CGFloat(numberOfPoints)) + GRAPH_X_BORDER + plotSpace.xOffsetToCenter
     drawTickAtXpos(xpos, xinc:xInc, tickColor:tickColor, plotSpace: plotSpace, context:context)
     
     // And add the x axis
     
-    drawAxisToXpos(lastXPos, ypos: ypos, centerY:centerY, context:context)
+    drawAxisToXpos(lastXPos, xOffset: plotSpace.xOffsetToCenter, ypos: ypos, centerY:centerY, context:context)
   }
   
-  // MARK: Drawing convenience methods
-  
-  func drawWhiskerAtXpos( xpos: CGFloat, ypos: CGFloat, centerY: CGFloat, context: CGContextRef) {
-    //   Draw a whisker from (xpos,centerY) to (xpos, ypos) in context.
-  
-    selectPenWidth(penWidth, context: context)
-    CGContextMoveToPoint(context, xpos, centerY)
-    CGContextAddLineToPoint(context, xpos, ypos)
-    CGContextClosePath(context)
-    CGContextStrokePath(context)
-  }
-  
-  func drawTickAtXpos( xpos: CGFloat,  xinc: CGFloat, tickColor: UIColor, plotSpace: PlotSpace, context: CGContextRef) {
-    // Draw a tick of color tickColor from (xpos-xinc, 0.0) to (xpos-xinc, self.fullHeight) in context.
-    let xposGrid = xpos - 0.5 * xinc
-    tickColor.setStroke()
-    selectTickPenWidth(tickWidth!, context: context)
-    
-    CGContextMoveToPoint(context, xposGrid, 0.0);
-    CGContextAddLineToPoint(context, xposGrid, plotSpace.fullHeight);
-    CGContextClosePath(context);
-    
-    // draw the tick
-    CGContextStrokePath(context);
-  }
-  
-  func drawAxisToXpos( xpos:CGFloat, ypos:CGFloat, centerY: CGFloat, context: CGContextRef ) {
-    selectPenColor(penColor)
-    
-    CGContextMoveToPoint(context, 0.0 + GRAPH_Y_BORDER + viewCenterX, centerY);
-    CGContextAddLineToPoint(context, xpos+0.5 , centerY);
-    CGContextClosePath(context);
-    
-    // draw the graph line (path)
-    CGContextStrokePath(context);
-  }
-  
-  override func drawValueMarker(values: [NSNumber], inout plotSpace: PlotSpace, xInc: CGFloat, yInc: Float, context: CGContextRef) {
-    // Null out superclass method as Whisker view has no label.
-  }
-
-  // returns the Y plot value, given the limitations we have
-  @inline(__always)
-  override func yPlotValue(maxHeight: Float, yInc: Float, val: Float, offset: Float, penWidth: Float) -> CGFloat {
-    // returns the Y plot value, given the limitations we have
-    var result: Float
-    
-    let yBorder = GRAPH_Y_BORDER
-    
-    result = maxHeight / 2.0
-    
-    if val == 1.0 {
-      result = maxHeight - Float(yBorder)
-    } else if (val == -1.0) {
-      result = 0.0 + Float(yBorder)
-    }
-    result = maxHeight - result    // flip
-    
-    return CGFloat(result)
-  }
 }
