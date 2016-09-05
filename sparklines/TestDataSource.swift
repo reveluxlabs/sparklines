@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct TestDataSource: WhiskerSparkLineDataSource {
+struct TestDataSource: SparkLineDataSource {
   
   var dataValues: [NSNumber]
   

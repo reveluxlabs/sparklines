@@ -20,12 +20,13 @@ protocol WhiskerSparkLineDataSource: SparkLineDataSource {
   var    tickInterval:         Int           {get set}
   
   var    values:               [Double]      {get set}
-  var    selectedStreakState:  ActivityState {get set}
+  var    streakType:  ActivityState {get set}
   
+  var    streaks:              [Int:Int]     {get set}
   var    streakMap:            [Bool]?       {get set}
   var    longestRun:           Int?          {get set}
 
-  init( values: [Double])
+  init( values: [Double], streakLength: Int )
   
   func whiskerColorForIndex( sparkLineView: SparkLinePlotter, index:Int ) -> UIColor
   func tickForIndex( sparkLineView: SparkLinePlotter, index:Int  ) -> Bool
@@ -42,22 +43,25 @@ enum ActivityState: Int {
 extension WhiskerSparkLineDataSource {
   
   mutating func prepareDataSourceForWhiskerView( values: [Double] ) -> (Int, [Bool], [NSNumber] ) {
-    var streakInfo: (longest: Int, map: [Bool])
+    var streakInfo: (longest: Int, streaks: [Int:Int], map: [Bool])
     let boxedValues = values.map( { NSNumber( double: $0 ) } )
+    
     guard boxedValues.count > 0 else {
       return ( longestRun!, streakMap!, boxedValues )
     }
     
     streakInfo = mapStreaks( boxedValues,
                              greaterThanOrEqual: selectedStreakLength,
-                             binaryState: selectedStreakState )
+                             binaryState: streakType )
+    
+    streaks    = streakInfo.streaks
     streakMap  = streakInfo.map
     longestRun = streakInfo.longest
     
     return ( longestRun!, streakMap!, boxedValues )
   }
   
-  func mapStreaks( boxedValues: [NSNumber], greaterThanOrEqual length: Int, binaryState type: ActivityState ) -> ( Int, [Bool] ) {
+  func mapStreaks( boxedValues: [NSNumber], greaterThanOrEqual length: Int, binaryState type: ActivityState ) -> ( Int, [Int:Int], [Bool] ) {
     
     var    streaks:      [Int:Int]?
     var    streakMap:    [Bool]?
@@ -81,7 +85,7 @@ extension WhiskerSparkLineDataSource {
     }
     
     let longest = Array(streaks!.values).maxElement()
-    return ( longest!, streakMap! )
+    return ( longest!, streaks!, streakMap! )
   }
   
   func findRuns( boxedValues: [NSNumber], greaterThanOrEqual length: Int, binaryState type: ActivityState ) -> [Int:Int] {

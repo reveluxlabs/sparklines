@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "sparklines/WhiskerSparkLineView.swift"
-            timestampString = "494606863.420163"
+            timestampString = "494621197.916483"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "112"
-            endingLineNumber = "112"
+            startingLineNumber = "127"
+            endingLineNumber = "127"
             landmarkName = "drawRect(_:)"
             landmarkType = "5">
          </BreakpointContent>

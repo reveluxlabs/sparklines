@@ -8,18 +8,19 @@
 
 import UIKit
 
-let GRAPH_X_BORDER:           CGFloat = 2.0                                               // horizontal border width for the graph line (in points)
-let GRAPH_Y_BORDER:           CGFloat = 2.0                                               // vertical border width for the graph line (in points)
-let DEFAULT_LABEL_COL:        UIColor = UIColor.darkGrayColor()                           // default label text colour
-let DEFAULT_CURRENTVALUE_COL: UIColor = UIColor.blueColor()                               // default current value colour (including the anchor marker)
-let DEFAULT_OVERLAY_COL:      UIColor = UIColor(red:0.8, green:0.8, blue:0.8, alpha:1.0)  // default overlay colour (light gray)
-let PEN_COL:                  UIColor = UIColor.blackColor()                              // default graph line colour (black)
-let DEFAULT_GRAPH_PEN_WIDTH:  CGFloat = 1.0
+let GRAPH_X_BORDER:                CGFloat = 2.0                                               // horizontal border width for the graph line (in points)
+let GRAPH_Y_BORDER:                CGFloat = 2.0                                               // vertical border width for the graph line (in points)
+let DEFAULT_LABEL_COL:             UIColor = UIColor.darkGrayColor()                           // default label text colour
+let DEFAULT_CURRENTVALUE_COL:      UIColor = UIColor.blueColor()                               // default current value colour (including the anchor marker)
+let DEFAULT_OVERLAY_COL:           UIColor = UIColor(red:0.8, green:0.8, blue:0.8, alpha:1.0)  // default overlay colour (light gray)
+let DEFAULT_HIGHLIGHT_OVERLAY_COL: UIColor = UIColor(red:1.0, green:0.85, blue:0.8, alpha:1.0)  // default overlay colour (Cinderella)
+let PEN_COL:                       UIColor = UIColor.blackColor()                              // default graph line colour (black)
+let DEFAULT_GRAPH_PEN_WIDTH:       CGFloat = 1.0
 
-let MAX_TEXT_FRAC:            CGFloat = 0.5     // maximum fraction of view to give to the textual part
-var LABEL_FONT:               String  = "Helvetica"
-var DEFAULT_FONT_SIZE:        CGFloat = 12.0    // we'll try to use this font size
-var MIN_FONT_SIZE:            CGFloat = 10.0    // this is the minimum font size, after that, we'll truncate
+let MAX_TEXT_FRAC:                 CGFloat = 0.5     // maximum fraction of view to give to the textual part
+var LABEL_FONT:                    String  = "Helvetica"
+var DEFAULT_FONT_SIZE:             CGFloat = 12.0    // we'll try to use this font size
+var MIN_FONT_SIZE:                 CGFloat = 10.0    // this is the minimum font size, after that, we'll truncate
 
 // WhiskerSparkLine
 

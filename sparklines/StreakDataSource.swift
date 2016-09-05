@@ -10,34 +10,40 @@ import UIKit
 
 struct StreakDataSource: WhiskerSparkLineDataSource {
 
-  var    selectedStreakLength: Int = 4
+  var    selectedStreakLength: Int = 3
   var    tickInterval:         Int = 5
 
   var    values: [Double] {
     didSet {
-      whiskerInfo = prepareDataSourceForWhiskerView( values )
-      longestRun  = whiskerInfo.longest
-      streakMap   = whiskerInfo.map
-      boxedValues = whiskerInfo.boxedValues
+      prepareData( values )
+    }
+  }
+  var    streakType:          ActivityState = .Active {
+    didSet {
+      prepareData( values )
     }
   }
   
-  var    boxedValues:        [NSNumber]? = []
-  var    selectedStreakState: ActivityState = .Active
+  var    boxedValues:         [NSNumber]? = []
+  var    streaks:             [Int:Int] = [:]
   var    streakMap:           [Bool]? = []
   var    longestRun:          Int? = 0
   
   var whiskerInfo: (longest: Int, map: [Bool], boxedValues: [NSNumber])
     = (longest: 0, map: [], boxedValues: [])
 
-  init( values: [Double]) {
-    self.values = values
-    selectedStreakState = .Active
+  init( values: [Double], streakLength: Int ) {
+    self.values               = values
+    self.selectedStreakLength = streakLength
+    streakType                = .Active
+    prepareData( values )
+  }
+  
+  mutating func prepareData( values: [Double] ) {
     whiskerInfo = prepareDataSourceForWhiskerView( values )
     longestRun  = whiskerInfo.longest
     streakMap   = whiskerInfo.map
     boxedValues = whiskerInfo.boxedValues
-
   }
   
   // MARK: Sparkline data source methods

@@ -64,6 +64,21 @@ public class WhiskerSparkLineView: UIView, WhiskerSparkLinePlotter {
     }
   }
   
+  // Flag to enable the display of the range overlay (default: NO).
+  var showHighlightOverlay: Bool = false
+    {
+    didSet {
+      self.setNeedsDisplay()
+    }
+  }
+  // The UIColor used for the range overlay.
+  var highlightOverlayColor: UIColor = DEFAULT_HIGHLIGHT_OVERLAY_COL
+    {
+    didSet {
+      self.setNeedsDisplay()
+    }
+  }
+  
   // The UIColor used for the sparkline colour itself
   var penColor: UIColor = PEN_COL
   

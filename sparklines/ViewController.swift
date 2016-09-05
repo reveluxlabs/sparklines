@@ -18,19 +18,19 @@ class ViewController: UIViewController {
   @IBOutlet weak var sparkLineView6: LineSparkLineView!
   
   @IBOutlet weak var sparkLineView7: WhiskerSparkLineView!
-  
   @IBOutlet weak var sparkLineView8: WhiskerSparkLineView!
+  
   var allSparklines: [LineSparkLineView] = []
   
-  var glucoseData: [NSNumber]     = []
+  var glucoseData:     [NSNumber] = []
   var temperatureData: [NSNumber] = []
-  var heartRateData: [NSNumber]   = []
-  var baseballData: [NSNumber]   = []
+  var heartRateData:   [NSNumber] = []
+  var baseballData:    [NSNumber] = []
 
-  let glucoseMinLimit: Float = 5.0
-  let glucoseMaxLimit: Float = 6.8
-  let tempMinLimit: Float = 36.9
-  let tempMaxLimit: Float = 37.4
+  let glucoseMinLimit:   Float = 5.0
+  let glucoseMaxLimit:   Float = 6.8
+  let tempMinLimit:      Float = 36.9
+  let tempMaxLimit:      Float = 37.4
   let heartRateMinLimit: Float = 45
   let heartRateMaxLimit: Float = 85
   
@@ -147,24 +147,26 @@ class ViewController: UIViewController {
                      sparkLineView4, sparkLineView5, sparkLineView6]
     
     let unboxedBaseball = baseballData.map({ $0.doubleValue })
-    sparkLineView7.labelText          = "games"
-    sparkLineView7.labelFont          = "Baskerville"
-    sparkLineView7.dataSource         = StreakDataSource( values: unboxedBaseball)
-    sparkLineView7.xIncrement         = 3.0
-    sparkLineView7.currentValueFormat = " %.0f"
-    sparkLineView7.labelColor         = scarlet
-    sparkLineView7.penWidth           = 1.0
-    sparkLineView7.centerSparkLine    = false
+    sparkLineView7.labelText            = "games"
+    sparkLineView7.labelFont            = "Baskerville"
+    sparkLineView7.dataSource           = StreakDataSource( values: unboxedBaseball, streakLength: 4 )
+    sparkLineView7.xIncrement           = 3.0
+    sparkLineView7.currentValueFormat   = " %.0f"
+    sparkLineView7.labelColor           = scarlet
+    sparkLineView7.penWidth             = 1.0
+    sparkLineView7.centerSparkLine      = false
+    sparkLineView7.showHighlightOverlay = true
 
     let randomBaseball = generateRandomRecord( 96, losses: 66 )
-    sparkLineView8.labelText          = ""
-    sparkLineView8.labelFont          = "Baskerville"
-    sparkLineView8.dataSource         = StreakDataSource( values: randomBaseball)
-    sparkLineView8.xIncrement         = 3.0
-    sparkLineView8.currentValueFormat = "    %.0f"
-    sparkLineView8.labelColor         = scarlet
-    sparkLineView8.penWidth           = 1.0
-    sparkLineView8.centerSparkLine    = false
+    sparkLineView8.labelText            = ""
+    sparkLineView8.labelFont            = "Baskerville"
+    sparkLineView8.dataSource           = StreakDataSource( values: randomBaseball, streakLength: 4 )
+    sparkLineView8.xIncrement           = 3.0
+    sparkLineView8.currentValueFormat   = "    %.0f"
+    sparkLineView8.labelColor           = scarlet
+    sparkLineView8.penWidth             = 1.0
+    sparkLineView8.centerSparkLine      = false
+    sparkLineView8.showHighlightOverlay = true
   }
   
   func generateRandomRecord( wins: Int, losses: Int ) -> [Double] {
@@ -234,7 +236,7 @@ class ViewController: UIViewController {
   @IBAction func regenerateSeason(sender: AnyObject) {
     
     let randomBaseball        = generateRandomRecord( 96, losses: 66 )
-    sparkLineView8.dataSource = StreakDataSource( values: randomBaseball)
+    sparkLineView8.dataSource = StreakDataSource( values: randomBaseball, streakLength: 4 )
     
     sparkLineView8.setNeedsDisplay()
   }

@@ -11,7 +11,9 @@ import UIKit
 protocol WhiskerSparkLinePlotter: SparkLinePlotter {
   var dataSource:              WhiskerSparkLineDataSource? {get set}
   var showLabel:               Bool     {get set}
+  var showHighlightOverlay:    Bool     {get set}
   var labelColor:              UIColor  {get set}
+  var highlightOverlayColor:   UIColor  {get set}
   var xIncrement:              CGFloat  {get set}
   var whiskerColor:            UIColor  {get set}
   var highlightedWhiskerColor: UIColor  {get set}
@@ -43,7 +45,6 @@ extension WhiskerSparkLinePlotter where Self: UIView {
     //
     //    configureOverlay( &plotSpace, upperLimit: rangeOverlayUpperLimit , lowerLimit: rangeOverlayLowerLimit )
     //
-    //    drawOverlayIfEnabled( &plotSpace, context: context )
     
     // For whiskers, X scale is set to a fixed value
     // dataValues may be empty if we are using SparkLineDataSource
@@ -65,8 +66,13 @@ extension WhiskerSparkLinePlotter where Self: UIView {
     if centerSparkLine {
        plotSpace.xOffsetToCenter = xOffsetToCenterWhiskers( dataValues, xInc: xinc )
     }
+    
+    // overlay needs to go under...
+
+    drawOverlayIfEnabled( &plotSpace, context: context )
 
     drawValues( dataValues, plotSpace: &plotSpace, xInc: xinc, yInc: yinc, context: context)
+
   }
   
   func pointCount( dataValues: [NSNumber] ) -> Int {
@@ -209,10 +215,8 @@ extension WhiskerSparkLinePlotter where Self: UIView {
   }
   
   func validateYPos(value: AnyObject, yInc: Float, index: Int, plotSpace: PlotSpace) -> CGFloat {
-    // Hook method
     var ypos: CGFloat = 0.0
     
-    // warning and zero value for any non-NSNumber objects
     if value.isKindOfClass(NSNumber) {
       ypos = yPlotValue(Float(plotSpace.fullHeight),
                         yInc: Float(yInc),
@@ -228,6 +232,37 @@ extension WhiskerSparkLinePlotter where Self: UIView {
                         penWidth: Float(penWidth))
     }
     return ypos
+  }
+  
+  func drawOverlayIfEnabled( inout plotSpace: PlotSpace, context: CGContextRef) {
+    
+    if let ds = dataSource {
+      // show the graph overlay if (still) enabled
+      if showHighlightOverlay {
+        
+        var originY: CGFloat
+        let sizeY = plotSpace.maxWhiskerHeight - GRAPH_Y_BORDER
+        
+        if ds.streakType.rawValue == 1 {
+          originY = plotSpace.fullHeight/2.0 - sizeY
+        } else {
+          originY = plotSpace.fullHeight/2.0
+        }
+        
+        for (_, run) in ds.streaks.enumerate() {
+          
+          let originX = GRAPH_X_BORDER + (CGFloat(run.0) * plotSpace.xInc!) + 0.5
+          let sizeX   = CGFloat(run.1-1) * plotSpace.xInc!
+          
+          highlightOverlayColor.setFill()
+          let overlayRect = CGRectMake(originX, originY, sizeX, sizeY)
+          CGContextFillRect(context, overlayRect)
+        }
+      }
+
+    } else {
+      print("Warning: whisker overlays must be enabled with a data source")
+    }
   }
   
   @inline(__always)
