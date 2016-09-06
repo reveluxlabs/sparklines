@@ -1,5 +1,5 @@
 # sparklines
-Sparkines and Whisker Sparklines for Swift
+Sparklines and Whisker Sparklines for Swift
 
 A complete rewrite of [Andy Belsey's](https://github.com/abelsey/Sparklines) objective-c implementation of sparklines with the addition of whisker sparklines.
 
