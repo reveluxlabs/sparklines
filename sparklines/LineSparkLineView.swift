@@ -9,6 +9,7 @@
 import UIKit
 
 public class LineSparkLineView: UIView, LineSparkLinePlotter {
+
   // MARK: Stored Properties
   
   // Array of NSNumber values to display
