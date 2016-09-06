@@ -53,18 +53,18 @@ protocol SparkLinePlotter: class {
   func configureView()
   func computeMaxMin(values: [NSNumber]) -> (max: NSNumber?, min: NSNumber?)
   func drawRect(rect: CGRect)
-  func drawGraphInContext(inout plotSpace: PlotSpace, dataValues: [NSNumber], context: CGContextRef )
-  func drawSparkline( labelText: String, bounds: CGRect, dataMinimum: Float, dataMaximum: Float, dataValues: [NSNumber], context: CGContextRef )
+  func drawGraphInContext(inout plotSpace: PlotSpace, dataValues: [NSNumber], renderer: Renderer )
+  func drawSparkline( labelText: String, bounds: CGRect, dataMinimum: Float, dataMaximum: Float, dataValues: [NSNumber], renderer: Renderer )
   func createSparkLabel(labelText: String, value: Float, bounds: CGRect, values: [NSNumber]) -> SparkLineLabel
   func formattedGraphText( graphText: String, formattedValue: String, showValue: Bool) -> String
   func formattedLabelValue( currentValue: Float ) -> String
-  func drawLabelAndValue( sparkLabel: SparkLineLabel, context: CGContextRef )
+  func drawLabelAndValue( sparkLabel: SparkLineLabel, renderer: Renderer )
   func valueForLabel() -> Float
   func xInc(values: [NSNumber], penWidth: CGFloat, plotSpace: PlotSpace) -> CGFloat
   func yInc(penWidth: CGFloat, plotSpace: PlotSpace) -> Float
-  func selectPenWidth(penWidth: CGFloat, context: CGContextRef)
+  func selectPenWidth(penWidth: CGFloat, renderer: Renderer)
   func selectPenColor(penColor: UIColor)
-  func drawValues( values: [NSNumber], inout plotSpace: PlotSpace, xInc: CGFloat, yInc: Float, context: CGContextRef )
+  func drawValues( values: [NSNumber], inout plotSpace: PlotSpace, xInc: CGFloat, yInc: Float, renderer: Renderer )
   func validateYPos(value: AnyObject, yInc: Float, index: Int, plotSpace: PlotSpace) -> CGFloat
   func yPlotValue(maxHeight: Float, yInc: Float, val: Float, offset: Float, penWidth: Float) -> CGFloat
 }
@@ -130,7 +130,7 @@ extension SparkLinePlotter where Self: UIView {
     return (max, min)
   }
   
-  func drawSparkline( text: String, bounds: CGRect, dataMinimum: Float, dataMaximum: Float, dataValues: [NSNumber], context: CGContextRef ) {
+  func drawSparkline( text: String, bounds: CGRect, dataMinimum: Float, dataMaximum: Float, dataValues: [NSNumber], renderer: Renderer ) {
     
     // Template method for drawning the sparkline
 
@@ -161,7 +161,7 @@ extension SparkLinePlotter where Self: UIView {
     
     // Draw the graph
     
-    drawGraphInContext( &plotSpace, dataValues: dataValues, context: context)
+    drawGraphInContext( &plotSpace, dataValues: dataValues, renderer: renderer)
     
     // And then the label
     // whiskerTextStartX needed to left justify the whisker label
@@ -169,7 +169,7 @@ extension SparkLinePlotter where Self: UIView {
     sparkLabel.whiskerTextStartX = GRAPH_X_BORDER +
       plotSpace.xInc!*CGFloat(plotSpace.numberOfPoints!) + plotSpace.xOffsetToCenter
     
-    drawLabelAndValue(sparkLabel, context: context)
+    drawLabelAndValue(sparkLabel, renderer: renderer)
   }
   
   func yInc(penWidth: CGFloat, plotSpace: PlotSpace) -> Float {
@@ -178,13 +178,13 @@ extension SparkLinePlotter where Self: UIView {
     return (Float(plotSpace.sparkHeight) - Float(penWidth)) / (plotSpace.graphMax - plotSpace.graphMin)
   }
   
-  func selectPenWidth(penWidth: CGFloat, context: CGContextRef) {
+  func selectPenWidth(penWidth: CGFloat, renderer: Renderer) {
     // ensure the pen is a suitable width for the device we are on (i.e. we use *pixels* and not points)
     let csf = self.contentScaleFactor
     if penWidth != 0.0 {
-      CGContextSetLineWidth(context, penWidth / csf)
+      renderer.setLineWidth( penWidth / csf )
     } else {
-      CGContextSetLineWidth(context, GRAPH_PEN_WIDTH / csf)
+      renderer.setLineWidth( GRAPH_PEN_WIDTH / csf )
     }
   }
   
@@ -198,14 +198,13 @@ extension SparkLinePlotter where Self: UIView {
   }
   
   func formattedLabelValue( currentValue: Float ) -> String {
-    
     let result = " ".stringByAppendingFormat(currentValueFormat, currentValue )
     
     return result
   }
 
-  func drawValues( values: [NSNumber], inout plotSpace: PlotSpace, xInc: CGFloat, yInc: Float, context: CGContextRef ) {
-    CGContextBeginPath(context)
+  func drawValues( values: [NSNumber], inout plotSpace: PlotSpace, xInc: CGFloat, yInc: Float, renderer: Renderer ) {
+    renderer.beginPath()
     
     // iterate over the data items, plotting the graph path
     for (index, value) in values.enumerate() {
@@ -214,14 +213,14 @@ extension SparkLinePlotter where Self: UIView {
       let ypos: CGFloat = validateYPos( value, yInc: yInc, index: index, plotSpace: plotSpace )
       
       if (index > 0) {
-        CGContextAddLineToPoint(context, xpos, ypos)
+        renderer.lineTo( CGPointMake(xpos, ypos) )
       } else {
-        CGContextMoveToPoint(context, xpos, ypos)
+        renderer.moveTo( CGPointMake(xpos, ypos) )
       }
     }
     
     // draw the graph line (path)
-    CGContextStrokePath(context)
+    renderer.strokePath()
   }
   
 }

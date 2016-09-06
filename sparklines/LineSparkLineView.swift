@@ -125,7 +125,7 @@ public class LineSparkLineView: UIView, LineSparkLinePlotter {
                   dataMinimum: dataMinimum!.floatValue,
                   dataMaximum: dataMaximum!.floatValue,
                   dataValues:  dataValues!,
-                  context:     context!)
+                  renderer:    context!)
   }
 
 }

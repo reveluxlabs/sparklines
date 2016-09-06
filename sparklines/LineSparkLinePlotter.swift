@@ -26,8 +26,8 @@ protocol LineSparkLinePlotter: SparkLinePlotter {
   
   func disableOverlayIfLimitsInconsistent( showOverlay: Bool, upperLimit: NSNumber?, lowerLimit: NSNumber? ) -> Bool
   func configureOverlay( inout plotSpace: PlotSpace, upperLimit: NSNumber?, lowerLimit: NSNumber? )
-  func drawOverlayIfEnabled( inout plotSpace: PlotSpace, context: CGContextRef)
-  func drawValueMarker(values: [NSNumber], inout plotSpace: PlotSpace, xInc: CGFloat, yInc: Float, context: CGContextRef)
+  func drawOverlayIfEnabled( inout plotSpace: PlotSpace, renderer: Renderer)
+  func drawValueMarker(values: [NSNumber], inout plotSpace: PlotSpace, xInc: CGFloat, yInc: Float, renderer: Renderer)
 }
 
 extension LineSparkLinePlotter where Self: UIView {
@@ -53,13 +53,13 @@ extension LineSparkLinePlotter where Self: UIView {
     rangeOverlayLowerLimit = dataMinimum
   }
   
-  func drawGraphInContext(inout plotSpace: PlotSpace, dataValues: [NSNumber], context: CGContextRef ) {
+  func drawGraphInContext(inout plotSpace: PlotSpace, dataValues: [NSNumber], renderer: Renderer ) {
     
     showRangeOverlay = disableOverlayIfLimitsInconsistent( showRangeOverlay, upperLimit: rangeOverlayUpperLimit , lowerLimit: rangeOverlayLowerLimit )
     
     configureOverlay( &plotSpace, upperLimit: rangeOverlayUpperLimit , lowerLimit: rangeOverlayLowerLimit )
     
-    drawOverlayIfEnabled( &plotSpace, context: context )
+    drawOverlayIfEnabled( &plotSpace, renderer: renderer )
     
     // X scale is set to show all values
     
@@ -69,16 +69,16 @@ extension LineSparkLinePlotter where Self: UIView {
     
     let yinc = yInc(penWidth, plotSpace: plotSpace)
     
-    selectPenWidth(penWidth, context: context)
+    selectPenWidth(penWidth, renderer: renderer)
     
     selectPenColor(penColor)
     
-    drawValues( dataValues, plotSpace: &plotSpace, xInc: xinc, yInc: yinc, context: context)
+    drawValues( dataValues, plotSpace: &plotSpace, xInc: xinc, yInc: yinc, renderer: renderer)
     
     // draw the value marker circle, if requested
     
     if showCurrentValue {
-      drawValueMarker( dataValues, plotSpace: &plotSpace, xInc: xinc, yInc: yinc, context: context )
+      drawValueMarker( dataValues, plotSpace: &plotSpace, xInc: xinc, yInc: yinc, renderer: renderer )
     }
   }
   
@@ -107,7 +107,7 @@ extension LineSparkLinePlotter where Self: UIView {
     return graphText
   }
   
-  func drawLabelAndValue( sparkLabel: SparkLineLabel, context: CGContextRef ) {
+  func drawLabelAndValue( sparkLabel: SparkLineLabel, renderer: Renderer ) {
     // first we draw the label using the specified font
     var textStart  = CGPointMake(sparkLabel.textStartX, sparkLabel.textStartY)
     
@@ -115,13 +115,13 @@ extension LineSparkLinePlotter where Self: UIView {
     
     // conditionally draw the current value in the chosen colour
     if showCurrentValue {
-      CGContextSaveGState(context)
+      renderer.saveState()
       currentValueColor.setFill()
       textStart = CGPointMake(sparkLabel.textStartX + sparkLabel.labelDrawnSize.width, sparkLabel.textStartY)
       
       sparkLabel.formattedLabelValue.drawAtPoint(textStart, withAttributes:sparkLabel.attributes)
       
-      CGContextRestoreGState(context)
+      renderer.restoreState()
     }
   }
   
@@ -166,7 +166,7 @@ extension LineSparkLinePlotter where Self: UIView {
     }
   }
   
-  func drawOverlayIfEnabled( inout plotSpace: PlotSpace, context: CGContextRef) {
+  func drawOverlayIfEnabled( inout plotSpace: PlotSpace, renderer: Renderer) {
     
     // default: undefined overlay limit means "no limit", so overlay will extend to view border
     
@@ -198,7 +198,7 @@ extension LineSparkLinePlotter where Self: UIView {
       
       rangeOverlayColor.setFill()
       let overlayRect = CGRectMake(GRAPH_X_BORDER, CGFloat(overlayOrigin), plotSpace.sparkWidth, overlayHeight)
-      CGContextFillRect(context, overlayRect)
+      renderer.fillRect(overlayRect)
     }
   }
   
@@ -208,7 +208,7 @@ extension LineSparkLinePlotter where Self: UIView {
     return plotSpace.sparkWidth / CGFloat(values.count - 1)
   }
   
-  func drawValueMarker(values: [NSNumber], inout plotSpace: PlotSpace, xInc: CGFloat, yInc: Float, context: CGContextRef) {
+  func drawValueMarker(values: [NSNumber], inout plotSpace: PlotSpace, xInc: CGFloat, yInc: Float, renderer: Renderer) {
     let markX = xInc * CGFloat(values.count-1) + GRAPH_X_BORDER
     let markY = yPlotValue(Float(plotSpace.fullHeight),
                            yInc: yInc,
@@ -226,7 +226,7 @@ extension LineSparkLinePlotter where Self: UIView {
     
     let markRect = CGRectMake(markX - (markSize/2.0), markY - (markSize/2.0), markSize, markSize)
     currentValueColor.setFill()
-    CGContextFillEllipseInRect(context, markRect)
+    renderer.fillEllipse(markRect)
   }
   
   func validateYPos(value: AnyObject, yInc: Float, index: Int, plotSpace: PlotSpace) -> CGFloat {

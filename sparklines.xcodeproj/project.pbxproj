@@ -18,6 +18,8 @@
 		D45D733D1D79F21E00C4531B /* LineSparkLinePlotter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D733C1D79F21E00C4531B /* LineSparkLinePlotter.swift */; };
 		D45D733F1D79F27700C4531B /* WhiskerSparkLinePlotter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D733E1D79F27700C4531B /* WhiskerSparkLinePlotter.swift */; };
 		D45D73431D7B4D7900C4531B /* TestDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D73421D7B4D7900C4531B /* TestDataSource.swift */; };
+		D45D73451D7E147700C4531B /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D73441D7E147700C4531B /* Renderer.swift */; };
+		D45D73471D7E4F6E00C4531B /* TestRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D73461D7E4F6E00C4531B /* TestRenderer.swift */; };
 		D497E9AD1D6D1C37004CD872 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D497E9AC1D6D1C37004CD872 /* AppDelegate.swift */; };
 		D497E9AF1D6D1C37004CD872 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D497E9AE1D6D1C37004CD872 /* ViewController.swift */; };
 		D497E9B21D6D1C37004CD872 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D497E9B01D6D1C37004CD872 /* Main.storyboard */; };
@@ -40,6 +42,8 @@
 		D45D733C1D79F21E00C4531B /* LineSparkLinePlotter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineSparkLinePlotter.swift; sourceTree = "<group>"; };
 		D45D733E1D79F27700C4531B /* WhiskerSparkLinePlotter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhiskerSparkLinePlotter.swift; sourceTree = "<group>"; };
 		D45D73421D7B4D7900C4531B /* TestDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDataSource.swift; sourceTree = "<group>"; };
+		D45D73441D7E147700C4531B /* Renderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		D45D73461D7E4F6E00C4531B /* TestRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestRenderer.swift; sourceTree = "<group>"; };
 		D497E9A91D6D1C37004CD872 /* sparklines.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sparklines.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D497E9AC1D6D1C37004CD872 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D497E9AE1D6D1C37004CD872 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -69,8 +73,8 @@
 				D45D732E1D72664700C4531B /* SparkLinePlotter.swift */,
 				D45D733C1D79F21E00C4531B /* LineSparkLinePlotter.swift */,
 				D45D733E1D79F27700C4531B /* WhiskerSparkLinePlotter.swift */,
-				D45D73381D79F17000C4531B /* PlotSpace.swift */,
-				D45D733A1D79F1C800C4531B /* SparkLineLabel.swift */,
+				D45D73441D7E147700C4531B /* Renderer.swift */,
+				D45D73461D7E4F6E00C4531B /* TestRenderer.swift */,
 			);
 			name = "SparkLine Protocols";
 			sourceTree = "<group>";
@@ -83,6 +87,17 @@
 				D45D73421D7B4D7900C4531B /* TestDataSource.swift */,
 			);
 			name = "Data Sources";
+			sourceTree = "<group>";
+		};
+		D45D73481D7E51E700C4531B /* data */ = {
+			isa = PBXGroup;
+			children = (
+				D45D732C1D71B92200C4531B /* baseball_data.txt */,
+				D497E9C01D6D2956004CD872 /* glucose_data.txt */,
+				D497E9C11D6D2956004CD872 /* heartRate_data.txt */,
+				D497E9C21D6D2956004CD872 /* temperature_data.txt */,
+			);
+			name = data;
 			sourceTree = "<group>";
 		};
 		D497E9A01D6D1C37004CD872 = {
@@ -109,14 +124,13 @@
 				D45D73401D79F2B700C4531B /* SparkLine Protocols */,
 				D45D73281D6F832600C4531B /* LineSparkLineView.swift */,
 				D45D732A1D6F837800C4531B /* WhiskerSparkLineView.swift */,
+				D45D73381D79F17000C4531B /* PlotSpace.swift */,
+				D45D733A1D79F1C800C4531B /* SparkLineLabel.swift */,
 				D45D73411D79F2CE00C4531B /* Data Sources */,
 				D497E9B01D6D1C37004CD872 /* Main.storyboard */,
 				D497E9B31D6D1C37004CD872 /* Assets.xcassets */,
 				D497E9B51D6D1C37004CD872 /* LaunchScreen.storyboard */,
-				D45D732C1D71B92200C4531B /* baseball_data.txt */,
-				D497E9C01D6D2956004CD872 /* glucose_data.txt */,
-				D497E9C11D6D2956004CD872 /* heartRate_data.txt */,
-				D497E9C21D6D2956004CD872 /* temperature_data.txt */,
+				D45D73481D7E51E700C4531B /* data */,
 				D497E9B81D6D1C37004CD872 /* Info.plist */,
 			);
 			path = sparklines;
@@ -202,6 +216,8 @@
 				D45D73431D7B4D7900C4531B /* TestDataSource.swift in Sources */,
 				D45D733D1D79F21E00C4531B /* LineSparkLinePlotter.swift in Sources */,
 				D45D73291D6F832600C4531B /* LineSparkLineView.swift in Sources */,
+				D45D73451D7E147700C4531B /* Renderer.swift in Sources */,
+				D45D73471D7E4F6E00C4531B /* TestRenderer.swift in Sources */,
 				D45D73371D79A53D00C4531B /* StreakDataSource.swift in Sources */,
 				D45D733F1D79F27700C4531B /* WhiskerSparkLinePlotter.swift in Sources */,
 				D45D732B1D6F837800C4531B /* WhiskerSparkLineView.swift in Sources */,

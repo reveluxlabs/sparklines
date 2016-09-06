@@ -129,10 +129,10 @@ public class WhiskerSparkLineView: UIView, WhiskerSparkLinePlotter {
                   dataMinimum: -1,
                   dataMaximum: 1,
                   dataValues:  dataValues!,
-                  context:     context!)
+                  renderer: context! )
   }
   
-  func drawValues( values: [NSNumber], inout plotSpace: PlotSpace, xInc: CGFloat, yInc: Float, context: CGContextRef ) {
+  func drawValues( values: [NSNumber], inout plotSpace: PlotSpace, xInc: CGFloat, yInc: Float, renderer: Renderer ) {
     // Retrieves the data and draws the binary outcome sparkline--whiskers, axis and tick marks.
     // Height and width for the sparkline are derived from the view bounds less borders.
   
@@ -143,7 +143,7 @@ public class WhiskerSparkLineView: UIView, WhiskerSparkLinePlotter {
     var lastXPos: CGFloat = 0.0;
     let centerY  = plotSpace.fullHeight/2.0
   
-    CGContextBeginPath(context)
+    renderer.beginPath()
   
     var numberOfPoints: Int = 0
     
@@ -183,13 +183,13 @@ public class WhiskerSparkLineView: UIView, WhiskerSparkLinePlotter {
     
       // Draw the whisker
     
-      drawWhiskerAtXpos(xpos, ypos:ypos, centerY:centerY, context:context)
+      drawWhiskerAtXpos(xpos, ypos:ypos, centerY:centerY, renderer: renderer)
     
       // And a tick mark if needed
       
       if let ds = dataSource {
         if ds.tickForIndex( self, index: index ) {
-          drawTickAtXpos( xpos,  xinc: xInc, tickColor: tickColor, plotSpace: plotSpace, context: context)
+          drawTickAtXpos( xpos,  xinc: xInc, tickColor: tickColor, plotSpace: plotSpace, renderer: renderer)
         }
       }
       
@@ -199,11 +199,11 @@ public class WhiskerSparkLineView: UIView, WhiskerSparkLinePlotter {
     // Draw the last tick
     
     xpos = (xInc * CGFloat(numberOfPoints)) + GRAPH_X_BORDER + plotSpace.xOffsetToCenter
-    drawTickAtXpos(xpos, xinc:xInc, tickColor:tickColor, plotSpace: plotSpace, context:context)
+    drawTickAtXpos(xpos, xinc:xInc, tickColor:tickColor, plotSpace: plotSpace, renderer: renderer)
     
     // And add the x axis
     
-    drawAxisToXpos(lastXPos, xOffset: plotSpace.xOffsetToCenter, ypos: ypos, centerY:centerY, context:context)
+    drawAxisToXpos(lastXPos, xOffset: plotSpace.xOffsetToCenter, ypos: ypos, centerY:centerY, renderer: renderer)
   }
   
 }
