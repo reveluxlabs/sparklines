@@ -22,6 +22,9 @@
 		D45D73471D7E4F6E00C4531B /* TestRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D73461D7E4F6E00C4531B /* TestRenderer.swift */; };
 		D45D73601D7EDBEF00C4531B /* SparklineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D735F1D7EDBEF00C4531B /* SparklineTests.swift */; };
 		D45D73921D7EE49600C4531B /* Cartfile.private in Resources */ = {isa = PBXBuildFile; fileRef = D45D73911D7EE49600C4531B /* Cartfile.private */; };
+		D45D73961D7EEC3800C4531B /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D45D73951D7EEC3800C4531B /* Nimble.framework */; };
+		D45D73991D7EED8100C4531B /* SparkLinePlotterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D73981D7EED8100C4531B /* SparkLinePlotterTests.swift */; };
+		D45D739B1D7EF64C00C4531B /* LineSparkLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D739A1D7EF64C00C4531B /* LineSparkLine.swift */; };
 		D497E9AD1D6D1C37004CD872 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D497E9AC1D6D1C37004CD872 /* AppDelegate.swift */; };
 		D497E9AF1D6D1C37004CD872 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D497E9AE1D6D1C37004CD872 /* ViewController.swift */; };
 		D497E9B21D6D1C37004CD872 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D497E9B01D6D1C37004CD872 /* Main.storyboard */; };
@@ -60,6 +63,9 @@
 		D45D735F1D7EDBEF00C4531B /* SparklineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparklineTests.swift; sourceTree = "<group>"; };
 		D45D73611D7EDBEF00C4531B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D45D73911D7EE49600C4531B /* Cartfile.private */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; };
+		D45D73951D7EEC3800C4531B /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = sparklines/Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
+		D45D73981D7EED8100C4531B /* SparkLinePlotterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SparkLinePlotterTests.swift; sourceTree = "<group>"; };
+		D45D739A1D7EF64C00C4531B /* LineSparkLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineSparkLine.swift; sourceTree = "<group>"; };
 		D497E9A91D6D1C37004CD872 /* sparklines.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sparklines.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D497E9AC1D6D1C37004CD872 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D497E9AE1D6D1C37004CD872 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -77,6 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D45D73961D7EEC3800C4531B /* Nimble.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				D45D735F1D7EDBEF00C4531B /* SparklineTests.swift */,
+				D45D73981D7EED8100C4531B /* SparkLinePlotterTests.swift */,
 				D45D73611D7EDBEF00C4531B /* Info.plist */,
 			);
 			path = SparklineTests;
@@ -135,6 +143,7 @@
 		D497E9A01D6D1C37004CD872 = {
 			isa = PBXGroup;
 			children = (
+				D45D73951D7EEC3800C4531B /* Nimble.framework */,
 				D497E9AB1D6D1C37004CD872 /* sparklines */,
 				D45D735E1D7EDBEF00C4531B /* SparklineTests */,
 				D497E9AA1D6D1C37004CD872 /* Products */,
@@ -158,6 +167,7 @@
 				D497E9AE1D6D1C37004CD872 /* ViewController.swift */,
 				D45D73401D79F2B700C4531B /* SparkLine Protocols */,
 				D45D73281D6F832600C4531B /* LineSparkLineView.swift */,
+				D45D739A1D7EF64C00C4531B /* LineSparkLine.swift */,
 				D45D732A1D6F837800C4531B /* WhiskerSparkLineView.swift */,
 				D45D73381D79F17000C4531B /* PlotSpace.swift */,
 				D45D733A1D79F1C800C4531B /* SparkLineLabel.swift */,
@@ -181,6 +191,7 @@
 				D45D73591D7EDBEF00C4531B /* Sources */,
 				D45D735A1D7EDBEF00C4531B /* Frameworks */,
 				D45D735B1D7EDBEF00C4531B /* Resources */,
+				D45D73971D7EEC8500C4531B /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -273,11 +284,29 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		D45D73971D7EEC8500C4531B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/sparklines/Carthage/Build/iOS/Nimble.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		D45D73591D7EDBEF00C4531B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D45D73991D7EED8100C4531B /* SparkLinePlotterTests.swift in Sources */,
 				D45D73601D7EDBEF00C4531B /* SparklineTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -289,6 +318,7 @@
 				D45D733B1D79F1C800C4531B /* SparkLineLabel.swift in Sources */,
 				D497E9AF1D6D1C37004CD872 /* ViewController.swift in Sources */,
 				D45D73431D7B4D7900C4531B /* TestDataSource.swift in Sources */,
+				D45D739B1D7EF64C00C4531B /* LineSparkLine.swift in Sources */,
 				D45D733D1D79F21E00C4531B /* LineSparkLinePlotter.swift in Sources */,
 				D45D73291D6F832600C4531B /* LineSparkLineView.swift in Sources */,
 				D45D73451D7E147700C4531B /* Renderer.swift in Sources */,
@@ -337,6 +367,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/sparklines/Carthage/Build/Mac",
+					"$(PROJECT_DIR)/sparklines/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = SparklineTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.reveluxlabs.SparklineTests;
@@ -349,6 +384,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/sparklines/Carthage/Build/Mac",
+					"$(PROJECT_DIR)/sparklines/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = SparklineTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.reveluxlabs.SparklineTests;
@@ -474,6 +514,7 @@
 				D45D73661D7EDBEF00C4531B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D497E9A41D6D1C37004CD872 /* Build configuration list for PBXProject "sparklines" */ = {
 			isa = XCConfigurationList;
