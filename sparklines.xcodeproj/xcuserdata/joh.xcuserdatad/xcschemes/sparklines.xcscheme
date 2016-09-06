@@ -28,6 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D45D734C1D7EDA2200C4531B"
+               BuildableName = "sparklinesTests.xctest"
+               BlueprintName = "sparklinesTests"
+               ReferencedContainer = "container:sparklines.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D45D735C1D7EDBEF00C4531B"
+               BuildableName = "SparklineTests.xctest"
+               BlueprintName = "SparklineTests"
+               ReferencedContainer = "container:sparklines.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

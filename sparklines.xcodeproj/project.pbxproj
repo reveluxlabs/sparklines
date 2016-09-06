@@ -20,6 +20,8 @@
 		D45D73431D7B4D7900C4531B /* TestDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D73421D7B4D7900C4531B /* TestDataSource.swift */; };
 		D45D73451D7E147700C4531B /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D73441D7E147700C4531B /* Renderer.swift */; };
 		D45D73471D7E4F6E00C4531B /* TestRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D73461D7E4F6E00C4531B /* TestRenderer.swift */; };
+		D45D73601D7EDBEF00C4531B /* SparklineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D735F1D7EDBEF00C4531B /* SparklineTests.swift */; };
+		D45D73921D7EE49600C4531B /* Cartfile.private in Resources */ = {isa = PBXBuildFile; fileRef = D45D73911D7EE49600C4531B /* Cartfile.private */; };
 		D497E9AD1D6D1C37004CD872 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D497E9AC1D6D1C37004CD872 /* AppDelegate.swift */; };
 		D497E9AF1D6D1C37004CD872 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D497E9AE1D6D1C37004CD872 /* ViewController.swift */; };
 		D497E9B21D6D1C37004CD872 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D497E9B01D6D1C37004CD872 /* Main.storyboard */; };
@@ -29,6 +31,16 @@
 		D497E9C41D6D2956004CD872 /* heartRate_data.txt in Resources */ = {isa = PBXBuildFile; fileRef = D497E9C11D6D2956004CD872 /* heartRate_data.txt */; };
 		D497E9C51D6D2956004CD872 /* temperature_data.txt in Resources */ = {isa = PBXBuildFile; fileRef = D497E9C21D6D2956004CD872 /* temperature_data.txt */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D45D73621D7EDBEF00C4531B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D497E9A11D6D1C37004CD872 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D497E9A81D6D1C37004CD872;
+			remoteInfo = sparklines;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		D45D73281D6F832600C4531B /* LineSparkLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineSparkLineView.swift; sourceTree = "<group>"; };
@@ -44,6 +56,10 @@
 		D45D73421D7B4D7900C4531B /* TestDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDataSource.swift; sourceTree = "<group>"; };
 		D45D73441D7E147700C4531B /* Renderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		D45D73461D7E4F6E00C4531B /* TestRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestRenderer.swift; sourceTree = "<group>"; };
+		D45D735D1D7EDBEF00C4531B /* SparklineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SparklineTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D45D735F1D7EDBEF00C4531B /* SparklineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparklineTests.swift; sourceTree = "<group>"; };
+		D45D73611D7EDBEF00C4531B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D45D73911D7EE49600C4531B /* Cartfile.private */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; };
 		D497E9A91D6D1C37004CD872 /* sparklines.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sparklines.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D497E9AC1D6D1C37004CD872 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D497E9AE1D6D1C37004CD872 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -57,6 +73,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		D45D735A1D7EDBEF00C4531B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D497E9A61D6D1C37004CD872 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -100,10 +123,20 @@
 			name = data;
 			sourceTree = "<group>";
 		};
+		D45D735E1D7EDBEF00C4531B /* SparklineTests */ = {
+			isa = PBXGroup;
+			children = (
+				D45D735F1D7EDBEF00C4531B /* SparklineTests.swift */,
+				D45D73611D7EDBEF00C4531B /* Info.plist */,
+			);
+			path = SparklineTests;
+			sourceTree = "<group>";
+		};
 		D497E9A01D6D1C37004CD872 = {
 			isa = PBXGroup;
 			children = (
 				D497E9AB1D6D1C37004CD872 /* sparklines */,
+				D45D735E1D7EDBEF00C4531B /* SparklineTests */,
 				D497E9AA1D6D1C37004CD872 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -112,6 +145,7 @@
 			isa = PBXGroup;
 			children = (
 				D497E9A91D6D1C37004CD872 /* sparklines.app */,
+				D45D735D1D7EDBEF00C4531B /* SparklineTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -120,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				D497E9AC1D6D1C37004CD872 /* AppDelegate.swift */,
+				D45D73911D7EE49600C4531B /* Cartfile.private */,
 				D497E9AE1D6D1C37004CD872 /* ViewController.swift */,
 				D45D73401D79F2B700C4531B /* SparkLine Protocols */,
 				D45D73281D6F832600C4531B /* LineSparkLineView.swift */,
@@ -139,6 +174,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		D45D735C1D7EDBEF00C4531B /* SparklineTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D45D73641D7EDBEF00C4531B /* Build configuration list for PBXNativeTarget "SparklineTests" */;
+			buildPhases = (
+				D45D73591D7EDBEF00C4531B /* Sources */,
+				D45D735A1D7EDBEF00C4531B /* Frameworks */,
+				D45D735B1D7EDBEF00C4531B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D45D73631D7EDBEF00C4531B /* PBXTargetDependency */,
+			);
+			name = SparklineTests;
+			productName = SparklineTests;
+			productReference = D45D735D1D7EDBEF00C4531B /* SparklineTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		D497E9A81D6D1C37004CD872 /* sparklines */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D497E9BB1D6D1C37004CD872 /* Build configuration list for PBXNativeTarget "sparklines" */;
@@ -166,8 +219,13 @@
 				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = "Revelux Labs LLC";
 				TargetAttributes = {
+					D45D735C1D7EDBEF00C4531B = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = D497E9A81D6D1C37004CD872;
+					};
 					D497E9A81D6D1C37004CD872 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = SWF4TFN485;
 					};
 				};
 			};
@@ -185,11 +243,19 @@
 			projectRoot = "";
 			targets = (
 				D497E9A81D6D1C37004CD872 /* sparklines */,
+				D45D735C1D7EDBEF00C4531B /* SparklineTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		D45D735B1D7EDBEF00C4531B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D497E9A71D6D1C37004CD872 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -197,6 +263,7 @@
 				D497E9B71D6D1C37004CD872 /* LaunchScreen.storyboard in Resources */,
 				D497E9C41D6D2956004CD872 /* heartRate_data.txt in Resources */,
 				D497E9C31D6D2956004CD872 /* glucose_data.txt in Resources */,
+				D45D73921D7EE49600C4531B /* Cartfile.private in Resources */,
 				D497E9C51D6D2956004CD872 /* temperature_data.txt in Resources */,
 				D45D732D1D71B92200C4531B /* baseball_data.txt in Resources */,
 				D497E9B41D6D1C37004CD872 /* Assets.xcassets in Resources */,
@@ -207,6 +274,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		D45D73591D7EDBEF00C4531B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D45D73601D7EDBEF00C4531B /* SparklineTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D497E9A51D6D1C37004CD872 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -230,6 +305,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		D45D73631D7EDBEF00C4531B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D497E9A81D6D1C37004CD872 /* sparklines */;
+			targetProxy = D45D73621D7EDBEF00C4531B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		D497E9B01D6D1C37004CD872 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -250,6 +333,30 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		D45D73651D7EDBEF00C4531B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = SparklineTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.reveluxlabs.SparklineTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/sparklines.app/sparklines";
+			};
+			name = Debug;
+		};
+		D45D73661D7EDBEF00C4531B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = SparklineTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.reveluxlabs.SparklineTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/sparklines.app/sparklines";
+			};
+			name = Release;
+		};
 		D497E9B91D6D1C37004CD872 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -337,6 +444,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = sparklines/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.reveluxlabs.sparklines;
@@ -348,6 +456,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = sparklines/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.reveluxlabs.sparklines;
@@ -358,6 +467,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		D45D73641D7EDBEF00C4531B /* Build configuration list for PBXNativeTarget "SparklineTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D45D73651D7EDBEF00C4531B /* Debug */,
+				D45D73661D7EDBEF00C4531B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		D497E9A41D6D1C37004CD872 /* Build configuration list for PBXProject "sparklines" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
