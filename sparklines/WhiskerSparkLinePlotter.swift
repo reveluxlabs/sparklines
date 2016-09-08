@@ -18,33 +18,39 @@ protocol WhiskerSparkLinePlotter: SparkLinePlotter {
   var whiskerColor:            UIColor  {get set}
   var highlightedWhiskerColor: UIColor  {get set}
   var tickWidth:               CGFloat  {get set}
+  var tickColor:               UIColor  {get set}
   var longestRun:              Int?     {get set}
   var centerSparkLine:         Bool     {get set}
   
   func pointCount( dataValues: [NSNumber] ) -> Int
-  func xOffsetToCenterWhiskers(dataValues: [NSNumber], xInc: CGFloat ) -> CGFloat
-  func selectTickPenWidth( tickWidth: CGFloat, renderer: Renderer )
-  func selectTimePenWidth( timeWidth: CGFloat, renderer: Renderer )
+  func xOffsetToCenterWhiskers(dataValues: [NSNumber], viewWidth: CGFloat, xInc: CGFloat ) -> CGFloat
+  func selectTickPenWidth( tickWidth: CGFloat, scaleFactor: CGFloat, renderer: Renderer )
+  func selectTimePenWidth( timeWidth: CGFloat, scaleFactor: CGFloat, renderer: Renderer )
   func drawWhiskerAtXpos( xpos: CGFloat, ypos: CGFloat, centerY: CGFloat, renderer: Renderer)
   func drawTickAtXpos( xpos: CGFloat,  xinc: CGFloat, tickColor: UIColor, plotSpace: PlotSpace, renderer: Renderer)
   func drawAxisToXpos( xpos:CGFloat, xOffset: CGFloat, ypos:CGFloat, centerY: CGFloat, renderer: Renderer )
 }
 
-extension WhiskerSparkLinePlotter where Self: UIView {
+extension WhiskerSparkLinePlotter {
   
-  func initialize(data: [NSNumber], label: String) {
+  mutating func initialize(data: [NSNumber], label: String) {
     dataValues = data
     computeRanges(dataValues!)
-    configureView()
-    self.setNeedsDisplay()
+  }
+  
+  mutating func computeRanges(dataValues: [NSNumber]) {
+    var values: [NSNumber]
+    if let ds = dataSource {
+      values = ds.dataValues
+    } else {
+      values = dataValues
+    }
+    let computedValues = computeMaxMin( values )
+    dataMaximum = computedValues.max
+    dataMinimum = computedValues.min
   }
   
   func drawGraphInContext(inout plotSpace: PlotSpace, dataValues: [NSNumber], renderer: Renderer ) {
-    
-    //    showRangeOverlay = disableOverlayIfLimitsInconsistent( showRangeOverlay, upperLimit: rangeOverlayUpperLimit , lowerLimit: rangeOverlayLowerLimit )
-    //
-    //    configureOverlay( &plotSpace, upperLimit: rangeOverlayUpperLimit , lowerLimit: rangeOverlayLowerLimit )
-    //
     
     // For whiskers, X scale is set to a fixed value
     // dataValues may be empty if we are using SparkLineDataSource
@@ -58,13 +64,13 @@ extension WhiskerSparkLinePlotter where Self: UIView {
     
     let yinc = yInc(penWidth, plotSpace: plotSpace)
     
-    selectPenWidth(penWidth, renderer: renderer)
+    selectPenWidth(penWidth, scaleFactor: 2.0, renderer: renderer)
     
-    selectPenColor(penColor)
+    selectPenColor(penColor, renderer: renderer)
     
     // Needed for drawValues
     if centerSparkLine {
-       plotSpace.xOffsetToCenter = xOffsetToCenterWhiskers( dataValues, xInc: xinc )
+      plotSpace.xOffsetToCenter = xOffsetToCenterWhiskers( dataValues, viewWidth: plotSpace.fullWidth, xInc: xinc )
     }
     
     // overlay needs to go under...
@@ -86,12 +92,11 @@ extension WhiskerSparkLinePlotter where Self: UIView {
     return numberOfPoints
   }
   
-  func xOffsetToCenterWhiskers(dataValues: [NSNumber], xInc: CGFloat ) -> CGFloat {
+  func xOffsetToCenterWhiskers(dataValues: [NSNumber], viewWidth: CGFloat, xInc: CGFloat ) -> CGFloat {
     var xOffsetToCenter: CGFloat?
     
     let numberOfPoints = pointCount(dataValues)
     
-    let viewWidth = self.bounds.size.width
     let graphWidth = xInc * CGFloat(numberOfPoints)
     let delta = viewWidth - graphWidth
     xOffsetToCenter = delta/2.0
@@ -109,28 +114,16 @@ extension WhiskerSparkLinePlotter where Self: UIView {
   }
   
   func createSparkLabel(labelText: String, value: Float, bounds: CGRect, values: [NSNumber]) -> SparkLineLabel {
-    let sparkLabel = SparkLineLabel(bounds: self.bounds,
+    let sparkLabel = SparkLineLabel(bounds: bounds,
                                     count: values.count,
                                     text: labelText,
                                     font: labelFont,
                                     value: value,
                                     showValue: showLabel,
                                     valueColor: labelColor,
-                                    valueFormat: currentValueFormat)
+                                    valueFormat: currentValueFormat,
+                                    reverse: true)
     return sparkLabel
-  }
-  
-  func formattedGraphText( graphText: String, formattedValue: String, showValue: Bool) -> String {
-    
-    var graphText = labelText == nil ? "not set" : String(UTF8String: labelText!)!
-    
-    let formattedValue = formattedLabelValue(Float(longestRun!))
-    
-    if showLabel {
-      graphText = formattedValue + " " + graphText
-    }
-    
-    return graphText
   }
   
   func drawLabelAndValue( sparkLabel: SparkLineLabel, renderer: Renderer ) {
@@ -153,21 +146,21 @@ extension WhiskerSparkLinePlotter where Self: UIView {
     return Float(longestRun!)
   }
   
-  func selectTickPenWidth( tickWidth: CGFloat, renderer: Renderer ) {
+  func selectTickPenWidth( tickWidth: CGFloat, scaleFactor: CGFloat, renderer: Renderer ) {
     // Ensure the tick pen is a suitable width for the device we are on (i.e. we use *pixels* and not points)
     if (tickWidth != 0.0) {
-      renderer.setLineWidth( tickWidth / self.contentScaleFactor )
+      renderer.setLineWidth( tickWidth / scaleFactor )
     } else {
-      renderer.setLineWidth( TICK_PEN_WIDTH / self.contentScaleFactor )
+      renderer.setLineWidth( TICK_PEN_WIDTH / scaleFactor )
     }
   }
   
-  func selectTimePenWidth( timeWidth: CGFloat, renderer: Renderer) {
+  func selectTimePenWidth( timeWidth: CGFloat, scaleFactor: CGFloat, renderer: Renderer) {
     // Ensure the tick pen is a suitable width for the device we are on (i.e. we use *pixels* and not points)
     if (timeWidth != 0.0) {
-      renderer.setLineWidth( timeWidth / self.contentScaleFactor )
+      renderer.setLineWidth( timeWidth / scaleFactor )
     } else {
-      renderer.setLineWidth( TIME_PEN_WIDTH / self.contentScaleFactor )
+      renderer.setLineWidth( TIME_PEN_WIDTH / scaleFactor )
     }
   }
   
@@ -177,10 +170,85 @@ extension WhiskerSparkLinePlotter where Self: UIView {
     return xi
   }
   
+  // MARK: Drawing Methods
+  
+  func drawValues( values: [NSNumber], inout plotSpace: PlotSpace, xInc: CGFloat, yInc: Float, renderer: Renderer ) {
+    // Retrieves the data and draws the binary outcome sparkline--whiskers, axis and tick marks.
+    // Height and width for the sparkline are derived from the view bounds less borders.
+    
+    // Ghost White 248-248-255
+    // White Smoke 245-245-245
+    
+    var lastXPos: CGFloat = 0.0;
+    let centerY  = plotSpace.fullHeight/2.0
+    
+    renderer.beginPath()
+    
+    var numberOfPoints: Int = 0
+    
+    if let ds = dataSource {
+      numberOfPoints = ds.numberOfDataPoints(self)
+      
+    } else {
+      numberOfPoints = values.count
+    }
+    
+    var xpos:          CGFloat
+    var ypos:          CGFloat = 1.0
+    var value:         NSNumber?
+    var currentColor:  UIColor?
+    
+    for index in 0..<numberOfPoints {
+      
+      // Get the value and whisker color
+      
+      if let ds = dataSource {
+        value        = ds.dataPointForIndex(self, index: index)
+        currentColor = ds.whiskerColorForIndex(self, index: index)
+        
+      } else {
+        value        = values[index]
+        currentColor = whiskerColor
+      }
+      
+      // And set the stroke color
+      
+      renderer.setStroke(currentColor!)
+      
+      // Calculate the x & y positions
+      
+      xpos = (xInc * CGFloat(index)) + GRAPH_X_BORDER + plotSpace.xOffsetToCenter
+      ypos = validateYPos(value!, yInc:yInc, index:index, plotSpace: plotSpace)
+      
+      // Draw the whisker
+      
+      drawWhiskerAtXpos(xpos, ypos:ypos, centerY:centerY, renderer: renderer)
+      
+      // And a tick mark if needed
+      
+      if let ds = dataSource {
+        if ds.tickForIndex( self, index: index ) {
+          drawTickAtXpos( xpos,  xinc: xInc, tickColor: tickColor, plotSpace: plotSpace, renderer: renderer)
+        }
+      }
+      
+      lastXPos = xpos
+    }
+    
+    // Draw the last tick
+    
+    xpos = (xInc * CGFloat(numberOfPoints)) + GRAPH_X_BORDER + plotSpace.xOffsetToCenter
+    drawTickAtXpos(xpos, xinc:xInc, tickColor:tickColor, plotSpace: plotSpace, renderer: renderer)
+    
+    // And add the x axis
+    
+    drawAxisToXpos(lastXPos, xOffset: plotSpace.xOffsetToCenter, ypos: ypos, centerY:centerY, renderer: renderer)
+  }
+  
   func drawWhiskerAtXpos( xpos: CGFloat, ypos: CGFloat, centerY: CGFloat, renderer: Renderer) {
     //   Draw a whisker from (xpos,centerY) to (xpos, ypos) in context.
     
-    selectPenWidth(penWidth, renderer: renderer)
+    selectPenWidth(penWidth, scaleFactor: 2.0, renderer: renderer)
     renderer.moveTo( CGPointMake(xpos, centerY))
     renderer.lineTo( CGPointMake(xpos, ypos))
     renderer.closePath()
@@ -190,8 +258,8 @@ extension WhiskerSparkLinePlotter where Self: UIView {
   func drawTickAtXpos( xpos: CGFloat,  xinc: CGFloat, tickColor: UIColor, plotSpace: PlotSpace, renderer: Renderer) {
     // Draw a tick of color tickColor from (xpos-xinc, 0.0) to (xpos-xinc, self.fullHeight) in context.
     let xposGrid = xpos - 0.5 * xinc
-    tickColor.setStroke()
-    selectTickPenWidth(tickWidth, renderer: renderer)
+    renderer.setStroke(tickColor)
+    selectTickPenWidth(tickWidth, scaleFactor: 2.0, renderer: renderer)
     
     renderer.moveTo( CGPointMake(xposGrid, 0.0))
     renderer.lineTo( CGPointMake(xposGrid, plotSpace.fullHeight))
@@ -203,8 +271,8 @@ extension WhiskerSparkLinePlotter where Self: UIView {
   
   func drawAxisToXpos( xpos:CGFloat, xOffset: CGFloat, ypos:CGFloat, centerY: CGFloat, renderer: Renderer ) {
     
-    selectPenWidth(penWidth, renderer: renderer)
-    selectPenColor(penColor)
+    selectPenWidth(penWidth, scaleFactor: 2.0, renderer: renderer)
+    selectPenColor(penColor, renderer: renderer)
     
     renderer.moveTo( CGPointMake(0.0 + GRAPH_Y_BORDER + xOffset, centerY))
     renderer.lineTo( CGPointMake(xpos+0.5 , centerY))
@@ -254,7 +322,7 @@ extension WhiskerSparkLinePlotter where Self: UIView {
           let originX = GRAPH_X_BORDER + (CGFloat(run.0) * plotSpace.xInc!) + 0.5
           let sizeX   = CGFloat(run.1-1) * plotSpace.xInc!
           
-          highlightOverlayColor.setFill()
+          renderer.setFill(highlightOverlayColor)
           let overlayRect = CGRectMake(originX, originY, sizeX, sizeY)
           renderer.fillRect( overlayRect )
         }

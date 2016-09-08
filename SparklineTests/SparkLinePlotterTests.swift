@@ -22,10 +22,17 @@ class SparkLinePlotterTests: SparklineTests {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-      
+  
+//  func createAnonymousSparklineView() -> SparkLinePlotter {
+//    let view = LineSparkLineView(data: [], frame: CGRectZero, label: "")
+//    return view
+//  }
+//    
+//  func testCreate() {
+//
+//    let view = createAnonymousSparklineView()
+//    
+//    expect(view).notTo(beNil())
+//  }
+//      
 }

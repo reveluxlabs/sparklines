@@ -10,10 +10,12 @@ import UIKit
 
 struct PlotSpace {
   
+  var textWidth: CGFloat = 0.0        // needs to be set before -graphSize used
+  
   // calculate the view fraction that will be the graph
   var graphSize: CGFloat {
     get {
-      return (fullWidth * 0.95) - textWidth!
+      return (fullWidth * 0.95) - textWidth
     }
   }
 
@@ -23,8 +25,7 @@ struct PlotSpace {
       return graphSize / fullWidth
     }
   }
-  var textWidth: CGFloat?
-  
+
   // calculate the graph area and X & Y widths and scales
   var dataMin: Float
   var dataMax: Float
@@ -41,8 +42,9 @@ struct PlotSpace {
       return fullHeight - (2 * GRAPH_Y_BORDER)
     }
   }
-  let maxWhiskerHeight: CGFloat
-  var xOffsetToCenter:  CGFloat = 0.5
+  
+  let maxWhiskerHeight: CGFloat  = 10.0
+  var xOffsetToCenter:  CGFloat  = 0.5
   var xInc:             CGFloat? = 0.0
   var numberOfPoints:   Int?     = 0
   
@@ -54,8 +56,6 @@ struct PlotSpace {
     
     fullWidth  = CGRectGetWidth(bounds)
     fullHeight = CGRectGetHeight(bounds)
-    
-    maxWhiskerHeight = 10.0
     
     dataMin = dataMinimum
     dataMax = dataMaximum

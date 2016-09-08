@@ -6,27 +6,38 @@
 //  Copyright © 2016 Revelux Labs LLC. All rights reserved.
 //
 
-import CoreGraphics
+import UIKit
 
-struct TestRenderer : Renderer {
-  func moveTo(p: CGPoint) { print("moveTo(\(p.x), \(p.y))") }
+class TestRenderer : Renderer {
+  var commands: [String] = []
   
-  func lineTo(p: CGPoint) { print("lineTo(\(p.x), \(p.y))") }
+  func appendAndPrint( cmd: String ) {
+    commands.append(cmd)
+    print(cmd)
+  }
   
-  func saveState() { print("saveState()") }
+  func moveTo(p: CGPoint) { appendAndPrint("moveTo(\(p.x), \(p.y))") }
   
-  func restoreState() { print("restoreState()") }
+  func lineTo(p: CGPoint) { appendAndPrint("lineTo(\(p.x), \(p.y))") }
   
-  func fillRect( rect: CGRect ) { print("fillRect(\(rect))") }
+  func saveState() { appendAndPrint("saveState()") }
   
-  func fillEllipse( rect: CGRect ) { print("fillEllipse(\(rect))") }
+  func restoreState() { appendAndPrint("restoreState()") }
   
-  func setLineWidth( width: CGFloat )  { print("setLineWidth(\(width))") }
+  func fillRect( rect: CGRect ) { appendAndPrint("fillRect(\(rect))") }
   
-  func beginPath() { print("beginPath()") }
+  func fillEllipse( rect: CGRect ) { appendAndPrint("fillEllipse(\(rect))") }
   
-  func strokePath() { print("strokePath()") }
+  func setLineWidth( width: CGFloat ) { appendAndPrint("setLineWidth(\(width))") }
   
-  func closePath() { print("closePath()") }
+  func setStroke( color: UIColor ) { appendAndPrint("setStroke(\(color))") }
+  
+  func setFill( color: UIColor ) { appendAndPrint("setFill(\(color))") }
+  
+  func beginPath() { appendAndPrint("beginPath()") }
+  
+  func strokePath() { appendAndPrint("strokePath()") }
+  
+  func closePath() { appendAndPrint("closePath()") }
   
 }
