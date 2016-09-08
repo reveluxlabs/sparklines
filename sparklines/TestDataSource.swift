@@ -23,6 +23,8 @@ struct TestDataSource: SparkLineDataSource {
 
   func numberOfDataPoints( sparkLineView: SparkLinePlotter ) -> Int { return dataValues.count }
   
+  func values() -> [NSNumber] { return dataValues }
+  
   func whiskerColorForIndex( sparkLineView: SparkLinePlotter, index:Int ) -> UIColor  {
     var result = UIColor.blackColor()
     

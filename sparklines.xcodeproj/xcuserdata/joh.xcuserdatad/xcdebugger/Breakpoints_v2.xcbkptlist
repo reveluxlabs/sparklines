@@ -9,13 +9,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "sparklines/WhiskerSparkLineView.swift"
-            timestampString = "494621197.916483"
+            filePath = "sparklines/SparkLineDataSource.swift"
+            timestampString = "495028808.295527"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "127"
-            endingLineNumber = "127"
-            landmarkName = "drawRect(_:)"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
+            landmarkName = "findRuns(_:greaterThanOrEqual:binaryState:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

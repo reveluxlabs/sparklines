@@ -13,9 +13,11 @@ struct SparkLineLabel {
   let count:                     Int
   let labelText:                 String?
   let labelFont:                 String
-  let showCurrentValue:          Bool
+  var showValue:                 Bool
   let currentValueColor:         UIColor
   let currentValueFormat:        String
+
+  var reverse:                   Bool = false
   
   let sparkValue:                NSNumber?
   let maxTextWidth:              CGFloat
@@ -28,11 +30,21 @@ struct SparkLineLabel {
     }
   }
   
-  var formattedGraphText: String?
+  var formattedGraphText: String {
+    get {
+      var text = graphText
+      if showValue {
+        text = reverse ? formattedLabelValue + text : text + formattedLabelValue
+      }
+      
+      return text
+    }
+  }
   
   var formattedLabelValue: String {
     get {
-      return " ".stringByAppendingFormat(currentValueFormat, sparkValue!.floatValue )
+      let head = reverse ? "" : " "
+      return head.stringByAppendingFormat(currentValueFormat, sparkValue!.floatValue )
     }
   }
   
@@ -45,7 +57,7 @@ struct SparkLineLabel {
   // calculate the width the text would take with the specified font
   var textSize: CGSize {
     get {
-      return frameForText(formattedGraphText!,
+      return frameForText(formattedGraphText,
                           sizeWithFont:defaultLabelFont!,
                           constrainedToSize:CGSizeMake(maxTextWidth, DEFAULT_FONT_SIZE+4),
                           lineBreakMode:NSLineBreakMode.ByClipping)
@@ -99,16 +111,17 @@ struct SparkLineLabel {
                           lineBreakMode:NSLineBreakMode.ByClipping)
     }
   }
-  init( bounds: CGRect, count: Int, text: String, font: String, value: NSNumber, showValue: Bool, valueColor: UIColor, valueFormat: String) {
+  init( bounds: CGRect, count: Int, text: String, font: String, value: NSNumber, showValue: Bool, valueColor: UIColor, valueFormat: String, reverse: Bool) {
     self.bounds        = bounds
     self.count         = count
     maxTextWidth       = CGRectGetWidth(bounds) * MAX_TEXT_FRAC
     labelText          = text
     labelFont          = font
     sparkValue         = value
-    showCurrentValue   = showValue
+    self.showValue     = showValue
     currentValueColor  = valueColor
     currentValueFormat = valueFormat
+    self.reverse  = reverse
   }
   
   func frameForText( text: String, sizeWithFont font: UIFont, constrainedToSize maxSize: CGSize, lineBreakMode: NSLineBreakMode ) -> CGSize {

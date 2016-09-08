@@ -13,14 +13,14 @@ struct StreakDataSource: WhiskerSparkLineDataSource {
   var    selectedStreakLength: Int = 3
   var    tickInterval:         Int = 5
 
-  var    values: [Double] {
+  var    dataValues: [Double] {
     didSet {
-      prepareData( values )
+      prepareData( dataValues )
     }
   }
   var    streakType:          ActivityState = .Active {
     didSet {
-      prepareData( values )
+      prepareData( dataValues )
     }
   }
   
@@ -32,15 +32,15 @@ struct StreakDataSource: WhiskerSparkLineDataSource {
   var whiskerInfo: (longest: Int, map: [Bool], boxedValues: [NSNumber])
     = (longest: 0, map: [], boxedValues: [])
 
-  init( values: [Double], streakLength: Int ) {
-    self.values               = values
+  init( values dataValues: [Double], streakLength: Int ) {
+    self.dataValues               = dataValues
     self.selectedStreakLength = streakLength
     streakType                = .Active
-    prepareData( values )
+    prepareData( dataValues )
   }
   
-  mutating func prepareData( values: [Double] ) {
-    whiskerInfo = prepareDataSourceForWhiskerView( values )
+  mutating func prepareData( dataValues: [Double] ) {
+    whiskerInfo = prepareDataSourceForWhiskerView( dataValues )
     longestRun  = whiskerInfo.longest
     streakMap   = whiskerInfo.map
     boxedValues = whiskerInfo.boxedValues
@@ -55,9 +55,11 @@ struct StreakDataSource: WhiskerSparkLineDataSource {
     return result
   }
   
+  func values() -> [NSNumber] { return dataValues }
+  
   func whiskerColorForIndex( sparkLineView: SparkLinePlotter, index:Int ) -> UIColor {
 
-    let whiskerView = sparkLineView as! WhiskerSparkLineView
+    let whiskerView = sparkLineView as! WhiskerSparkLine
     if streakMap![index].boolValue {
       return whiskerView.highlightedWhiskerColor
     }

@@ -12,6 +12,7 @@ import UIKit
 protocol SparkLineDataSource {
   func dataPointForIndex( sparkLineView: SparkLinePlotter, index:Int) -> NSNumber
   func numberOfDataPoints( sparkLineView: SparkLinePlotter ) -> Int
+  func values() -> [NSNumber]
 }
 
 protocol WhiskerSparkLineDataSource: SparkLineDataSource {
@@ -19,7 +20,7 @@ protocol WhiskerSparkLineDataSource: SparkLineDataSource {
   var    selectedStreakLength: Int           {get set}
   var    tickInterval:         Int           {get set}
   
-  var    values:               [Double]      {get set}
+  var    dataValues:           [Double]      {get set}
   var    streakType:  ActivityState {get set}
   
   var    streaks:              [Int:Int]     {get set}
@@ -90,7 +91,7 @@ extension WhiskerSparkLineDataSource {
   
   func findRuns( boxedValues: [NSNumber], greaterThanOrEqual length: Int, binaryState type: ActivityState ) -> [Int:Int] {
     
-    var    streaks:              [Int:Int]? = [:]
+    var    streaks:              [Int:Int]? = [1:1]
     var    runLength:            Int        = 0
     var    lastWhiskerValue:     Float      = boxedValues[0].floatValue
     

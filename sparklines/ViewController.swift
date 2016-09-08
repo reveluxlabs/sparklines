@@ -108,65 +108,70 @@ class ViewController: UIViewController {
     let scarlet   = UIColor(red:0.99, green:0.14, blue:0.22, alpha:1.0)
     
     // small ones are 1 - 3
-    sparkLineView1.dataValues = glucoseData
-    sparkLineView1.labelText = "Glucose"
-    sparkLineView1.currentValueColor = darkRed
+    var lineSpark = LineSparkLine(data: glucoseData, label: "Glucose")
+    lineSpark.currentValueColor = darkRed
+    sparkLineView1.lineSpark = lineSpark
     
-    sparkLineView2.dataValues = temperatureData
-    sparkLineView2.labelText = "Temp"
-    sparkLineView2.currentValueColor = darkGreen
-    sparkLineView2.penColor = UIColor.blueColor()
-    sparkLineView2.penWidth = 2.0
+    lineSpark = LineSparkLine(data: temperatureData, label: "Temp")
+    lineSpark.currentValueColor = darkGreen
+    lineSpark.penColor = UIColor.blueColor()
+    lineSpark.penWidth = 2.0
+    sparkLineView2.lineSpark = lineSpark
     
-    sparkLineView3.dataValues = heartRateData
-    sparkLineView3.labelText = "Pulse";
-    sparkLineView3.currentValueColor = darkGreen
-    sparkLineView3.currentValueFormat = "%.0f"
-    sparkLineView3.penColor = scarlet
-    sparkLineView3.penWidth = 3.0
+    lineSpark = LineSparkLine(data: heartRateData, label: "Pulse")
+    lineSpark.currentValueColor = darkGreen
+    lineSpark.currentValueFormat = "%.0f"
+    lineSpark.penColor = scarlet
+    lineSpark.penWidth = 3.0
+    sparkLineView3.lineSpark = lineSpark
     
     // large ones are 4 - 6
-    sparkLineView4.dataValues = glucoseData
-    sparkLineView4.labelText = "Glucose"
-    sparkLineView4.currentValueColor = darkRed
+    lineSpark = LineSparkLine(data: glucoseData, label: "Glucose")
+    lineSpark.currentValueColor = darkRed
+    sparkLineView4.lineSpark = lineSpark
     
-    sparkLineView5.dataValues = temperatureData
-    sparkLineView5.labelText = "Temp"
-    sparkLineView5.currentValueColor = darkGreen
-    sparkLineView5.penColor = UIColor.blueColor()
-    sparkLineView5.penWidth = 3.0
+    lineSpark = LineSparkLine(data: temperatureData, label: "Temp")
+    lineSpark.currentValueColor = darkGreen
+    lineSpark.penColor = UIColor.blueColor()
+    lineSpark.penWidth = 3.0
+    sparkLineView5.lineSpark = lineSpark
     
-    sparkLineView6.dataValues = heartRateData
-    sparkLineView6.labelText = "Pulse"
-    sparkLineView6.currentValueColor = darkGreen
-    sparkLineView6.currentValueFormat = "%.0f"
-    sparkLineView6.penColor = scarlet
-    sparkLineView6.penWidth = 6.0
+    lineSpark = LineSparkLine(data: heartRateData, label: "Pulse")
+    lineSpark.currentValueColor = darkGreen
+    lineSpark.currentValueFormat = "%.0f"
+    lineSpark.penColor = scarlet
+    lineSpark.penWidth = 6.0
+    sparkLineView6.lineSpark = lineSpark
     
     allSparklines = [sparkLineView1, sparkLineView2, sparkLineView3,
                      sparkLineView4, sparkLineView5, sparkLineView6]
     
     let unboxedBaseball = baseballData.map({ $0.doubleValue })
-    sparkLineView7.labelText            = "games"
-    sparkLineView7.labelFont            = "Baskerville"
-    sparkLineView7.dataSource           = StreakDataSource( values: unboxedBaseball, streakLength: 4 )
-    sparkLineView7.xIncrement           = 3.0
-    sparkLineView7.currentValueFormat   = " %.0f"
-    sparkLineView7.labelColor           = scarlet
-    sparkLineView7.penWidth             = 1.0
-    sparkLineView7.centerSparkLine      = false
-    sparkLineView7.showHighlightOverlay = true
+  
+    var whiskerSpark = WhiskerSparkLine(data: [], label: "games")
+    whiskerSpark.dataSource = StreakDataSource( values: unboxedBaseball, streakLength: 4 )
+    whiskerSpark.labelText            = "games"
+    whiskerSpark.labelFont            = "Baskerville"
+    whiskerSpark.xIncrement           = 3.0
+    whiskerSpark.currentValueFormat   = " %.0f"
+    whiskerSpark.labelColor           = scarlet
+    whiskerSpark.penWidth             = 1.0
+    whiskerSpark.centerSparkLine      = false
+    whiskerSpark.showHighlightOverlay = true
+    sparkLineView7.whiskerSpark       = whiskerSpark
 
     let randomBaseball = generateRandomRecord( 96, losses: 66 )
-    sparkLineView8.labelText            = ""
-    sparkLineView8.labelFont            = "Baskerville"
-    sparkLineView8.dataSource           = StreakDataSource( values: randomBaseball, streakLength: 4 )
-    sparkLineView8.xIncrement           = 3.0
-    sparkLineView8.currentValueFormat   = "    %.0f"
-    sparkLineView8.labelColor           = scarlet
-    sparkLineView8.penWidth             = 1.0
-    sparkLineView8.centerSparkLine      = false
-    sparkLineView8.showHighlightOverlay = true
+
+    whiskerSpark = WhiskerSparkLine(data: [], label: "")
+    whiskerSpark.dataSource = StreakDataSource( values: randomBaseball, streakLength: 4 )
+    whiskerSpark.labelFont            = "Baskerville"
+    whiskerSpark.xIncrement           = 3.0
+    whiskerSpark.currentValueFormat   = "    %.0f"
+    whiskerSpark.labelColor           = scarlet
+    whiskerSpark.penWidth             = 1.0
+    whiskerSpark.centerSparkLine      = false
+    whiskerSpark.showHighlightOverlay = true
+    sparkLineView8.whiskerSpark       = whiskerSpark
   }
   
   func generateRandomRecord( wins: Int, losses: Int ) -> [Double] {
@@ -191,9 +196,9 @@ class ViewController: UIViewController {
   
   @IBAction func toggleCurrentValues(sender: AnyObject) {
     for (_, value) in allSparklines.enumerate() {
-      value.showCurrentValue = !value.showCurrentValue
+      value.lineSpark!.showCurrentValue = !value.lineSpark!.showCurrentValue
     
-      let buttonText = String(format:"%@ Current Values", sparkLineView1.showCurrentValue ? "Hide" : "Show")
+      let buttonText = String(format:"%@ Current Values", sparkLineView1.lineSpark!.showCurrentValue ? "Hide" : "Show")
       let button = sender as! UIButton
       button.setTitle( buttonText, forState:UIControlState.Normal)
     }
@@ -201,33 +206,33 @@ class ViewController: UIViewController {
 
   @IBAction func toggleShowOverlays(sender: AnyObject) {
     for (_, value) in allSparklines.enumerate() {
-      value.showRangeOverlay = !value.showRangeOverlay;
+      value.lineSpark!.showRangeOverlay = !value.lineSpark!.showRangeOverlay;
     
-      let buttonText = String(format:"%@ Range Overlays", sparkLineView1.showRangeOverlay ? "Hide" : "Show")
+      let buttonText = String(format:"%@ Range Overlays", sparkLineView1.lineSpark!.showRangeOverlay ? "Hide" : "Show")
       let button = sender as! UIButton
       button.setTitle( buttonText, forState:UIControlState.Normal)
     
       // if the overlays are enabled, we define the limits, otherwise we reset them (the view will auto-scale)
-      if (sparkLineView1.showRangeOverlay) {
+      if (sparkLineView1.lineSpark!.showRangeOverlay) {
         
-        sparkLineView1.rangeOverlayLowerLimit = glucoseMinLimit
-        sparkLineView1.rangeOverlayUpperLimit = glucoseMaxLimit
-        sparkLineView2.rangeOverlayLowerLimit = tempMinLimit
-        sparkLineView2.rangeOverlayUpperLimit = tempMaxLimit
-        sparkLineView3.rangeOverlayLowerLimit = heartRateMinLimit
-        sparkLineView3.rangeOverlayUpperLimit = heartRateMaxLimit
-        sparkLineView4.rangeOverlayLowerLimit = glucoseMinLimit
-        sparkLineView4.rangeOverlayUpperLimit = glucoseMaxLimit
-        sparkLineView5.rangeOverlayLowerLimit = tempMinLimit
-        sparkLineView5.rangeOverlayUpperLimit = tempMaxLimit
-        sparkLineView6.rangeOverlayLowerLimit = heartRateMinLimit
-        sparkLineView6.rangeOverlayUpperLimit = heartRateMaxLimit
+        sparkLineView1.lineSpark!.rangeOverlayLowerLimit = glucoseMinLimit
+        sparkLineView1.lineSpark!.rangeOverlayUpperLimit = glucoseMaxLimit
+        sparkLineView2.lineSpark!.rangeOverlayLowerLimit = tempMinLimit
+        sparkLineView2.lineSpark!.rangeOverlayUpperLimit = tempMaxLimit
+        sparkLineView3.lineSpark!.rangeOverlayLowerLimit = heartRateMinLimit
+        sparkLineView3.lineSpark!.rangeOverlayUpperLimit = heartRateMaxLimit
+        sparkLineView4.lineSpark!.rangeOverlayLowerLimit = glucoseMinLimit
+        sparkLineView4.lineSpark!.rangeOverlayUpperLimit = glucoseMaxLimit
+        sparkLineView5.lineSpark!.rangeOverlayLowerLimit = tempMinLimit
+        sparkLineView5.lineSpark!.rangeOverlayUpperLimit = tempMaxLimit
+        sparkLineView6.lineSpark!.rangeOverlayLowerLimit = heartRateMinLimit
+        sparkLineView6.lineSpark!.rangeOverlayUpperLimit = heartRateMaxLimit
         
       } else {
         // make them all nil, which will result in an auto-scale of the data values
         for (_, value) in allSparklines.enumerate() {
-          value.rangeOverlayLowerLimit = nil
-          value.rangeOverlayUpperLimit = nil
+          value.lineSpark!.rangeOverlayLowerLimit = nil
+          value.lineSpark!.rangeOverlayUpperLimit = nil
         }
       }
     }
@@ -235,8 +240,8 @@ class ViewController: UIViewController {
 
   @IBAction func regenerateSeason(sender: AnyObject) {
     
-    let randomBaseball        = generateRandomRecord( 96, losses: 66 )
-    sparkLineView8.dataSource = StreakDataSource( values: randomBaseball, streakLength: 4 )
+    let randomBaseball = generateRandomRecord( 96, losses: 66 )
+    sparkLineView8.whiskerSpark!.dataSource = StreakDataSource( values: randomBaseball, streakLength: 4 )
     
     sparkLineView8.setNeedsDisplay()
   }
