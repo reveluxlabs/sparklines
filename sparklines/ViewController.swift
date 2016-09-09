@@ -192,43 +192,45 @@ class ViewController: UIViewController {
   @IBAction func toggleCurrentValues(sender: AnyObject) {
     for (_, value) in allSparklines.enumerate() {
       value.lineSpark!.showCurrentValue = !value.lineSpark!.showCurrentValue
-    
-      let buttonText = String(format:"%@ Current Values", sparkLineView1.lineSpark!.showCurrentValue ? "Hide" : "Show")
-      let button = sender as! UIButton
-      button.setTitle( buttonText, forState:UIControlState.Normal)
+      value.setNeedsDisplay()
     }
+    
+    let buttonText = String(format:"%@ Current Values", sparkLineView1.lineSpark!.showCurrentValue ? "Hide" : "Show")
+    let button = sender as! UIButton
+    button.setTitle( buttonText, forState:UIControlState.Normal)
   }
 
   @IBAction func toggleShowOverlays(sender: AnyObject) {
     for (_, value) in allSparklines.enumerate() {
-      value.lineSpark!.showRangeOverlay = !value.lineSpark!.showRangeOverlay;
-    
-      let buttonText = String(format:"%@ Range Overlays", sparkLineView1.lineSpark!.showRangeOverlay ? "Hide" : "Show")
-      let button = sender as! UIButton
-      button.setTitle( buttonText, forState:UIControlState.Normal)
-    
-      // if the overlays are enabled, we define the limits, otherwise we reset them (the view will auto-scale)
-      if (sparkLineView1.lineSpark!.showRangeOverlay) {
-        
-        sparkLineView1.lineSpark!.rangeOverlayLowerLimit = glucoseMinLimit
-        sparkLineView1.lineSpark!.rangeOverlayUpperLimit = glucoseMaxLimit
-        sparkLineView2.lineSpark!.rangeOverlayLowerLimit = tempMinLimit
-        sparkLineView2.lineSpark!.rangeOverlayUpperLimit = tempMaxLimit
-        sparkLineView3.lineSpark!.rangeOverlayLowerLimit = heartRateMinLimit
-        sparkLineView3.lineSpark!.rangeOverlayUpperLimit = heartRateMaxLimit
-        sparkLineView4.lineSpark!.rangeOverlayLowerLimit = glucoseMinLimit
-        sparkLineView4.lineSpark!.rangeOverlayUpperLimit = glucoseMaxLimit
-        sparkLineView5.lineSpark!.rangeOverlayLowerLimit = tempMinLimit
-        sparkLineView5.lineSpark!.rangeOverlayUpperLimit = tempMaxLimit
-        sparkLineView6.lineSpark!.rangeOverlayLowerLimit = heartRateMinLimit
-        sparkLineView6.lineSpark!.rangeOverlayUpperLimit = heartRateMaxLimit
-        
-      } else {
-        // make them all nil, which will result in an auto-scale of the data values
-        for (_, value) in allSparklines.enumerate() {
-          value.lineSpark!.rangeOverlayLowerLimit = nil
-          value.lineSpark!.rangeOverlayUpperLimit = nil
-        }
+      value.lineSpark!.showRangeOverlay = !value.lineSpark!.showRangeOverlay
+      value.setNeedsDisplay()
+    }
+   
+    let buttonText = String(format:"%@ Range Overlays", sparkLineView1.lineSpark!.showRangeOverlay ? "Hide" : "Show")
+    let button = sender as! UIButton
+    button.setTitle( buttonText, forState:UIControlState.Normal)
+  
+    // if the overlays are enabled, we define the limits, otherwise we reset them (the view will auto-scale)
+    if (sparkLineView1.lineSpark!.showRangeOverlay) {
+      
+      sparkLineView1.lineSpark!.rangeOverlayLowerLimit = glucoseMinLimit
+      sparkLineView1.lineSpark!.rangeOverlayUpperLimit = glucoseMaxLimit
+      sparkLineView2.lineSpark!.rangeOverlayLowerLimit = tempMinLimit
+      sparkLineView2.lineSpark!.rangeOverlayUpperLimit = tempMaxLimit
+      sparkLineView3.lineSpark!.rangeOverlayLowerLimit = heartRateMinLimit
+      sparkLineView3.lineSpark!.rangeOverlayUpperLimit = heartRateMaxLimit
+      sparkLineView4.lineSpark!.rangeOverlayLowerLimit = glucoseMinLimit
+      sparkLineView4.lineSpark!.rangeOverlayUpperLimit = glucoseMaxLimit
+      sparkLineView5.lineSpark!.rangeOverlayLowerLimit = tempMinLimit
+      sparkLineView5.lineSpark!.rangeOverlayUpperLimit = tempMaxLimit
+      sparkLineView6.lineSpark!.rangeOverlayLowerLimit = heartRateMinLimit
+      sparkLineView6.lineSpark!.rangeOverlayUpperLimit = heartRateMaxLimit
+      
+    } else {
+      // make them all nil, which will result in an auto-scale of the data values
+      for (_, value) in allSparklines.enumerate() {
+        value.lineSpark!.rangeOverlayLowerLimit = nil
+        value.lineSpark!.rangeOverlayUpperLimit = nil
       }
     }
   }
