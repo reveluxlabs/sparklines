@@ -13,7 +13,7 @@ let GRAPH_Y_BORDER:                CGFloat = 2.0                                
 let DEFAULT_LABEL_COL:             UIColor = UIColor.darkGrayColor()                           // default label text colour
 let DEFAULT_CURRENTVALUE_COL:      UIColor = UIColor.blueColor()                               // default current value colour (including the anchor marker)
 let DEFAULT_OVERLAY_COL:           UIColor = UIColor(red:0.8, green:0.8, blue:0.8, alpha:1.0)  // default overlay colour (light gray)
-let DEFAULT_HIGHLIGHT_OVERLAY_COL: UIColor = UIColor(red:1.0, green:0.85, blue:0.8, alpha:1.0)  // default overlay colour (Cinderella)
+let DEFAULT_HIGHLIGHT_OVERLAY_COL: UIColor = UIColor(red:1.0, green:0.85, blue:0.8, alpha:1.0) // default overlay colour (Cinderella)
 let PEN_COL:                       UIColor = UIColor.blackColor()                              // default graph line colour (black)
 let DEFAULT_GRAPH_PEN_WIDTH:       CGFloat = 1.0
 
@@ -26,13 +26,13 @@ var MIN_FONT_SIZE:                 CGFloat = 10.0    // this is the minimum font
 
 let TIME_PEN_WIDTH:           CGFloat = 1.0
 let DEFAULT_TICK_PEN_WIDTH:   CGFloat = 4.0
-var TICK_PEN_WIDTH:           CGFloat = DEFAULT_TICK_PEN_WIDTH    // pen width for the graph line (in *pixels*)
+var TICK_PEN_WIDTH:           CGFloat = DEFAULT_TICK_PEN_WIDTH    // pen width for the tick line (in *pixels*)
 let MAX_WHISKER_HEIGHT:       Float   = 8.0
 
 
 protocol SparkLinePlotter {
   
-  var GRAPH_PEN_WIDTH:    CGFloat    {get}     // pen width for the graph line (in *pixels*)
+  var GRAPH_PEN_WIDTH:    CGFloat    {get}     // pen width for the line (in *pixels*)
   
   var dataValues:         [NSNumber]? {get set}
   var labelText:          String?     {get set}
@@ -45,13 +45,12 @@ protocol SparkLinePlotter {
   var dataMinimum:        NSNumber? {get set}
   var dataMaximum:        NSNumber? {get set}
   
-  init(data: [NSNumber], label: String)
   
   mutating func initialize(data: [NSNumber], label: String)
   mutating func computeRanges(dataValues: [NSNumber])
   func computeMaxMin(values: [NSNumber]) -> (max: NSNumber?, min: NSNumber?)
-  mutating func drawGraphInContext(inout plotSpace: PlotSpace, dataValues: [NSNumber], renderer: Renderer )
-  mutating func drawSparkline( labelText: String, bounds: CGRect, dataMinimum: Float, dataMaximum: Float, dataValues: [NSNumber], renderer: Renderer )
+  mutating func drawSparkLine(inout plotSpace: PlotSpace, dataValues: [NSNumber], renderer: Renderer )
+  mutating func draw( bounds: CGRect, renderer: Renderer )
   func createSparkLabel(labelText: String, value: Float, bounds: CGRect, values: [NSNumber]) -> SparkLineLabel
   func drawLabelAndValue( sparkLabel: SparkLineLabel, renderer: Renderer )
   func valueForLabel() -> Float
@@ -66,9 +65,9 @@ protocol SparkLinePlotter {
 
 extension SparkLinePlotter {
   
-  var GRAPH_PEN_WIDTH:   CGFloat    {return DEFAULT_GRAPH_PEN_WIDTH}    // pen width for the graph line (in *pixels*)
+  var GRAPH_PEN_WIDTH:   CGFloat  {return DEFAULT_GRAPH_PEN_WIDTH}    // pen width for the line (in *pixels*)
   
-  // Calculates the min and max values (for auto-scaling)
+  // Calculates the min and max values (for auto-scaling) for array of NSNumber
   func computeMaxMin(values: [NSNumber]) -> (max: NSNumber?, min: NSNumber?) {
     var min: NSNumber?
     var max: NSNumber?
@@ -104,7 +103,7 @@ extension SparkLinePlotter {
     return (max, min)
   }
   
-  mutating func drawSparkline( text: String, bounds: CGRect, dataMinimum: Float, dataMaximum: Float, dataValues: [NSNumber], renderer: Renderer ) {
+  mutating func draw( bounds: CGRect, renderer: Renderer ) {
     
     // Template method for drawning the sparkline
 
@@ -112,16 +111,16 @@ extension SparkLinePlotter {
     // -createSparkLabel is a seam for selecting label order (value+text vs text+value)
     
     let labelValue = valueForLabel()
-    var sparkLabel = createSparkLabel( text,
+    var sparkLabel = createSparkLabel( labelText!,
                                        value: labelValue,
                                        bounds: bounds,
-                                       values: dataValues )
+                                       values: dataValues! )
 
     // Create the plot space for the sparkline
     
     var plotSpace = PlotSpace(bounds: bounds,
-                              dataMinimum: dataMinimum,
-                              dataMaximum: dataMaximum)
+                              dataMinimum: dataMinimum!.floatValue,
+                              dataMaximum: dataMaximum!.floatValue)
 
     // Save the label size in the plot space
     // Depends on having formattedGraphText
@@ -130,29 +129,17 @@ extension SparkLinePlotter {
     
     // Draw the graph
     
-    drawGraphInContext( &plotSpace, dataValues: dataValues, renderer: renderer)
+    drawSparkLine( &plotSpace, dataValues: dataValues!, renderer: renderer)
     
     // And then the label
-    // whiskerTextStartX needed to left justify the whisker label
+    // -whiskerTextStartX needed to left justify the whisker label
     
-    sparkLabel.whiskerTextStartX = GRAPH_X_BORDER +
-      plotSpace.xInc!*CGFloat(plotSpace.numberOfPoints!) + plotSpace.xOffsetToCenter
+    let plotWidth = plotSpace.xInc!*CGFloat(plotSpace.numberOfPoints!)
+    sparkLabel.whiskerTextStartX =
+      GRAPH_X_BORDER + plotSpace.xOffsetToCenter + plotWidth
     
     drawLabelAndValue(sparkLabel, renderer: renderer)
   }
-  
-//  func formattedGraphText( labelText: String?, value: Float, formattedValue: String, showValue: Bool) -> String {
-//    
-//    var graphText = labelText == nil ? "not set" : String(UTF8String: labelText!)!
-//    
-//    let formattedValue = formattedLabelValue( value )
-//    
-//    if showValue {
-//      graphText = graphText + formattedValue
-//    }
-//    
-//    return graphText
-//  }
   
   func yInc(penWidth: CGFloat, plotSpace: PlotSpace) -> Float {
     // Y scale is auto-zoomed to specified limits (allowing for pen width)

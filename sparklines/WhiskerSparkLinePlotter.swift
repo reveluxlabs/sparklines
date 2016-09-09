@@ -22,6 +22,8 @@ protocol WhiskerSparkLinePlotter: SparkLinePlotter {
   var longestRun:              Int?     {get set}
   var centerSparkLine:         Bool     {get set}
   
+  init(data: [NSNumber], label: String, xIncrement: CGFloat, whiskerWidth: CGFloat)
+  
   func pointCount( dataValues: [NSNumber] ) -> Int
   func xOffsetToCenterWhiskers(dataValues: [NSNumber], viewWidth: CGFloat, xInc: CGFloat ) -> CGFloat
   func selectTickPenWidth( tickWidth: CGFloat, scaleFactor: CGFloat, renderer: Renderer )
@@ -35,6 +37,7 @@ extension WhiskerSparkLinePlotter {
   
   mutating func initialize(data: [NSNumber], label: String) {
     dataValues = data
+    labelText = label
     computeRanges(dataValues!)
   }
   
@@ -50,7 +53,7 @@ extension WhiskerSparkLinePlotter {
     dataMinimum = computedValues.min
   }
   
-  func drawGraphInContext(inout plotSpace: PlotSpace, dataValues: [NSNumber], renderer: Renderer ) {
+  func drawSparkLine(inout plotSpace: PlotSpace, dataValues: [NSNumber], renderer: Renderer ) {
     
     // For whiskers, X scale is set to a fixed value
     // dataValues may be empty if we are using SparkLineDataSource

@@ -148,27 +148,22 @@ class ViewController: UIViewController {
     
     let unboxedBaseball = baseballData.map({ $0.doubleValue })
   
-    var whiskerSpark = WhiskerSparkLine(data: [], label: "games")
+    var whiskerSpark = WhiskerSparkLine( data: [], label: "games", xIncrement: 3.0, whiskerWidth: 1.0 )
     whiskerSpark.dataSource = StreakDataSource( values: unboxedBaseball, streakLength: 4 )
-    whiskerSpark.labelText            = "games"
     whiskerSpark.labelFont            = "Baskerville"
-    whiskerSpark.xIncrement           = 3.0
     whiskerSpark.currentValueFormat   = " %.0f"
     whiskerSpark.labelColor           = scarlet
-    whiskerSpark.penWidth             = 1.0
     whiskerSpark.centerSparkLine      = false
     whiskerSpark.showHighlightOverlay = true
     sparkLineView7.whiskerSpark       = whiskerSpark
 
     let randomBaseball = generateRandomRecord( 96, losses: 66 )
 
-    whiskerSpark = WhiskerSparkLine(data: [], label: "")
+    whiskerSpark = WhiskerSparkLine( data: [], label: "", xIncrement: 3.0, whiskerWidth: 1.0 )
     whiskerSpark.dataSource = StreakDataSource( values: randomBaseball, streakLength: 4 )
     whiskerSpark.labelFont            = "Baskerville"
-    whiskerSpark.xIncrement           = 3.0
     whiskerSpark.currentValueFormat   = "    %.0f"
     whiskerSpark.labelColor           = scarlet
-    whiskerSpark.penWidth             = 1.0
     whiskerSpark.centerSparkLine      = false
     whiskerSpark.showHighlightOverlay = true
     sparkLineView8.whiskerSpark       = whiskerSpark
