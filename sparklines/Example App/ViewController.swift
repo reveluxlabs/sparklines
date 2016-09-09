@@ -101,7 +101,6 @@ class ViewController: UIViewController {
   }
   
   func setupViews() {
-    // we have two test views to load
     
     let darkRed   = UIColor(red:0.6, green:0.0, blue:0.0, alpha:1.0)
     let darkGreen = UIColor(red:0.0, green:0.6, blue:0.0, alpha:1.0)
@@ -145,6 +144,8 @@ class ViewController: UIViewController {
     
     allSparklines = [sparkLineView1, sparkLineView2, sparkLineView3,
                      sparkLineView4, sparkLineView5, sparkLineView6]
+    
+    // whisker views 
     
     let unboxedBaseball = baseballData.map({ $0.doubleValue })
   

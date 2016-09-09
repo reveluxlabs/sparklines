@@ -26,7 +26,7 @@ class WhiskerSparkLineTests: SparklineTests {
   // MARK: Factory methods
   
   func createAnonymousWhiskerSparkLine() -> WhiskerSparkLine {
-    let wsl = WhiskerSparkLine(data: [], label: "Test")
+    let wsl = WhiskerSparkLine( data: [], label: "Test", xIncrement: 3.0, whiskerWidth: 1.0 )
     return wsl
   }
   
@@ -222,26 +222,26 @@ class WhiskerSparkLineTests: SparklineTests {
                            "beginPath()",
                            "setStroke(UIDeviceWhiteColorSpace 0 1)",
                            "setLineWidth(0.5)",
-                           "moveTo(301.5, 20.0)",
-                           "lineTo(301.5, 12.0)",
+                           "moveTo(300.5, 20.0)",
+                           "lineTo(300.5, 12.0)",
                            "closePath()",
                            "strokePath()",
                            "setStroke(UIDeviceRGBColorSpace 0.960784 0.960784 0.960784 0.1)",
                            "setLineWidth(2.0)",
-                           "moveTo(300.5, 0.0)",
-                           "lineTo(300.5, 40.0)",
+                           "moveTo(299.0, 0.0)",
+                           "lineTo(299.0, 40.0)",
                            "closePath()",
                            "strokePath()",
                            "setStroke(UIDeviceRGBColorSpace 0.960784 0.960784 0.960784 0.1)",
                            "setLineWidth(2.0)",
-                           "moveTo(302.5, 0.0)",
-                           "lineTo(302.5, 40.0)",
+                           "moveTo(302.0, 0.0)",
+                           "lineTo(302.0, 40.0)",
                            "closePath()",
                            "strokePath()",
                            "setLineWidth(0.5)",
                            "setStroke(UIDeviceWhiteColorSpace 0 1)",
-                           "moveTo(301.5, 20.0)",
-                           "lineTo(302.0, 20.0)",
+                           "moveTo(300.5, 20.0)",
+                           "lineTo(301.0, 20.0)",
                            "closePath()",
                            "strokePath()"]
     
@@ -249,6 +249,4 @@ class WhiskerSparkLineTests: SparklineTests {
     assertThatCommandsEqual( renderer.commands, expected: whiskerCommands )
   }
   
-  
-
 }
