@@ -13,7 +13,7 @@ let GRAPH_Y_BORDER:                CGFloat = 2.0                                
 let DEFAULT_LABEL_COL:             UIColor = UIColor.darkGrayColor()                           // default label text colour
 let DEFAULT_CURRENTVALUE_COL:      UIColor = UIColor.blueColor()                               // default current value colour (including the anchor marker)
 let DEFAULT_OVERLAY_COL:           UIColor = UIColor(red:0.8, green:0.8, blue:0.8, alpha:1.0)  // default overlay colour (light gray)
-let DEFAULT_HIGHLIGHT_OVERLAY_COL: UIColor = UIColor(red:1.0, green:0.85, blue:0.8, alpha:1.0)  // default overlay colour (Cinderella)
+let DEFAULT_HIGHLIGHT_OVERLAY_COL: UIColor = UIColor(red:1.0, green:0.85, blue:0.8, alpha:1.0) // default overlay colour (Cinderella)
 let PEN_COL:                       UIColor = UIColor.blackColor()                              // default graph line colour (black)
 let DEFAULT_GRAPH_PEN_WIDTH:       CGFloat = 1.0
 
@@ -26,13 +26,13 @@ var MIN_FONT_SIZE:                 CGFloat = 10.0    // this is the minimum font
 
 let TIME_PEN_WIDTH:           CGFloat = 1.0
 let DEFAULT_TICK_PEN_WIDTH:   CGFloat = 4.0
-var TICK_PEN_WIDTH:           CGFloat = DEFAULT_TICK_PEN_WIDTH    // pen width for the graph line (in *pixels*)
+var TICK_PEN_WIDTH:           CGFloat = DEFAULT_TICK_PEN_WIDTH    // pen width for the tick line (in *pixels*)
 let MAX_WHISKER_HEIGHT:       Float   = 8.0
 
 
-protocol SparkLinePlotter: class {
+protocol SparkLinePlotter {
   
-  var GRAPH_PEN_WIDTH:    CGFloat    {get}     // pen width for the graph line (in *pixels*)
+  var GRAPH_PEN_WIDTH:    CGFloat    {get}     // pen width for the line (in *pixels*)
   
   var dataValues:         [NSNumber]? {get set}
   var labelText:          String?     {get set}
@@ -45,56 +45,29 @@ protocol SparkLinePlotter: class {
   var dataMinimum:        NSNumber? {get set}
   var dataMaximum:        NSNumber? {get set}
   
-  init(data: [NSNumber], frame: CGRect, label: String)
   
-  func awakeFromNib()
-  func initialize(data: [NSNumber], label: String)
-  func computeRanges(dataValues: [NSNumber])
-  func configureView()
+  mutating func initialize(data: [NSNumber], label: String)
+  mutating func computeRanges(dataValues: [NSNumber])
   func computeMaxMin(values: [NSNumber]) -> (max: NSNumber?, min: NSNumber?)
-  func drawRect(rect: CGRect)
-  func drawGraphInContext(inout plotSpace: PlotSpace, dataValues: [NSNumber], context: CGContextRef )
-  func drawSparkline( labelText: String, bounds: CGRect, dataMinimum: Float, dataMaximum: Float, dataValues: [NSNumber], context: CGContextRef )
+  mutating func drawSparkLine(inout plotSpace: PlotSpace, dataValues: [NSNumber], renderer: Renderer )
+  mutating func draw( bounds: CGRect, renderer: Renderer )
   func createSparkLabel(labelText: String, value: Float, bounds: CGRect, values: [NSNumber]) -> SparkLineLabel
-  func formattedGraphText( graphText: String, formattedValue: String, showValue: Bool) -> String
-  func formattedLabelValue( currentValue: Float ) -> String
-  func drawLabelAndValue( sparkLabel: SparkLineLabel, context: CGContextRef )
+  func drawLabelAndValue( sparkLabel: SparkLineLabel, renderer: Renderer )
   func valueForLabel() -> Float
   func xInc(values: [NSNumber], penWidth: CGFloat, plotSpace: PlotSpace) -> CGFloat
   func yInc(penWidth: CGFloat, plotSpace: PlotSpace) -> Float
-  func selectPenWidth(penWidth: CGFloat, context: CGContextRef)
-  func selectPenColor(penColor: UIColor)
-  func drawValues( values: [NSNumber], inout plotSpace: PlotSpace, xInc: CGFloat, yInc: Float, context: CGContextRef )
+  func selectPenWidth(penWidth: CGFloat, scaleFactor: CGFloat, renderer: Renderer)
+  func selectPenColor(penColor: UIColor, renderer: Renderer)
+  func drawValues( values: [NSNumber], inout plotSpace: PlotSpace, xInc: CGFloat, yInc: Float, renderer: Renderer )
   func validateYPos(value: AnyObject, yInc: Float, index: Int, plotSpace: PlotSpace) -> CGFloat
   func yPlotValue(maxHeight: Float, yInc: Float, val: Float, offset: Float, penWidth: Float) -> CGFloat
 }
 
-extension SparkLinePlotter where Self: UIView {
+extension SparkLinePlotter {
   
-  var GRAPH_PEN_WIDTH:   CGFloat    {return DEFAULT_GRAPH_PEN_WIDTH}    // pen width for the graph line (in *pixels*)
+  var GRAPH_PEN_WIDTH:   CGFloat  {return DEFAULT_GRAPH_PEN_WIDTH}    // pen width for the line (in *pixels*)
   
-  func awakeFromNib() {
-    configureView()
-  }
-  
-  func computeRanges(dataValues: [NSNumber]) {
-    let computedValues = computeMaxMin( dataValues )
-    dataMaximum = computedValues.max
-    dataMinimum = computedValues.min
-  }
-  
-  // configures the defaults (used in init or when waking from a nib)
-  func configureView() {
-    
-    // ensure we redraw correctly when resized
-    self.contentMode = UIViewContentMode.Redraw
-    
-    // and we have a nice rounded shape...
-    self.layer.masksToBounds = true
-    self.layer.cornerRadius = 5.0
-  }
-  
-  // Calculates the min and max values (for auto-scaling)
+  // Calculates the min and max values (for auto-scaling) for array of NSNumber
   func computeMaxMin(values: [NSNumber]) -> (max: NSNumber?, min: NSNumber?) {
     var min: NSNumber?
     var max: NSNumber?
@@ -125,34 +98,29 @@ extension SparkLinePlotter where Self: UIView {
           }
         }
       }               // for
-    }                 // end if
+    }                 // end else
     
     return (max, min)
   }
   
-  func drawSparkline( text: String, bounds: CGRect, dataMinimum: Float, dataMaximum: Float, dataValues: [NSNumber], context: CGContextRef ) {
+  mutating func draw( bounds: CGRect, renderer: Renderer ) {
     
     // Template method for drawning the sparkline
 
-    // Create the label
+    // Create the label (includes calculating the text width)
+    // -createSparkLabel is a seam for selecting label order (value+text vs text+value)
     
     let labelValue = valueForLabel()
-    var sparkLabel = createSparkLabel( text,
+    var sparkLabel = createSparkLabel( labelText!,
                                        value: labelValue,
                                        bounds: bounds,
-                                       values: dataValues )
-
-    // Format the label and calculate text width
-    
-    sparkLabel.formattedGraphText = formattedGraphText( sparkLabel.graphText,
-                                                        formattedValue:sparkLabel.formattedLabelValue,
-                                                        showValue: true )
+                                       values: dataValues! )
 
     // Create the plot space for the sparkline
     
     var plotSpace = PlotSpace(bounds: bounds,
-                              dataMinimum: dataMinimum,
-                              dataMaximum: dataMaximum)
+                              dataMinimum: dataMinimum!.floatValue,
+                              dataMaximum: dataMaximum!.floatValue)
 
     // Save the label size in the plot space
     // Depends on having formattedGraphText
@@ -161,15 +129,16 @@ extension SparkLinePlotter where Self: UIView {
     
     // Draw the graph
     
-    drawGraphInContext( &plotSpace, dataValues: dataValues, context: context)
+    drawSparkLine( &plotSpace, dataValues: dataValues!, renderer: renderer)
     
     // And then the label
-    // whiskerTextStartX needed to left justify the whisker label
+    // -whiskerTextStartX needed to left justify the whisker label
     
-    sparkLabel.whiskerTextStartX = GRAPH_X_BORDER +
-      plotSpace.xInc!*CGFloat(plotSpace.numberOfPoints!) + plotSpace.xOffsetToCenter
+    let plotWidth = plotSpace.xInc!*CGFloat(plotSpace.numberOfPoints!)
+    sparkLabel.whiskerTextStartX =
+      GRAPH_X_BORDER + plotSpace.xOffsetToCenter + plotWidth
     
-    drawLabelAndValue(sparkLabel, context: context)
+    drawLabelAndValue(sparkLabel, renderer: renderer)
   }
   
   func yInc(penWidth: CGFloat, plotSpace: PlotSpace) -> Float {
@@ -178,34 +147,26 @@ extension SparkLinePlotter where Self: UIView {
     return (Float(plotSpace.sparkHeight) - Float(penWidth)) / (plotSpace.graphMax - plotSpace.graphMin)
   }
   
-  func selectPenWidth(penWidth: CGFloat, context: CGContextRef) {
+  func selectPenWidth(penWidth: CGFloat, scaleFactor: CGFloat, renderer: Renderer) {
     // ensure the pen is a suitable width for the device we are on (i.e. we use *pixels* and not points)
-    let csf = self.contentScaleFactor
     if penWidth != 0.0 {
-      CGContextSetLineWidth(context, penWidth / csf)
+      renderer.setLineWidth( penWidth / scaleFactor )
     } else {
-      CGContextSetLineWidth(context, GRAPH_PEN_WIDTH / csf)
+      renderer.setLineWidth( GRAPH_PEN_WIDTH / scaleFactor )
     }
   }
   
-  func selectPenColor(penColor: UIColor) {
+  func selectPenColor(penColor: UIColor, renderer: Renderer) {
     // Customisation to allow pencolour changes
     if penColor != PEN_COL {
-      penColor.setStroke()
+      renderer.setStroke( penColor )
     } else {
-      PEN_COL.setStroke()
+      renderer.setStroke( PEN_COL )
     }
   }
   
-  func formattedLabelValue( currentValue: Float ) -> String {
-    
-    let result = " ".stringByAppendingFormat(currentValueFormat, currentValue )
-    
-    return result
-  }
-
-  func drawValues( values: [NSNumber], inout plotSpace: PlotSpace, xInc: CGFloat, yInc: Float, context: CGContextRef ) {
-    CGContextBeginPath(context)
+  func drawValues( values: [NSNumber], inout plotSpace: PlotSpace, xInc: CGFloat, yInc: Float, renderer: Renderer ) {
+    renderer.beginPath()
     
     // iterate over the data items, plotting the graph path
     for (index, value) in values.enumerate() {
@@ -214,14 +175,14 @@ extension SparkLinePlotter where Self: UIView {
       let ypos: CGFloat = validateYPos( value, yInc: yInc, index: index, plotSpace: plotSpace )
       
       if (index > 0) {
-        CGContextAddLineToPoint(context, xpos, ypos)
+        renderer.lineTo( CGPointMake(xpos, ypos) )
       } else {
-        CGContextMoveToPoint(context, xpos, ypos)
+        renderer.moveTo( CGPointMake(xpos, ypos) )
       }
     }
     
     // draw the graph line (path)
-    CGContextStrokePath(context)
+    renderer.strokePath()
   }
   
 }
