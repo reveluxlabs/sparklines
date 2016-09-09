@@ -24,6 +24,8 @@ protocol LineSparkLinePlotter: SparkLinePlotter {
   var rangeOverlayLowerLimit:    NSNumber? {get set}
   var rangeOverlayUpperLimit:    NSNumber? {get set}
   
+  init(data: [NSNumber], label: String)
+  
   func disableOverlayIfLimitsInconsistent( showOverlay: Bool, upperLimit: NSNumber?, lowerLimit: NSNumber? ) -> Bool
   func configureOverlay( inout plotSpace: PlotSpace, upperLimit: NSNumber?, lowerLimit: NSNumber? )
   func drawOverlayIfEnabled( inout plotSpace: PlotSpace, renderer: Renderer)
@@ -51,7 +53,7 @@ extension LineSparkLinePlotter {
     rangeOverlayLowerLimit = dataMinimum
   }
   
-  mutating func drawGraphInContext(inout plotSpace: PlotSpace, dataValues: [NSNumber], renderer: Renderer ) {
+  mutating func drawSparkLine(inout plotSpace: PlotSpace, dataValues: [NSNumber], renderer: Renderer ) {
     
     // Overlay goes "under" so must go first
     

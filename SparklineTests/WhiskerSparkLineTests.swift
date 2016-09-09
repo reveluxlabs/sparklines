@@ -214,12 +214,7 @@ class WhiskerSparkLineTests: SparklineTests {
     let renderer = TestRenderer()
     
     // execute
-    spark.drawSparkline("games",
-                        bounds: CGRectMake(0,0,600,40),
-                        dataMinimum: -1,
-                        dataMaximum: 1,
-                        dataValues:  [],
-                        renderer: renderer )
+    spark.draw( CGRectMake(0,0,600,40), renderer: renderer )
     
     // verify
     let whiskerCommands = ["setLineWidth(0.5)",

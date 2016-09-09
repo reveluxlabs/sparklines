@@ -34,12 +34,14 @@ struct WhiskerSparkLine: WhiskerSparkLinePlotter {
   
   var dataSource: WhiskerSparkLineDataSource? {
     didSet {
+      initialize( dataSource!.dataValues, label: labelText!)
       longestRun = dataSource!.longestRun
     }
   }
   
-  init(data: [NSNumber], label: String) {
-    dataValues = data
-    labelText = label
+  init(data: [NSNumber], label: String, xIncrement: CGFloat, whiskerWidth: CGFloat) {
+    initialize( data, label: label)
+    self.xIncrement = xIncrement
+    penWidth = whiskerWidth
   }
 }

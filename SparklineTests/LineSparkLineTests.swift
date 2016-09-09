@@ -186,12 +186,7 @@ class LineSparkLineTests: SparklineTests {
     spark.computeRanges(spark.dataValues!)
     
     // execute
-    spark.drawSparkline(labelText,
-                        bounds: CGRectMake(0,0,280,40),
-                        dataMinimum: spark.dataMinimum!.floatValue,
-                        dataMaximum: spark.dataMaximum!.floatValue,
-                        dataValues:  spark.dataValues!,
-                        renderer: renderer )
+    spark.draw( CGRectMake(0,0,280,40), renderer: renderer )
     
     // verify
     let whiskerCommands = ["setLineWidth(0.5)",
