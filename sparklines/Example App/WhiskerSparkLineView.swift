@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class WhiskerSparkLineView: UIView {
+open class WhiskerSparkLineView: UIView {
   
   var whiskerSpark:  WhiskerSparkLine?
 
@@ -23,14 +23,14 @@ public class WhiskerSparkLineView: UIView {
     
   }
   
-  override public func awakeFromNib() {
+  override open func awakeFromNib() {
     configureView()
   }
 
   func configureView() {
 
     // ensure we redraw correctly when resized
-    self.contentMode = UIViewContentMode.Redraw
+    self.contentMode = UIViewContentMode.redraw
 
     // and we have a nice rounded shape...
     self.layer.masksToBounds = true
@@ -38,7 +38,7 @@ public class WhiskerSparkLineView: UIView {
   }
 
   // Hook the drawing method for the view
-  public override func drawRect(rect: CGRect) {
+  open override func draw(_ rect: CGRect) {
     
     let context = UIGraphicsGetCurrentContext()
     

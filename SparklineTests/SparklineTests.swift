@@ -21,13 +21,13 @@ class SparklineTests: XCTestCase {
         super.tearDown()
     }
 
-  func loadFile( name: String) -> [NSNumber] {
+  func loadFile( _ name: String) -> [NSNumber] {
     var data: [NSNumber] = []
     
-    let dataFile = NSBundle.mainBundle().pathForResource(name, ofType: ".txt")
+    let dataFile = Bundle.main.path(forResource: name, ofType: ".txt")
     let contents: String?
     do {
-      try contents  = String( contentsOfFile: dataFile!, encoding: NSUTF8StringEncoding )
+      try contents  = String( contentsOfFile: dataFile!, encoding: String.Encoding.utf8 )
     } catch _ {
       contents = nil
       NSLog("failed to read in data file %@", name)
@@ -35,12 +35,12 @@ class SparklineTests: XCTestCase {
     
     if (contents != nil) {
       
-      let scanner = NSScanner(string:contents!)
+      let scanner = Scanner(string:contents!)
       
-      while !scanner.atEnd {
+      while !scanner.isAtEnd {
         var scannedValue: Double = 0.0
         if scanner.scanDouble(&scannedValue) {
-          let num: NSNumber = scannedValue
+          let num: NSNumber = NSNumber( value: scannedValue )
           data.append(num)
         }
       }

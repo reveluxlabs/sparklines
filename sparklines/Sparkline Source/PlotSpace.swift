@@ -54,8 +54,8 @@ struct PlotSpace {
   
   init( bounds: CGRect, dataMinimum: Float, dataMaximum: Float) {
     
-    fullWidth  = CGRectGetWidth(bounds)
-    fullHeight = CGRectGetHeight(bounds)
+    fullWidth  = bounds.width
+    fullHeight = bounds.height
     
     dataMin = dataMinimum
     dataMax = dataMaximum

@@ -34,7 +34,6 @@
 		D45D73961D7EEC3800C4531B /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D45D73951D7EEC3800C4531B /* Nimble.framework */; };
 		D45D739D1D7F7E8600C4531B /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D45D73951D7EEC3800C4531B /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D45D73A31D802FE700C4531B /* WhiskerSparkLineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D73A21D802FE700C4531B /* WhiskerSparkLineTests.swift */; };
-		D45D73A51D80315000C4531B /* Test.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D45D73A41D80315000C4531B /* Test.storyboard */; };
 		D45D73A71D80C4E500C4531B /* PlotSpaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D73A61D80C4E500C4531B /* PlotSpaceTests.swift */; };
 		D45D73A91D817D1700C4531B /* SparkLineLabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D73A81D817D1700C4531B /* SparkLineLabelTests.swift */; };
 		D45D73B11D81A04900C4531B /* LineSparkLineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D73B01D81A04900C4531B /* LineSparkLineTests.swift */; };
@@ -96,7 +95,6 @@
 		D45D73951D7EEC3800C4531B /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = sparklines/Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		D45D739E1D7F7FB400C4531B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D45D73A21D802FE700C4531B /* WhiskerSparkLineTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhiskerSparkLineTests.swift; sourceTree = "<group>"; };
-		D45D73A41D80315000C4531B /* Test.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Test.storyboard; sourceTree = "<group>"; };
 		D45D73A61D80C4E500C4531B /* PlotSpaceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlotSpaceTests.swift; sourceTree = "<group>"; };
 		D45D73A81D817D1700C4531B /* SparkLineLabelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SparkLineLabelTests.swift; sourceTree = "<group>"; };
 		D45D73B01D81A04900C4531B /* LineSparkLineTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineSparkLineTests.swift; sourceTree = "<group>"; };
@@ -217,7 +215,6 @@
 				D45D73401D79F2B700C4531B /* SparkLine Source */,
 				D45D73411D79F2CE00C4531B /* Data Sources */,
 				D497E9B01D6D1C37004CD872 /* Main.storyboard */,
-				D45D73A41D80315000C4531B /* Test.storyboard */,
 				D497E9B31D6D1C37004CD872 /* Assets.xcassets */,
 				D497E9B51D6D1C37004CD872 /* LaunchScreen.storyboard */,
 				D45D73481D7E51E700C4531B /* data */,
@@ -272,16 +269,18 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "Revelux Labs LLC";
 				TargetAttributes = {
 					D45D735C1D7EDBEF00C4531B = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0810;
 						TestTargetID = D497E9A81D6D1C37004CD872;
 					};
 					D497E9A81D6D1C37004CD872 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = SWF4TFN485;
+						LastSwiftMigration = 0810;
 					};
 				};
 			};
@@ -321,7 +320,6 @@
 				D4431F5C1D83392800792C58 /* temperature_data.txt in Resources */,
 				D4431F591D83392800792C58 /* baseball_data.txt in Resources */,
 				D45D73921D7EE49600C4531B /* Cartfile.private in Resources */,
-				D45D73A51D80315000C4531B /* Test.storyboard in Resources */,
 				D497E9B41D6D1C37004CD872 /* Assets.xcassets in Resources */,
 				D4431F5D1D83392800792C58 /* test_whisker_1.txt in Resources */,
 				D4431F5B1D83392800792C58 /* heartRate_data.txt in Resources */,
@@ -410,6 +408,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.reveluxlabs.SparklineTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/sparklines.app/sparklines";
 			};
 			name = Debug;
@@ -426,6 +425,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.reveluxlabs.SparklineTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/sparklines.app/sparklines";
 			};
 			name = Release;
@@ -444,8 +444,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -489,8 +491,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -509,6 +513,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -522,6 +527,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.reveluxlabs.sparklines;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -534,6 +540,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.reveluxlabs.sparklines;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

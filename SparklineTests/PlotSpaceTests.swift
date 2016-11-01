@@ -22,7 +22,7 @@ class PlotSpaceTests: SparklineTests {
   }
   
   func createAnonymousPlotSpace() -> PlotSpace {
-    let ps = PlotSpace(bounds: CGRectZero, dataMinimum: -1.0, dataMaximum: 1.0)
+    let ps = PlotSpace(bounds: CGRect.zero, dataMinimum: -1.0, dataMaximum: 1.0)
     return ps
   }
 
@@ -40,56 +40,56 @@ class PlotSpaceTests: SparklineTests {
   
   func testShouldHaveFullHeight() {
     
-    let ps = createPlotSpace( bounds: CGRectMake(0, 0, 600, 40), dataMinimum: -1.0, dataMaximum: 1.0 )
+    let ps = createPlotSpace( bounds: CGRect(x: 0, y: 0, width: 600, height: 40), dataMinimum: -1.0, dataMaximum: 1.0 )
     
     expect(ps.fullHeight).to(equal(40.0))
   }
   
   func testShouldHaveFullWidth() {
     
-    let ps = createPlotSpace( bounds: CGRectMake(0, 0, 600, 40), dataMinimum: -1.0, dataMaximum: 1.0 )
+    let ps = createPlotSpace( bounds: CGRect(x: 0, y: 0, width: 600, height: 40), dataMinimum: -1.0, dataMaximum: 1.0 )
     
     expect(ps.fullWidth).to(equal(600.0))
   }
   
   func testShouldHaveDataMin() {
     
-    let ps = createPlotSpace( bounds: CGRectMake(0, 0, 600, 40), dataMinimum: -1.0, dataMaximum: 1.0 )
+    let ps = createPlotSpace( bounds: CGRect(x: 0, y: 0, width: 600, height: 40), dataMinimum: -1.0, dataMaximum: 1.0 )
     
     expect(ps.dataMin).to(equal(-1.0))
   }
   
   func testShouldHaveDataMax() {
     
-    let ps = createPlotSpace( bounds: CGRectMake(0, 0, 600, 40), dataMinimum: -1.0, dataMaximum: 1.0 )
+    let ps = createPlotSpace( bounds: CGRect(x: 0, y: 0, width: 600, height: 40), dataMinimum: -1.0, dataMaximum: 1.0 )
     
     expect(ps.dataMax).to(equal(1.0))
   }
   
   func testShouldHaveGraphMin() {
     
-    let ps = createPlotSpace( bounds: CGRectMake(0, 0, 600, 40), dataMinimum: -1.0, dataMaximum: 1.0 )
+    let ps = createPlotSpace( bounds: CGRect(x: 0, y: 0, width: 600, height: 40), dataMinimum: -1.0, dataMaximum: 1.0 )
     
     expect(ps.graphMin).to(equal(-1.0))
   }
   
   func testShouldHaveGraphMax() {
     
-    let ps = createPlotSpace( bounds: CGRectMake(0, 0, 600, 40), dataMinimum: -1.0, dataMaximum: 1.0 )
+    let ps = createPlotSpace( bounds: CGRect(x: 0, y: 0, width: 600, height: 40), dataMinimum: -1.0, dataMaximum: 1.0 )
     
     expect(ps.graphMax).to(equal(1.0))
   }
   
   func testShouldHaveGraphSize_textWidthZero() {
     
-    let ps = createPlotSpace( bounds: CGRectMake(0, 0, 600, 40), dataMinimum: -1.0, dataMaximum: 1.0 )
+    let ps = createPlotSpace( bounds: CGRect(x: 0, y: 0, width: 600, height: 40), dataMinimum: -1.0, dataMaximum: 1.0 )
     
     expect(ps.graphSize).to(equal(570.0))
   }
   
   func testShouldHaveGraphSize_textWidth40() {
     
-    var ps = createPlotSpace( bounds: CGRectMake(0, 0, 600, 40), dataMinimum: -1.0, dataMaximum: 1.0 )
+    var ps = createPlotSpace( bounds: CGRect(x: 0, y: 0, width: 600, height: 40), dataMinimum: -1.0, dataMaximum: 1.0 )
     ps.textWidth = 40.0
     
     expect(ps.graphSize).to(equal(530.0))
@@ -97,21 +97,21 @@ class PlotSpaceTests: SparklineTests {
   
   func testShouldHaveGraphFrac() {
     
-    let ps = createPlotSpace( bounds: CGRectMake(0, 0, 600, 40), dataMinimum: -1.0, dataMaximum: 1.0 )
+    let ps = createPlotSpace( bounds: CGRect(x: 0, y: 0, width: 600, height: 40), dataMinimum: -1.0, dataMaximum: 1.0 )
     
     expect(ps.graphFrac).to(equal(0.95))
   }
   
   func testShouldHaveSparkWidth() {
     
-    let ps = createPlotSpace( bounds: CGRectMake(0, 0, 600, 40), dataMinimum: -1.0, dataMaximum: 1.0 )
+    let ps = createPlotSpace( bounds: CGRect(x: 0, y: 0, width: 600, height: 40), dataMinimum: -1.0, dataMaximum: 1.0 )
     
     expect(ps.sparkWidth).to(beCloseTo(566.2))
   }
   
   func testShouldHaveSparkHeight() {
     
-    let ps = createPlotSpace( bounds: CGRectMake(0, 0, 600, 40), dataMinimum: -1.0, dataMaximum: 1.0 )
+    let ps = createPlotSpace( bounds: CGRect(x: 0, y: 0, width: 600, height: 40), dataMinimum: -1.0, dataMaximum: 1.0 )
     
     expect(ps.sparkHeight).to(equal(36.0))
   }

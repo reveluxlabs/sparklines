@@ -22,13 +22,13 @@ class SparkLineLabelTests: SparklineTests {
   }
   
   func createAnonymousLabel() -> SparkLineLabel {
-    let sll = SparkLineLabel(bounds: CGRectMake(0,0,600,40),
+    let sll = SparkLineLabel(bounds: CGRect(x: 0,y: 0,width: 600,height: 40),
                              count: 162,
                              text: " games",
                              font: "Baskerville",
                              value: 5.0,
                              showValue: true,
-                             valueColor: UIColor.blackColor(),
+                             valueColor: UIColor.black,
                              valueFormat: "%.0f",
                              reverse: true)
     

@@ -24,7 +24,7 @@ struct WhiskerSparkLine: WhiskerSparkLinePlotter {
   var xIncrement:              CGFloat = 2.0                           // For the whisker view, xIncrement is set, not calculated.
   var longestRun:              Int?    = 0                             // Longest run of whiskers from data source, used for value
 
-  var whiskerColor:            UIColor = UIColor.blackColor()
+  var whiskerColor:            UIColor = UIColor.black
   var highlightedWhiskerColor: UIColor = UIColor(red:0.99, green:0.14, blue:0.22, alpha:1.0) // scarlet
   var tickWidth:               CGFloat = DEFAULT_TICK_PEN_WIDTH
   var tickColor:               UIColor = UIColor(red:245/255, green:245/255, blue:245/255, alpha:0.1)
@@ -34,7 +34,7 @@ struct WhiskerSparkLine: WhiskerSparkLinePlotter {
   
   var dataSource: WhiskerSparkLineDataSource? {
     didSet {
-      initialize( dataSource!.dataValues, label: labelText!)
+      initialize( dataSource!.dataValues as [NSNumber], label: labelText!)
       longestRun = dataSource!.longestRun
     }
   }

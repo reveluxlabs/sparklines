@@ -30,7 +30,7 @@ class WhiskerSparkLineTests: SparklineTests {
     return wsl
   }
   
-  func createSparklineWithStreakDataSource( fileName: String ) -> WhiskerSparkLine {
+  func createSparklineWithStreakDataSource( _ fileName: String ) -> WhiskerSparkLine {
     let baseballData    = loadFile(fileName)
     let unboxedBaseball = baseballData.map({ $0.doubleValue })
     let dataSource      = StreakDataSource( values: unboxedBaseball, streakLength: 4 )
@@ -41,9 +41,9 @@ class WhiskerSparkLineTests: SparklineTests {
     return spark
   }
   
-  func assertThatCommandsEqual( commands: [String], expected: [String] ) {
+  func assertThatCommandsEqual( _ commands: [String], expected: [String] ) {
     
-    for (index, cmd) in commands.enumerate() {
+    for (index, cmd) in commands.enumerated() {
       expect(cmd).to(equal(expected[index]))
     }
   }
@@ -214,32 +214,32 @@ class WhiskerSparkLineTests: SparklineTests {
     let renderer = TestRenderer()
     
     // execute
-    spark.draw( CGRectMake(0,0,600,40), renderer: renderer )
+    spark.draw( CGRect(x: 0,y: 0,width: 600,height: 40), renderer: renderer )
     
     // verify
     let whiskerCommands = ["setLineWidth(0.5)",
-                           "setStroke(UIDeviceWhiteColorSpace 0 1)",
+                           "setStroke(UIExtendedGrayColorSpace 0 1)",
                            "beginPath()",
-                           "setStroke(UIDeviceWhiteColorSpace 0 1)",
+                           "setStroke(UIExtendedGrayColorSpace 0 1)",
                            "setLineWidth(0.5)",
                            "moveTo(300.5, 20.0)",
                            "lineTo(300.5, 12.0)",
                            "closePath()",
                            "strokePath()",
-                           "setStroke(UIDeviceRGBColorSpace 0.960784 0.960784 0.960784 0.1)",
+                           "setStroke(UIExtendedSRGBColorSpace 0.960784 0.960784 0.960784 0.1)",
                            "setLineWidth(2.0)",
                            "moveTo(299.0, 0.0)",
                            "lineTo(299.0, 40.0)",
                            "closePath()",
                            "strokePath()",
-                           "setStroke(UIDeviceRGBColorSpace 0.960784 0.960784 0.960784 0.1)",
+                           "setStroke(UIExtendedSRGBColorSpace 0.960784 0.960784 0.960784 0.1)",
                            "setLineWidth(2.0)",
                            "moveTo(302.0, 0.0)",
                            "lineTo(302.0, 40.0)",
                            "closePath()",
                            "strokePath()",
                            "setLineWidth(0.5)",
-                           "setStroke(UIDeviceWhiteColorSpace 0 1)",
+                           "setStroke(UIExtendedGrayColorSpace 0 1)",
                            "moveTo(300.5, 20.0)",
                            "lineTo(301.0, 20.0)",
                            "closePath()",

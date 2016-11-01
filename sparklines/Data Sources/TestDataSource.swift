@@ -16,25 +16,25 @@ struct TestDataSource: SparkLineDataSource {
     self.dataValues = dataValues
   }
   
-  func dataPointForIndex( sparkLineView: SparkLinePlotter, index:Int) -> NSNumber {
+  func dataPointForIndex( _ sparkLineView: SparkLinePlotter, index:Int) -> NSNumber {
     assert(index < dataValues.count)
     return dataValues[index]
   }
 
-  func numberOfDataPoints( sparkLineView: SparkLinePlotter ) -> Int { return dataValues.count }
+  func numberOfDataPoints( _ sparkLineView: SparkLinePlotter ) -> Int { return dataValues.count }
   
   func values() -> [NSNumber] { return dataValues }
   
-  func whiskerColorForIndex( sparkLineView: SparkLinePlotter, index:Int ) -> UIColor  {
-    var result = UIColor.blackColor()
+  func whiskerColorForIndex( _ sparkLineView: SparkLinePlotter, index:Int ) -> UIColor  {
+    var result = UIColor.black
     
     if (6...12).contains(index) {
-      result = UIColor.redColor()
+      result = UIColor.red
     }
     return result
   }
 
-  func tickForIndex( sparkLineView: SparkLinePlotter, index:Int  ) -> Bool {
+  func tickForIndex( _ sparkLineView: SparkLinePlotter, index:Int  ) -> Bool {
     var result = false
     if index == 5 {
       result = true
@@ -43,6 +43,6 @@ struct TestDataSource: SparkLineDataSource {
     return result
   }
   
-  func timeForIndex( sparkLineView: SparkLinePlotter, index:Int  ) -> Bool { return false }
+  func timeForIndex( _ sparkLineView: SparkLinePlotter, index:Int  ) -> Bool { return false }
 
 }

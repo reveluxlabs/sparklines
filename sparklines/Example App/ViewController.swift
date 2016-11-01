@@ -72,13 +72,13 @@ class ViewController: UIViewController {
     assert(glucoseData.count > 0)
   }
   
-  func loadFile( name: String) -> [NSNumber] {
+  func loadFile( _ name: String) -> [NSNumber] {
     var data: [NSNumber] = []
 
-    let dataFile = NSBundle.mainBundle().pathForResource(name, ofType: ".txt")
+    let dataFile = Bundle.main.path(forResource: name, ofType: ".txt")
     let contents: String?
     do {
-      try contents  = String( contentsOfFile: dataFile!, encoding: NSUTF8StringEncoding )
+      try contents  = String( contentsOfFile: dataFile!, encoding: String.Encoding.utf8 )
     } catch _ {
       contents = nil
       NSLog("failed to read in data file %@", name)
@@ -86,12 +86,12 @@ class ViewController: UIViewController {
     
     if (contents != nil) {
       
-      let scanner = NSScanner(string:contents!)
+      let scanner = Scanner(string:contents!)
       
-      while !scanner.atEnd {
+      while !scanner.isAtEnd {
         var scannedValue: Double = 0.0
         if scanner.scanDouble(&scannedValue) {
-          let num: NSNumber = scannedValue
+          let num: NSNumber = NSNumber( value: scannedValue )
           data.append(num)
         }
       }
@@ -113,7 +113,7 @@ class ViewController: UIViewController {
     
     lineSpark = LineSparkLine(data: temperatureData, label: "Temp")
     lineSpark.currentValueColor = darkGreen
-    lineSpark.penColor = UIColor.blueColor()
+    lineSpark.penColor = UIColor.blue
     lineSpark.penWidth = 2.0
     sparkLineView2.lineSpark = lineSpark
     
@@ -131,7 +131,7 @@ class ViewController: UIViewController {
     
     lineSpark = LineSparkLine(data: temperatureData, label: "Temp")
     lineSpark.currentValueColor = darkGreen
-    lineSpark.penColor = UIColor.blueColor()
+    lineSpark.penColor = UIColor.blue
     lineSpark.penWidth = 3.0
     sparkLineView5.lineSpark = lineSpark
     
@@ -170,7 +170,7 @@ class ViewController: UIViewController {
     sparkLineView8.whiskerSpark       = whiskerSpark
   }
   
-  func generateRandomRecord( wins: Int, losses: Int ) -> [Double] {
+  func generateRandomRecord( _ wins: Int, losses: Int ) -> [Double] {
     var result: [Double] = []
     var r: Double
     let winPercent: Double = Double(wins)/Double(wins + losses)
@@ -190,53 +190,53 @@ class ViewController: UIViewController {
     return result
   }
   
-  @IBAction func toggleCurrentValues(sender: AnyObject) {
-    for (_, value) in allSparklines.enumerate() {
+  @IBAction func toggleCurrentValues(_ sender: AnyObject) {
+    for (_, value) in allSparklines.enumerated() {
       value.lineSpark!.showCurrentValue = !value.lineSpark!.showCurrentValue
       value.setNeedsDisplay()
     }
     
     let buttonText = String(format:"%@ Current Values", sparkLineView1.lineSpark!.showCurrentValue ? "Hide" : "Show")
     let button = sender as! UIButton
-    button.setTitle( buttonText, forState:UIControlState.Normal)
+    button.setTitle( buttonText, for:UIControlState())
   }
 
-  @IBAction func toggleShowOverlays(sender: AnyObject) {
-    for (_, value) in allSparklines.enumerate() {
+  @IBAction func toggleShowOverlays(_ sender: AnyObject) {
+    for (_, value) in allSparklines.enumerated() {
       value.lineSpark!.showRangeOverlay = !value.lineSpark!.showRangeOverlay
       value.setNeedsDisplay()
     }
    
     let buttonText = String(format:"%@ Range Overlays", sparkLineView1.lineSpark!.showRangeOverlay ? "Hide" : "Show")
     let button = sender as! UIButton
-    button.setTitle( buttonText, forState:UIControlState.Normal)
+    button.setTitle( buttonText, for:UIControlState())
   
     // if the overlays are enabled, we define the limits, otherwise we reset them (the view will auto-scale)
     if (sparkLineView1.lineSpark!.showRangeOverlay) {
       
-      sparkLineView1.lineSpark!.rangeOverlayLowerLimit = glucoseMinLimit
-      sparkLineView1.lineSpark!.rangeOverlayUpperLimit = glucoseMaxLimit
-      sparkLineView2.lineSpark!.rangeOverlayLowerLimit = tempMinLimit
-      sparkLineView2.lineSpark!.rangeOverlayUpperLimit = tempMaxLimit
-      sparkLineView3.lineSpark!.rangeOverlayLowerLimit = heartRateMinLimit
-      sparkLineView3.lineSpark!.rangeOverlayUpperLimit = heartRateMaxLimit
-      sparkLineView4.lineSpark!.rangeOverlayLowerLimit = glucoseMinLimit
-      sparkLineView4.lineSpark!.rangeOverlayUpperLimit = glucoseMaxLimit
-      sparkLineView5.lineSpark!.rangeOverlayLowerLimit = tempMinLimit
-      sparkLineView5.lineSpark!.rangeOverlayUpperLimit = tempMaxLimit
-      sparkLineView6.lineSpark!.rangeOverlayLowerLimit = heartRateMinLimit
-      sparkLineView6.lineSpark!.rangeOverlayUpperLimit = heartRateMaxLimit
+      sparkLineView1.lineSpark!.rangeOverlayLowerLimit = glucoseMinLimit as NSNumber?
+      sparkLineView1.lineSpark!.rangeOverlayUpperLimit = glucoseMaxLimit as NSNumber?
+      sparkLineView2.lineSpark!.rangeOverlayLowerLimit = tempMinLimit as NSNumber?
+      sparkLineView2.lineSpark!.rangeOverlayUpperLimit = tempMaxLimit as NSNumber?
+      sparkLineView3.lineSpark!.rangeOverlayLowerLimit = heartRateMinLimit as NSNumber?
+      sparkLineView3.lineSpark!.rangeOverlayUpperLimit = heartRateMaxLimit as NSNumber?
+      sparkLineView4.lineSpark!.rangeOverlayLowerLimit = glucoseMinLimit as NSNumber?
+      sparkLineView4.lineSpark!.rangeOverlayUpperLimit = glucoseMaxLimit as NSNumber?
+      sparkLineView5.lineSpark!.rangeOverlayLowerLimit = tempMinLimit as NSNumber?
+      sparkLineView5.lineSpark!.rangeOverlayUpperLimit = tempMaxLimit as NSNumber?
+      sparkLineView6.lineSpark!.rangeOverlayLowerLimit = heartRateMinLimit as NSNumber?
+      sparkLineView6.lineSpark!.rangeOverlayUpperLimit = heartRateMaxLimit as NSNumber?
       
     } else {
       // make them all nil, which will result in an auto-scale of the data values
-      for (_, value) in allSparklines.enumerate() {
+      for (_, value) in allSparklines.enumerated() {
         value.lineSpark!.rangeOverlayLowerLimit = nil
         value.lineSpark!.rangeOverlayUpperLimit = nil
       }
     }
   }
 
-  @IBAction func regenerateSeason(sender: AnyObject) {
+  @IBAction func regenerateSeason(_ sender: AnyObject) {
     
     let randomBaseball = generateRandomRecord( 96, losses: 66 )
     sparkLineView8.whiskerSpark!.dataSource = StreakDataSource( values: randomBaseball, streakLength: 4 )

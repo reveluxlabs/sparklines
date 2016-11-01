@@ -35,7 +35,7 @@ class LineSparkLineTests: SparklineTests {
     return lsl
   }
   
-  func createSparklineWithData( fileName: String, label l: String ) -> LineSparkLine {
+  func createSparklineWithData( _ fileName: String, label l: String ) -> LineSparkLine {
     let lineData = loadFile(fileName)
     let spark    = createLineSparkLine( data: lineData, label: l )
     return spark
@@ -52,9 +52,9 @@ class LineSparkLineTests: SparklineTests {
   //    return spark
   //  }
   
-  func assertThatCommandsEqual( commands: [String], expected: [String] ) {
+  func assertThatCommandsEqual( _ commands: [String], expected: [String] ) {
     
-    for (index, cmd) in commands.enumerate() {
+    for (index, cmd) in commands.enumerated() {
       expect(cmd).to(equal(expected[index]))
     }
   }
@@ -186,11 +186,11 @@ class LineSparkLineTests: SparklineTests {
     spark.computeRanges(spark.dataValues!)
     
     // execute
-    spark.draw( CGRectMake(0,0,280,40), renderer: renderer )
+    spark.draw( CGRect(x: 0,y: 0,width: 280,height: 40), renderer: renderer )
     
     // verify
     let whiskerCommands = ["setLineWidth(0.5)",
-                           "setStroke(UIDeviceWhiteColorSpace 0 1)",
+                           "setStroke(UIExtendedGrayColorSpace 0 1)",
                            "beginPath()",
                            "moveTo(2.0, 21.4189186096191)",
                            "lineTo(8.95516760314039, 23.31081199646)",
@@ -223,10 +223,10 @@ class LineSparkLineTests: SparklineTests {
                            "lineTo(196.744692887931, 8.17568016052246)",
                            "lineTo(203.699860491071, 10.067569732666)",
                            "strokePath()",
-                           "setFill(UIDeviceRGBColorSpace 0 0 1 1)",
+                           "setFill(UIExtendedSRGBColorSpace 0 0 1 1)",
                            "fillEllipse((199.699860491071, 6.06756973266602, 8.0, 8.0))",
                            "saveState()",
-                           "setFill(UIDeviceRGBColorSpace 0 0 1 1)",
+                           "setFill(UIExtendedSRGBColorSpace 0 0 1 1)",
                            "restoreState()"]
     
     expect(renderer.commands.count).to(equal(39))

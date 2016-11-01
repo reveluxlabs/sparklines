@@ -18,7 +18,7 @@ struct StreakDataSource: WhiskerSparkLineDataSource {
       prepareData( dataValues )
     }
   }
-  var    streakType:          ActivityState = .Active {
+  var    streakType:          ActivityState = .active {
     didSet {
       prepareData( dataValues )
     }
@@ -35,11 +35,11 @@ struct StreakDataSource: WhiskerSparkLineDataSource {
   init( values dataValues: [Double], streakLength: Int ) {
     self.dataValues               = dataValues
     self.selectedStreakLength = streakLength
-    streakType                = .Active
+    streakType                = .active
     prepareData( dataValues )
   }
   
-  mutating func prepareData( dataValues: [Double] ) {
+  mutating func prepareData( _ dataValues: [Double] ) {
     whiskerInfo = prepareDataSourceForWhiskerView( dataValues )
     longestRun  = whiskerInfo.longest
     streakMap   = whiskerInfo.map
@@ -48,26 +48,26 @@ struct StreakDataSource: WhiskerSparkLineDataSource {
   
   // MARK: Sparkline data source methods
   
-  func dataPointForIndex( sparkLineView: SparkLinePlotter, index:Int) -> NSNumber {
+  func dataPointForIndex( _ sparkLineView: SparkLinePlotter, index:Int) -> NSNumber {
 
     let result = boxedValues![index]
     
     return result
   }
   
-  func values() -> [NSNumber] { return dataValues }
+  func values() -> [NSNumber] { return dataValues as [NSNumber] }
   
-  func whiskerColorForIndex( sparkLineView: SparkLinePlotter, index:Int ) -> UIColor {
+  func whiskerColorForIndex( _ sparkLineView: SparkLinePlotter, index:Int ) -> UIColor {
 
     let whiskerView = sparkLineView as! WhiskerSparkLine
-    if streakMap![index].boolValue {
+    if streakMap![index] {
       return whiskerView.highlightedWhiskerColor
     }
     
     return whiskerView.whiskerColor
   }
   
-  func tickForIndex( sparkLineView: SparkLinePlotter, index:Int  ) -> Bool {
+  func tickForIndex( _ sparkLineView: SparkLinePlotter, index:Int  ) -> Bool {
     // ticks turned off
     if (tickInterval == 0) { return false }
     
@@ -79,13 +79,13 @@ struct StreakDataSource: WhiskerSparkLineDataSource {
     return false
   }
   
-  func numberOfDataPoints( sparkLineView: SparkLinePlotter ) -> Int {
+  func numberOfDataPoints( _ sparkLineView: SparkLinePlotter ) -> Int {
     let result = boxedValues!.count
     
     return result
   }
   
-  func longestRun( sparkLineView: SparkLinePlotter ) -> Int {
+  func longestRun( _ sparkLineView: SparkLinePlotter ) -> Int {
     let result = longestRun!
     
     return result

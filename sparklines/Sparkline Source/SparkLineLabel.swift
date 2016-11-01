@@ -26,7 +26,7 @@ struct SparkLineLabel {
   
   var graphText: String {
     get {
-      return labelText == nil ? "not set" : String(UTF8String: labelText!)!
+      return labelText == nil ? "not set" : String(validatingUTF8: labelText!)!
     }
   }
   
@@ -44,7 +44,7 @@ struct SparkLineLabel {
   var formattedLabelValue: String {
     get {
       let head = reverse ? "" : " "
-      return head.stringByAppendingFormat(currentValueFormat, sparkValue!.floatValue )
+      return head.appendingFormat(currentValueFormat, sparkValue!.floatValue )
     }
   }
   
@@ -59,8 +59,8 @@ struct SparkLineLabel {
     get {
       return frameForText(formattedGraphText,
                           sizeWithFont:defaultLabelFont!,
-                          constrainedToSize:CGSizeMake(maxTextWidth, DEFAULT_FONT_SIZE+4),
-                          lineBreakMode:NSLineBreakMode.ByClipping)
+                          constrainedToSize:CGSize(width: maxTextWidth, height: DEFAULT_FONT_SIZE+4),
+                          lineBreakMode:NSLineBreakMode.byClipping)
       
     }
   }
@@ -72,13 +72,13 @@ struct SparkLineLabel {
   
   var textStartX: CGFloat  {
     get {
-      return (CGRectGetWidth(self.bounds) * 0.975) - textSize.width
+      return (self.bounds.width * 0.975) - textSize.width
     }
   }
   
   var textStartY: CGFloat  {
     get {
-      return CGRectGetMidY(self.bounds) - (textSize.height / 2.0)
+      return self.bounds.midY - (textSize.height / 2.0)
     }
   }
   
@@ -98,8 +98,8 @@ struct SparkLineLabel {
     get {
       return frameForText(labelText!,
                           sizeWithFont:selectedFont!,
-                          constrainedToSize:CGSizeMake(maxTextWidth, actualFontSize+4),
-                          lineBreakMode:NSLineBreakMode.ByClipping)
+                          constrainedToSize:CGSize(width: maxTextWidth, height: actualFontSize+4),
+                          lineBreakMode:NSLineBreakMode.byClipping)
     }
   }
   
@@ -107,14 +107,14 @@ struct SparkLineLabel {
     get {
       return frameForText(formattedLabelValue,
                           sizeWithFont:selectedFont!,
-                          constrainedToSize:CGSizeMake(maxTextWidth, actualFontSize+4),
-                          lineBreakMode:NSLineBreakMode.ByClipping)
+                          constrainedToSize:CGSize(width: maxTextWidth, height: actualFontSize+4),
+                          lineBreakMode:NSLineBreakMode.byClipping)
     }
   }
   init( bounds: CGRect, count: Int, text: String, font: String, value: NSNumber, showValue: Bool, valueColor: UIColor, valueFormat: String, reverse: Bool) {
     self.bounds        = bounds
     self.count         = count
-    maxTextWidth       = CGRectGetWidth(bounds) * MAX_TEXT_FRAC
+    maxTextWidth       = bounds.width * MAX_TEXT_FRAC
     labelText          = text
     labelFont          = font
     sparkValue         = value
@@ -124,13 +124,13 @@ struct SparkLineLabel {
     self.reverse  = reverse
   }
   
-  func frameForText( text: String, sizeWithFont font: UIFont, constrainedToSize maxSize: CGSize, lineBreakMode: NSLineBreakMode ) -> CGSize {
+  func frameForText( _ text: String, sizeWithFont font: UIFont, constrainedToSize maxSize: CGSize, lineBreakMode: NSLineBreakMode ) -> CGSize {
     var paragraphStyle: NSMutableParagraphStyle
     var attributes:     [String: AnyObject]
     var textRect:       CGRect
     
     paragraphStyle = NSMutableParagraphStyle()
-    paragraphStyle.setParagraphStyle(NSParagraphStyle.defaultParagraphStyle())
+    paragraphStyle.setParagraphStyle(NSParagraphStyle.default)
     paragraphStyle.lineBreakMode = lineBreakMode;
     
     attributes = [NSFontAttributeName           : font,
@@ -138,8 +138,8 @@ struct SparkLineLabel {
     ]
     
     
-    textRect = text.boundingRectWithSize(maxSize,
-                                         options:NSStringDrawingOptions.UsesLineFragmentOrigin,
+    textRect = text.boundingRect(with: maxSize,
+                                         options:NSStringDrawingOptions.usesLineFragmentOrigin,
                                          attributes:attributes,
                                          context:nil)
     

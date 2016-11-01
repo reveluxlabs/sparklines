@@ -10,8 +10,8 @@
 import UIKit
 
 protocol SparkLineDataSource {
-  func dataPointForIndex( sparkLineView: SparkLinePlotter, index:Int) -> NSNumber
-  func numberOfDataPoints( sparkLineView: SparkLinePlotter ) -> Int
+  func dataPointForIndex( _ sparkLineView: SparkLinePlotter, index:Int) -> NSNumber
+  func numberOfDataPoints( _ sparkLineView: SparkLinePlotter ) -> Int
   func values() -> [NSNumber]
 }
 
@@ -29,23 +29,23 @@ protocol WhiskerSparkLineDataSource: SparkLineDataSource {
 
   init( values: [Double], streakLength: Int )
   
-  func whiskerColorForIndex( sparkLineView: SparkLinePlotter, index:Int ) -> UIColor
-  func tickForIndex( sparkLineView: SparkLinePlotter, index:Int  ) -> Bool
-  func longestRun( sparkLineView: SparkLinePlotter ) -> Int
+  func whiskerColorForIndex( _ sparkLineView: SparkLinePlotter, index:Int ) -> UIColor
+  func tickForIndex( _ sparkLineView: SparkLinePlotter, index:Int  ) -> Bool
+  func longestRun( _ sparkLineView: SparkLinePlotter ) -> Int
 
 }
 
 enum ActivityState: Int {
-  case Active      = 1
-  case NotTracking = 0
-  case Inactive    = -1
+  case active      = 1
+  case notTracking = 0
+  case inactive    = -1
 }
 
 extension WhiskerSparkLineDataSource {
   
-  mutating func prepareDataSourceForWhiskerView( values: [Double] ) -> (Int, [Bool], [NSNumber] ) {
+  mutating func prepareDataSourceForWhiskerView( _ values: [Double] ) -> (Int, [Bool], [NSNumber] ) {
     var streakInfo: (longest: Int, streaks: [Int:Int], map: [Bool])
-    let boxedValues = values.map( { NSNumber( double: $0 ) } )
+    let boxedValues = values.map( { NSNumber(value: $0 as Double) } )
     
     guard boxedValues.count > 0 else {
       return ( longestRun!, streakMap!, boxedValues )
@@ -62,7 +62,7 @@ extension WhiskerSparkLineDataSource {
     return ( longestRun!, streakMap!, boxedValues )
   }
   
-  func mapStreaks( boxedValues: [NSNumber], greaterThanOrEqual length: Int, binaryState type: ActivityState ) -> ( Int, [Int:Int], [Bool] ) {
+  func mapStreaks( _ boxedValues: [NSNumber], greaterThanOrEqual length: Int, binaryState type: ActivityState ) -> ( Int, [Int:Int], [Bool] ) {
     
     var    streaks:      [Int:Int]?
     var    streakMap:    [Bool]?
@@ -85,11 +85,11 @@ extension WhiskerSparkLineDataSource {
       }
     }
     
-    let longest = Array(streaks!.values).maxElement()
+    let longest = Array(streaks!.values).max()
     return ( longest!, streaks!, streakMap! )
   }
   
-  func findRuns( boxedValues: [NSNumber], greaterThanOrEqual length: Int, binaryState type: ActivityState ) -> [Int:Int] {
+  func findRuns( _ boxedValues: [NSNumber], greaterThanOrEqual length: Int, binaryState type: ActivityState ) -> [Int:Int] {
     
     var    streaks:              [Int:Int]? = [1:1]
     var    runLength:            Int        = 0
@@ -97,7 +97,7 @@ extension WhiskerSparkLineDataSource {
     
     let last = boxedValues.count
     
-    for (index, value) in boxedValues.enumerate() {
+    for (index, value) in boxedValues.enumerated() {
       
       if index < last && value.floatValue == lastWhiskerValue  {
         
@@ -110,7 +110,7 @@ extension WhiskerSparkLineDataSource {
         // Run ending
         
         let runStart = index - runLength
-        if boxedValues[runStart] == type.rawValue && runLength >= length {
+        if Int(boxedValues[runStart]) == type.rawValue && runLength >= length {
           streaks![runStart] = runLength
         }
         

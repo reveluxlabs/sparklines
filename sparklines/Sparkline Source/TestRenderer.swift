@@ -11,28 +11,28 @@ import UIKit
 class TestRenderer : Renderer {
   var commands: [String] = []
   
-  func appendAndPrint( cmd: String ) {
+  func appendAndPrint( _ cmd: String ) {
     commands.append(cmd)
     print(cmd)
   }
   
-  func moveTo(p: CGPoint) { appendAndPrint("moveTo(\(p.x), \(p.y))") }
+  func moveTo(_ p: CGPoint) { appendAndPrint("moveTo(\(p.x), \(p.y))") }
   
-  func lineTo(p: CGPoint) { appendAndPrint("lineTo(\(p.x), \(p.y))") }
+  func lineTo(_ p: CGPoint) { appendAndPrint("lineTo(\(p.x), \(p.y))") }
   
   func saveState() { appendAndPrint("saveState()") }
   
   func restoreState() { appendAndPrint("restoreState()") }
   
-  func fillRect( rect: CGRect ) { appendAndPrint("fillRect(\(rect))") }
+  func fillRect( _ rect: CGRect ) { appendAndPrint("fillRect(\(rect))") }
   
-  func fillEllipse( rect: CGRect ) { appendAndPrint("fillEllipse(\(rect))") }
+  func fillEllipse( _ rect: CGRect ) { appendAndPrint("fillEllipse(\(rect))") }
   
-  func setLineWidth( width: CGFloat ) { appendAndPrint("setLineWidth(\(width))") }
+  func setLineWidth( _ width: CGFloat ) { appendAndPrint("setLineWidth(\(width))") }
   
-  func setStroke( color: UIColor ) { appendAndPrint("setStroke(\(color))") }
+  func setStroke( _ color: UIColor ) { appendAndPrint("setStroke(\(color))") }
   
-  func setFill( color: UIColor ) { appendAndPrint("setFill(\(color))") }
+  func setFill( _ color: UIColor ) { appendAndPrint("setFill(\(color))") }
   
   func beginPath() { appendAndPrint("beginPath()") }
   

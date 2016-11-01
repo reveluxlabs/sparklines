@@ -9,68 +9,68 @@
 import UIKit
 
 protocol Renderer {
-  func moveTo(position: CGPoint)
-  func lineTo(position: CGPoint)
+  func moveTo(_ position: CGPoint)
+  func lineTo(_ position: CGPoint)
   
   func saveState()
   func restoreState()
-  func fillRect( rect: CGRect )
-  func fillEllipse( rect: CGRect )
-  func setLineWidth( width: CGFloat )
-  func setStroke( color: UIColor )
-  func setFill(  color: UIColor )
+  func fillRect( _ rect: CGRect )
+  func fillEllipse( _ rect: CGRect )
+  func setLineWidth( _ width: CGFloat )
+  func setStroke( _ color: UIColor )
+  func setFill(  _ color: UIColor )
   func beginPath()
   func strokePath()
   func closePath()
 }
 
 extension CGContext : Renderer {
-  func moveTo(position: CGPoint) {
-    CGContextMoveToPoint(self, position.x, position.y)
+  func moveTo(_ position: CGPoint) {
+    self.move(to: CGPoint(x: position.x, y: position.y))
   }
 
-  func lineTo(position: CGPoint) {
-    CGContextAddLineToPoint(self, position.x, position.y)
+  func lineTo(_ position: CGPoint) {
+    self.addLine(to: CGPoint(x: position.x, y: position.y))
   }
 
   func saveState(){
-    CGContextSaveGState(self)
+    self.saveGState()
   }
 
   func restoreState(){
-    CGContextRestoreGState(self)
+    self.restoreGState()
   }
 
-  func fillRect( rect: CGRect ){
-    CGContextFillRect(self, rect)
+  func fillRect( _ rect: CGRect ){
+    self.fill(rect)
   }
 
-  func fillEllipse( rect: CGRect ){
-    CGContextFillEllipseInRect(self, rect)
+  func fillEllipse( _ rect: CGRect ){
+    self.fillEllipse(in: rect)
   }
 
-  func setLineWidth( width: CGFloat ){
-    CGContextSetLineWidth(self, width)
-  }
+//  func setLineWidth( _ width: CGFloat ){
+//    self.setLineWidth(width)
+//  }
 
-  func setStroke( color: UIColor ){
-    CGContextSetStrokeColorWithColor(self, color.CGColor)
+  func setStroke( _ color: UIColor ){
+    self.setStrokeColor(color.cgColor)
   }
   
-  func setFill( color: UIColor ){
-    CGContextSetFillColorWithColor(self, color.CGColor)
+  func setFill( _ color: UIColor ){
+    self.setFillColor(color.cgColor)
   }
   
-  func beginPath(){
-    CGContextBeginPath(self)
-  }
-
-  func strokePath(){
-    CGContextStrokePath(self)
-  }
-
-  func closePath(){
-    CGContextClosePath(self)
-  }
+//  func beginPath(){
+//    self.beginPath()
+//  }
+//
+//  func strokePath(){
+//    self.strokePath()
+//  }
+//
+//  func closePath(){
+//    self.closePath()
+//  }
 
 }
